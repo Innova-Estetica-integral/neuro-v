@@ -5,39 +5,23 @@
 :root {
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
-  /* Profile Dynamic Colors */
+
+  /* Unified Premium Palette (Phase 5) */
   --profile-accent: 239 84% 67%;
-  /* Default - Indigo */
+  /* Indigo */
   --profile-glow: rgba(99, 102, 241, 0.15);
+  --accent-cyan: 180 100% 50%;
+  /* Cyan for secondary accents */
 
   --card: 222.2 84% 4.9%;
   --card-foreground: 210 40% 98%;
   --border: 217.2 32.6% 17.5%;
 }
 
-/* Profile Overrides */
-[data-profile='impulsive'] {
-  --profile-accent: 12 92% 50%;
-  /* Red-Orange */
-  --profile-glow: rgba(239, 68, 68, 0.2);
-}
-
-[data-profile='analytic'] {
-  --profile-accent: 217 91% 60%;
-  /* Blue-Indigo */
-  --profile-glow: rgba(59, 130, 246, 0.2);
-}
-
-[data-profile='price_sensitive'] {
-  --profile-accent: 160 84% 39%;
-  /* Green-Teal */
-  --profile-glow: rgba(16, 185, 129, 0.2);
-}
-
-[data-profile='hesitant'] {
-  --profile-accent: 215 16% 47%;
-  /* Slate-Gray */
-  --profile-glow: rgba(100, 116, 139, 0.2);
+/* Unified Theme Overrides (Stable) */
+[data-profile] {
+  --profile-accent: 239 84% 67%;
+  --profile-glow: rgba(99, 102, 241, 0.15);
 }
 
 body {
