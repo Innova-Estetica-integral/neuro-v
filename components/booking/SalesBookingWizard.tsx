@@ -21,26 +21,34 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
 
     if (!isQualified) {
         return (
-            <GlassCard className="max-w-md mx-auto py-10 px-8 text-center border-red-500/10 shadow-[0_20px_50px_rgba(239,68,68,0.05)]">
-                <div className="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 mx-auto mb-6">
-                    <LucideLock className="w-6 h-6 border-none" />
-                </div>
-                <h3 className="text-xl font-black mb-3 uppercase tracking-tighter">Acceso Reservado</h3>
-                <p className="text-xs text-gray-400 max-w-[280px] mx-auto mb-8 leading-relaxed font-medium">
-                    El Motor de Ingresos de NeuroV tiene cupos limitados por mes. Califica con nuestro Cerebro de Ventas para desbloquear la agenda.
-                </p>
-                <PremiumButton
-                    variant="primary"
-                    size="md"
-                    className="w-full rounded-2xl font-black text-xs py-4"
-                    onClick={() => {
-                        const assistantBtn = document.querySelector('button.fixed.bottom-6.right-6') as HTMLButtonElement;
-                        if (assistantBtn) assistantBtn.click();
-                    }}
-                >
-                    HABLAR CON CEREBRO DE VENTAS
-                </PremiumButton>
-            </GlassCard>
+            <div className="flex flex-col items-center justify-center py-20 px-6 relative">
+                {/* Visual Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-indigo-500/10 blur-[100px] pointer-events-none" />
+
+                <GlassCard className="max-w-[400px] w-full border-white/10 shadow-2xl relative z-10 text-center">
+                    <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-indigo-400 mx-auto mb-8">
+                        <LucideLock className="w-8 h-8" strokeWidth={1.5} />
+                    </div>
+
+                    <h3 className="text-2xl font-black mb-4 uppercase tracking-tighter text-white">Acceso Reservado</h3>
+
+                    <p className="text-sm text-gray-400 mb-10 leading-relaxed font-medium">
+                        El Motor de Ingresos de NeuroV tiene cupos limitados. Califica con nuestra IA para desbloquear la agenda.
+                    </p>
+
+                    <PremiumButton
+                        variant="primary"
+                        size="md"
+                        className="w-full py-4 font-black"
+                        onClick={() => {
+                            const assistantBtn = document.querySelector('button.fixed.bottom-6.right-6, button.fixed.bottom-10.right-10') as HTMLButtonElement;
+                            if (assistantBtn) assistantBtn.click();
+                        }}
+                    >
+                        CALIFICAR CON CEREBRO IA
+                    </PremiumButton>
+                </GlassCard>
+            </div>
         );
     }
 
