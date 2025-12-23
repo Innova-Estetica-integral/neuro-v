@@ -144,16 +144,17 @@ export function SalesAssistant() {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-8 sm:bottom-32 sm:w-[420px] max-h-[80vh] z-[200] flex flex-col"
+                        className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-8 sm:bottom-32 sm:w-[420px] max-h-[85vh] z-[200] flex flex-col"
                     >
-                        <GlassCard className="h-full flex flex-col p-0 overflow-hidden border-[hsl(var(--profile-accent))]/30 shadow-2xl">
-                            {/* Header */}
-                            <div className="p-6 border-b border-white/10 bg-gradient-to-br from-[hsl(var(--profile-accent))]/20 to-transparent flex items-center gap-4">
-                                <div className="w-12 h-12 bg-[hsl(var(--profile-accent))] rounded-2xl flex items-center justify-center shadow-lg transform rotate-3">
-                                    <LucideCheckCircle2 className="w-7 h-7 text-white" />
+                        <div className="h-full flex flex-col overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0a0f1e]/90 backdrop-blur-2xl shadow-[0_32px_64px_rgba(0,0,0,0.6)]">
+                            {/* Seamless Header */}
+                            <div className="p-8 pb-4 flex items-center gap-4 relative overflow-hidden">
+                                <div className="absolute top-0 left-0 w-full h-32 bg-indigo-500/10 blur-[60px] pointer-events-none" />
+                                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg relative z-10">
+                                    <LucideBrainCircuit size={24} className="text-white" />
                                 </div>
-                                <div>
-                                    <h4 className="font-black text-white uppercase tracking-tighter text-lg">Cerebro de Ventas</h4>
+                                <div className="relative z-10">
+                                    <h4 className="font-black text-white uppercase tracking-tighter text-lg leading-none mb-1">Cerebro de Ventas</h4>
                                     <div className="flex items-center gap-1.5">
                                         <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
                                         <span className="text-[10px] text-green-400 font-black uppercase tracking-widest">Protocolo Activo</span>
@@ -161,16 +162,16 @@ export function SalesAssistant() {
                                 </div>
                             </div>
 
-                            {/* Chat Window */}
+                            {/* Transparent Message Area */}
                             <div
                                 ref={scrollRef}
-                                className="flex-1 overflow-y-auto p-6 space-y-6 min-h-[350px] max-h-[450px] custom-scrollbar bg-black/20"
+                                className="flex-1 overflow-y-auto px-8 py-4 space-y-6 min-h-[300px] max-h-[450px] custom-scrollbar"
                             >
                                 {messages.map((m, i) => (
                                     <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2`}>
-                                        <div className={`max-w-[85%] p-5 rounded-3xl text-sm font-bold leading-relaxed ${m.role === 'user'
-                                            ? 'bg-[hsl(var(--profile-accent))] text-white rounded-tr-none shadow-lg shadow-[hsl(var(--profile-accent))]/20'
-                                            : 'bg-white/5 text-gray-200 border border-white/10 rounded-tl-none backdrop-blur-md'
+                                        <div className={`max-w-[85%] p-4 rounded-2xl text-[13px] font-bold leading-relaxed ${m.role === 'user'
+                                            ? 'bg-indigo-600 text-white rounded-tr-none shadow-lg shadow-indigo-600/20'
+                                            : 'bg-white/5 text-gray-200 border border-white/5 rounded-tl-none'
                                             }`}>
                                             {m.content}
                                         </div>
@@ -178,61 +179,57 @@ export function SalesAssistant() {
                                 ))}
                             </div>
 
-                            {/* Actions / Inputs */}
-                            <div className="p-6 bg-black/40 border-t border-white/10 backdrop-blur-xl">
+                            {/* Integrated Actions Area */}
+                            <div className="p-8 pt-4 pb-10">
                                 {bantStep === 'initial' && (
-                                    <div className="flex gap-3">
-                                        <PremiumButton variant="primary" size="md" className="flex-1 font-black" onClick={() => handleInitialResponse(true)}>AUDITAR AHORA</PremiumButton>
-                                        <PremiumButton variant="outline" size="md" className="flex-1 opacity-60" onClick={() => handleInitialResponse(false)}>LUEGO</PremiumButton>
+                                    <div className="flex flex-col gap-3">
+                                        <PremiumButton variant="primary" size="lg" className="w-full font-black rounded-2xl py-4 shadow-xl shadow-indigo-600/20" onClick={() => handleInitialResponse(true)}>AUDITAR AHORA</PremiumButton>
+                                        <button className="text-gray-500 text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors py-2" onClick={() => handleInitialResponse(false)}>LUEGO</button>
                                     </div>
                                 )}
 
                                 {bantStep === 'leads' && (
                                     <div className="grid grid-cols-2 gap-3">
-                                        <button onClick={() => handleLeadsCount(25, '0-50')} className="p-3 bg-white/5 border border-white/10 rounded-xl text-xs font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">0 - 50</button>
-                                        <button onClick={() => handleLeadsCount(125, '50-200')} className="p-3 bg-white/5 border border-white/10 rounded-xl text-xs font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">50 - 200</button>
-                                        <button onClick={() => handleLeadsCount(350, '200-500')} className="p-3 bg-white/5 border border-white/10 rounded-xl text-xs font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">200 - 500</button>
-                                        <button onClick={() => handleLeadsCount(1000, '500+')} className="p-3 bg-[hsl(var(--profile-accent))]/20 border border-[hsl(var(--profile-accent))] rounded-xl text-xs font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">500+</button>
+                                        {['0-50', '50-200', '200-500', '500+'].map((range, idx) => (
+                                            <button key={range} onClick={() => handleLeadsCount(idx * 100, range)} className="p-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black text-white hover:bg-indigo-600 transition-all uppercase tracking-widest">{range} Leads</button>
+                                        ))}
                                     </div>
                                 )}
 
                                 {bantStep === 'ticket' && (
                                     <div className="grid grid-cols-1 gap-3">
-                                        <button onClick={() => handleTicket(45000, '< $50.000 CLP')} className="p-4 bg-white/5 border border-white/10 rounded-xl text-sm font-black text-white hover:bg-red-500/20 transition-colors">BAJO TICKET</button>
-                                        <button onClick={() => handleTicket(150000, '$150.000+ CLP')} className="p-4 bg-[hsl(var(--profile-accent))]/20 border border-[hsl(var(--profile-accent))] rounded-xl text-sm font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">TICKET PREMIUM</button>
+                                        <button onClick={() => handleTicket(45000, '< $50k')} className="p-4 bg-white/5 border border-white/5 rounded-2xl text-xs font-black text-white hover:bg-red-500/20 transition-all uppercase tracking-widest">Bajo Ticket</button>
+                                        <button onClick={() => handleTicket(150000, '$150k+')} className="p-4 bg-indigo-600 rounded-2xl text-xs font-black text-white hover:bg-indigo-500 transition-all uppercase tracking-widest">Ticket Premium</button>
                                     </div>
                                 )}
 
                                 {bantStep === 'authority' && (
-                                    <div className="flex gap-3">
-                                        <PremiumButton variant="primary" size="md" className="flex-1 font-black" onClick={() => handleAuthority(true)}>SOY DECISOR</PremiumButton>
-                                        <PremiumButton variant="outline" size="md" className="flex-1" onClick={() => handleAuthority(false)}>SOCIOS</PremiumButton>
+                                    <div className="flex flex-col gap-3">
+                                        <PremiumButton variant="primary" size="md" className="w-full font-black rounded-2xl py-4" onClick={() => handleAuthority(true)}>SOY DECISOR</PremiumButton>
+                                        <button className="text-gray-500 text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors py-2" onClick={() => handleAuthority(false)}>TENGO SOCIOS</button>
                                     </div>
                                 )}
 
                                 {bantStep === 'qualified' && qualified && (
                                     <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="space-y-4">
-                                        <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-2xl">
-                                            <p className="text-[10px] font-black text-green-400 uppercase tracking-widest text-center">Score: Máxima Prioridad</p>
-                                        </div>
                                         <PremiumButton
                                             variant="primary"
                                             size="lg"
-                                            className="w-full shadow-lg shadow-[hsl(var(--profile-accent))]/40 py-6"
+                                            className="w-full shadow-2xl shadow-indigo-600/40 py-6 rounded-2xl font-black"
                                             onClick={() => window.location.href = '/demo?qualified=true'}
                                         >
-                                            ACCEDER A LA DEMO TÉCNICA
+                                            ACCEDER AL PROTOCOLO
                                         </PremiumButton>
                                     </motion.div>
                                 )}
 
                                 {bantStep === 'qualified' && !qualified && (
-                                    <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-2xl text-center">
-                                        <p className="text-xs font-bold text-red-400">Acceso restringido: No cumples los requisitos mínimos para el motor de alta gama.</p>
+                                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-center">
+                                        <p className="text-[10px] font-black text-red-400 uppercase tracking-widest leading-relaxed">Acceso denegado: motor reservado para alta gama</p>
                                     </div>
                                 )}
                             </div>
-                        </GlassCard>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
