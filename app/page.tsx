@@ -213,22 +213,25 @@ function CorporateHomeContent() {
                                 </ul>
                             </div>
 
-                            <div className="w-full order-2 relative">
-                                <div className="absolute inset-0 bg-indigo-500/20 blur-[100px] rounded-full" />
-                                <GlassCard className="relative z-10 p-4 border-white/10 w-full overflow-hidden">
-                                    <div className="bg-[#0f172a] rounded-xl p-4 sm:p-6 border border-white/5 font-mono text-[10px] sm:text-sm overflow-x-auto custom-scrollbar">
-                                        <div className="flex gap-2 mb-4 opacity-40">
-                                            <div className="w-2 h-2 rounded-full bg-red-400" />
-                                            <div className="w-2 h-2 rounded-full bg-yellow-400" />
-                                            <div className="w-2 h-2 rounded-full bg-green-400" />
-                                        </div>
-                                        <div className="space-y-1 sm:space-y-2 whitespace-nowrap sm:whitespace-normal">
+                            <div className="w-full order-2 relative group">
+                                <div className="absolute inset-0 bg-indigo-500/20 blur-[100px] rounded-full group-hover:bg-indigo-500/30 transition-all duration-700" />
+                                <GlassCard className="relative z-10 p-4 sm:p-8 border-white/10 bg-[#0f172a]/90 backdrop-blur-3xl w-full overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.6)]">
+                                    <div className="flex gap-2 mb-6 opacity-60">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.4)]" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 shadow-[0_0_8px_rgba(234,179,8,0.4)]" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
+                                    </div>
+                                    <div className="font-mono text-[10px] sm:text-[13px] leading-relaxed overflow-x-auto custom-scrollbar-horizontal pb-2 pr-4">
+                                        <div className="space-y-1 sm:space-y-2 whitespace-nowrap min-w-fit">
                                             <p className="text-indigo-400">CREATE POLICY clinic_isolation</p>
-                                            <p className="text-purple-400 pl-4">FOR SELECT TO verified_clinic</p>
-                                            <p className="text-cyan-400 pl-4">USING (clinic_id = current_setting('app.id'));</p>
-                                            <div className="h-4" />
-                                            <p className="text-gray-500">// Security Active: RLS</p>
-                                            <p className="text-green-400 font-bold tracking-widest uppercase mt-4 text-[8px] sm:text-xs">PG_SODIUM: SECURE</p>
+                                            <p className="text-purple-400 pl-4 sm:pl-6">FOR SELECT TO verified_clinic</p>
+                                            <p className="text-cyan-400 pl-4 sm:pl-6">USING (clinic_id = current_setting('app.id'));</p>
+                                            <div className="h-4 sm:h-6" />
+                                            <p className="text-gray-500 font-medium italic">// Security Active: RLS Protocol</p>
+                                            <div className="mt-6 flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-lg w-fit">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                                                <p className="text-green-400 font-black tracking-widest uppercase text-[8px] sm:text-[10px]">PG_SODIUM: SECURE_ENCRYPTION</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </GlassCard>
