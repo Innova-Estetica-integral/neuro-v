@@ -54,12 +54,8 @@ export function SalesAssistant() {
         setMessages(prev => [...prev, { role: 'user', content: response ? 'Empecemos el diagnóstico.' : 'Ahora no.' }]);
 
         if (response) {
-            const currentProfile = forceClassify();
-            const adaptiveIntro = currentProfile === 'analytic'
-                ? 'Análisis clínico iniciado. NeuroV opera bajo el estándar FHIR R4 para garantizar interoperabilidad del 100%.'
-                : 'Perfecto. Vamos a calcular cuánto dinero estás dejando sobre la mesa por culpa de las inasistencias.';
-
-            addBotMessage(adaptiveIntro);
+            const intro = 'Diagnóstico iniciado. NeuroV opera bajo el estándar FHIR R4 para garantizar interoperabilidad del 100% y optimización de agenda en tiempo real.';
+            addBotMessage(intro);
 
             setTimeout(() => {
                 addBotMessage('¿Cuántos prospectos (leads) genera tu clínica mensualmente?');
@@ -97,9 +93,7 @@ export function SalesAssistant() {
         setBantStep('qualified');
 
         if (isQualified) {
-            const closing = profile === 'impulsive'
-                ? 'Diagnóstico: CRÍTICO. Estás perdiendo una fortuna. Tu clínica califica para nuestro Revenue Engine. Tengo un cupo para demo MAÑANA.'
-                : 'Diagnóstico: ELEGIBLE. Proyectamos un incremento del 27.5% en facturación neta optimizando tu embudo actual. ¿Revisamos el modelo?';
+            const closing = 'Diagnóstico: ELEGIBLE. Tu clínica califica para nuestro Revenue Engine. Proyectamos un incremento del 27.5% en facturación neta optimizando tu embudo actual. He desbloqueado un cupo para tu demo técnica.';
             addBotMessage(closing);
         } else {
             addBotMessage('Tu perfil actual no requiere nuestro motor de alta gama todavía. Te sugiero revisar nuestros recursos gratuitos de gestión.');
