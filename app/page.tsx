@@ -94,7 +94,7 @@ function CorporateHomeContent() {
                             </span>
                         </div>
 
-                        <h1 className="text-4xl sm:text-5xl md:text-8xl font-black mb-8 leading-[1.1] sm:leading-[1] tracking-tight">
+                        <h1 className="text-3xl sm:text-5xl md:text-8xl font-black mb-6 sm:mb-8 leading-[1.1] sm:leading-[1] tracking-tight">
                             {profile === 'analytic' ? (
                                 <>Interoperabilidad <span className="text-gradient">FHIR R4</span> & Conversión Psico-Digital</>
                             ) : (
@@ -102,25 +102,25 @@ function CorporateHomeContent() {
                             )}
                         </h1>
 
-                        <p className="max-w-3xl mx-auto text-lg md:text-xl text-gray-400 mb-12 leading-relaxed font-medium capitalize">
+                        <p className="max-w-2xl mx-auto text-base md:text-xl text-gray-400 mb-10 sm:mb-12 leading-relaxed font-medium">
                             {profile === 'analytic' ?
                                 'Aseguramos la integridad de los datos bajo Ley 21.668 mientras nuestro asistente virtual incrementa tus tasas de agendamiento en un 275%.' :
                                 'Elimina la pérdida financiera por inasistencias. Nuestro sistema automatiza el cobro y la confirmación mediante persuasión psicográfica en tiempo real.'
                             }
                         </p>
 
-                        <div className="flex flex-col sm:row items-center justify-center gap-6">
+                        <div className="flex flex-col items-center justify-center gap-6">
                             <PremiumButton
                                 variant="secondary"
                                 size="lg"
-                                className="shine-effect w-full sm:w-auto"
-                                onClick={() => window.location.href = '/clinic-alpha'}
+                                className="shine-effect w-full sm:w-auto px-8 sm:px-12 rounded-[1.5rem] text-sm sm:text-lg"
+                                onClick={() => window.location.href = '#agenda'}
                                 icon={<LucideArrowRight />}
                             >
-                                SOLICITAR DEMO HOT-LEAD
+                                AGENDAR DEMO TÉCNICA
                             </PremiumButton>
 
-                            <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                            <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">
                                 Validado para Clínicas Estéticas en Chile
                             </p>
                         </div>
