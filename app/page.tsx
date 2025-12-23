@@ -178,20 +178,20 @@ function CorporateHomeContent() {
                 </section>
 
                 {/* Medical Grade Security Section (Sales Point 3) */}
-                <section id="seguridad" className="container mx-auto px-6 py-32 relative">
-                    <div className="absolute inset-0 bg-indigo-600/5 -skew-y-3 z-0" />
+                <section id="seguridad" className="container mx-auto px-6 py-20 sm:py-32 relative">
+                    <div className="absolute inset-0 bg-indigo-600/5 -skew-y-3 z-0 sm:skew-y-[-3deg]" />
 
-                    <div className="relative z-10 grid lg:grid-cols-2 gap-20 items-center">
+                    <div className="relative z-10 grid lg:grid-cols-2 gap-12 sm:gap-20 items-center">
                         <div>
                             <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full mb-8">
                                 <LucideLock className="w-4 h-4 text-green-400" />
                                 <span className="text-xs font-black text-green-300 tracking-widest uppercase">Fortaleza Inexpugnable</span>
                             </div>
-                            <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
-                                Tus datos son un activo, <br />
+                            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-6 sm:mb-8 leading-tight">
+                                Tus datos son un activo, <br className="hidden sm:block" />
                                 <span className="text-gradient">no un riesgo</span>.
                             </h2>
-                            <p className="text-xl text-gray-400 mb-10 leading-relaxed capitalize">
+                            <p className="text-lg sm:text-xl text-gray-400 mb-8 sm:mb-10 leading-relaxed capitalize">
                                 Diseñamos la arquitectura más segura de la industria estética, superando los estándares exigidos por el Ministerio de Salud.
                             </p>
 
@@ -216,21 +216,21 @@ function CorporateHomeContent() {
 
                         <div className="relative">
                             <div className="absolute inset-0 bg-indigo-500/30 blur-[100px] rounded-full" />
-                            <GlassCard className="relative z-10 p-4 border-white/20">
-                                <div className="bg-[#0f172a] rounded-2xl p-6 border border-white/5 font-mono text-sm overflow-hidden">
+                            <GlassCard className="relative z-10 p-3 sm:p-4 border-white/20">
+                                <div className="bg-[#0f172a] rounded-2xl p-4 sm:p-6 border border-white/5 font-mono text-[10px] sm:text-sm overflow-hidden whitespace-pre-wrap sm:whitespace-normal">
                                     <div className="flex gap-2 mb-4 opacity-40">
-                                        <div className="w-3 h-3 rounded-full bg-red-400" />
-                                        <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                                        <div className="w-3 h-3 rounded-full bg-green-400" />
+                                        <div className="w-2.5 h-2.5 sm:w-3 h-3 rounded-full bg-red-400" />
+                                        <div className="w-2.5 h-2.5 sm:w-3 h-3 rounded-full bg-yellow-400" />
+                                        <div className="w-2.5 h-2.5 sm:w-3 h-3 rounded-full bg-green-400" />
                                     </div>
-                                    <div className="space-y-2">
+                                    <div className="space-y-1 sm:space-y-2">
                                         <p className="text-indigo-400">CREATE POLICY clinic_isolation ON appointments</p>
-                                        <p className="text-purple-400 pl-4">FOR SELECT TO verified_clinic</p>
-                                        <p className="text-cyan-400 pl-4">USING (clinic_id = current_setting('app.current_clinic_id')::uuid);</p>
-                                        <div className="h-4" />
+                                        <p className="text-purple-400 pl-2 sm:pl-4">FOR SELECT TO verified_clinic</p>
+                                        <p className="text-cyan-400 pl-2 sm:pl-4">USING (clinic_id = current_setting('app.current_clinic_id')::uuid);</p>
+                                        <div className="h-2 sm:h-4" />
                                         <p className="text-gray-500">// Security Layer Active: RLS Protocol</p>
-                                        <p className="text-green-400 font-bold tracking-widest uppercase mt-4">[ENCRYPTION: PG_SODIUM_ACTIVE]</p>
-                                        <p className="text-green-400 font-bold tracking-widest uppercase">[STATUS: SECURE]</p>
+                                        <p className="text-green-400 font-bold tracking-widest uppercase mt-4 text-[8px] sm:text-sm">[ENCRYPTION: PG_SODIUM_ACTIVE]</p>
+                                        <p className="text-green-400 font-bold tracking-widest uppercase text-[8px] sm:text-sm">[STATUS: SECURE]</p>
                                     </div>
                                 </div>
                             </GlassCard>
