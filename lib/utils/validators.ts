@@ -5,9 +5,15 @@ export function validateFullName(name: string): { isValid: boolean; error?: stri
         return { isValid: false, error: 'El nombre es requerido' };
     }
 
-    const parts = trimmed.split(/\s+/);
+    const parts = trimmed.split(/\s+/).filter(p => p.length > 0);
     if (parts.length < 2) {
-        return { isValid: false, error: 'Debe ingresar nombre y apellido' };
+        return { isValid: false, error: 'Debe ingresar al menos Nombre y Apellido' };
+    }
+
+    // Validar que cada nombre/apellido empiece con mayúscula
+    const isCapitalized = parts.every(part => /^[A-ZÁÉÍÓÚÑ]/.test(part));
+    if (!isCapitalized) {
+        return { isValid: false, error: 'Nombre y Apellidos deben comenzar con Mayúscula' };
     }
 
     return { isValid: true };

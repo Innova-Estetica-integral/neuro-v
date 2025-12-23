@@ -69,6 +69,12 @@ function BookingWizardContent() {
         return Object.keys(newErrors).length === 0;
     };
 
+    const handleStep3Submit = () => {
+        if (validateStep3()) {
+            handleNext();
+        }
+    };
+
     const handleFinalize = async () => {
         setLoading(true);
         try {
@@ -279,9 +285,15 @@ function BookingWizardContent() {
                                         type="text"
                                         placeholder="Ej. María García"
                                         value={userData.name}
-                                        onChange={e => setUserData({ ...userData, name: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:border-indigo-500 outline-none transition-all"
+                                        onChange={e => {
+                                            const val = e.target.value;
+                                            setUserData({ ...userData, name: val });
+                                            if (errors.name) setErrors({ ...errors, name: '' });
+                                        }}
+                                        onBlur={e => setUserData({ ...userData, name: capitalizeWords(e.target.value) })}
+                                        className={`w-full bg-white/5 border rounded-2xl p-4 outline-none transition-all ${errors.name ? 'border-red-500/50 bg-red-500/5' : 'border-white/10 focus:border-indigo-500'}`}
                                     />
+                                    {errors.name && <p className="text-[10px] text-red-400 font-bold uppercase tracking-wider">{errors.name}</p>}
                                 </div>
                                 <div className="space-y-4">
                                     <label className="text-sm text-gray-500 font-bold uppercase tracking-widest">Correo Electrónico</label>
@@ -289,9 +301,13 @@ function BookingWizardContent() {
                                         type="email"
                                         placeholder="maria@correo.com"
                                         value={userData.email}
-                                        onChange={e => setUserData({ ...userData, email: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:border-indigo-500 outline-none transition-all"
+                                        onChange={e => {
+                                            setUserData({ ...userData, email: e.target.value });
+                                            if (errors.email) setErrors({ ...errors, email: '' });
+                                        }}
+                                        className={`w-full bg-white/5 border rounded-2xl p-4 outline-none transition-all ${errors.email ? 'border-red-500/50 bg-red-500/5' : 'border-white/10 focus:border-indigo-500'}`}
                                     />
+                                    {errors.email && <p className="text-[10px] text-red-400 font-bold uppercase tracking-wider">{errors.email}</p>}
                                 </div>
                                 <div className="space-y-4">
                                     <label className="text-sm text-gray-500 font-bold uppercase tracking-widest">WhatsApp / Teléfono</label>
@@ -299,9 +315,14 @@ function BookingWizardContent() {
                                         type="tel"
                                         placeholder="+569 1234 5678"
                                         value={userData.phone}
-                                        onChange={e => setUserData({ ...userData, phone: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:border-indigo-500 outline-none transition-all"
+                                        onChange={e => {
+                                            setUserData({ ...userData, phone: e.target.value });
+                                            if (errors.phone) setErrors({ ...errors, phone: '' });
+                                        }}
+                                        onBlur={e => setUserData({ ...userData, phone: formatWhatsApp(e.target.value) })}
+                                        className={`w-full bg-white/5 border rounded-2xl p-4 outline-none transition-all ${errors.phone ? 'border-red-500/50 bg-red-500/5' : 'border-white/10 focus:border-indigo-500'}`}
                                     />
+                                    {errors.phone && <p className="text-[10px] text-red-400 font-bold uppercase tracking-wider">{errors.phone}</p>}
                                 </div>
                                 <div className="space-y-4">
                                     <label className="text-sm text-gray-500 font-bold uppercase tracking-widest">RUT / DNI</label>
@@ -309,9 +330,14 @@ function BookingWizardContent() {
                                         type="text"
                                         placeholder="12.345.678-9"
                                         value={userData.rut}
-                                        onChange={e => setUserData({ ...userData, rut: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 focus:border-indigo-500 outline-none transition-all"
+                                        onChange={e => {
+                                            setUserData({ ...userData, rut: e.target.value });
+                                            if (errors.rut) setErrors({ ...errors, rut: '' });
+                                        }}
+                                        onBlur={e => setUserData({ ...userData, rut: formatRUT(e.target.value) })}
+                                        className={`w-full bg-white/5 border rounded-2xl p-4 outline-none transition-all ${errors.rut ? 'border-red-500/50 bg-red-500/5' : 'border-white/10 focus:border-indigo-500'}`}
                                     />
+                                    {errors.rut && <p className="text-[10px] text-red-400 font-bold uppercase tracking-wider">{errors.rut}</p>}
                                 </div>
                             </div>
 
@@ -339,7 +365,7 @@ function BookingWizardContent() {
                                 <button onClick={handleBack} className="flex-1 py-4 rounded-2xl border border-white/10 hover:bg-white/5 transition-all font-bold">Volver</button>
                                 <button
                                     disabled={!userData.name || !userData.email || !userData.phone}
-                                    onClick={handleNext}
+                                    onClick={handleStep3Submit}
                                     className="flex-[2] py-4 bg-indigo-600 rounded-2xl font-bold shadow-lg shadow-indigo-500/20 disabled:opacity-30"
                                 >
                                     Ver Resumen de Pago
