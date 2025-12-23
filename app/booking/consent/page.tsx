@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { LucideCheck, LucideAlertCircle, LucideLoader2, LucideX } from 'lucide-react';
 
-export default function ConsentPage() {
+function ConsentContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const patientId = searchParams.get('patient_id');
@@ -304,3 +304,18 @@ export default function ConsentPage() {
         </div>
     );
 }
+
+import { Suspense } from 'react';
+
+export default function ConsentPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex items-center justify-center min-h-screen">
+                <LucideLoader2 className="w-8 h-8 animate-spin text-blue-600" />
+            </div>
+        }>
+            <ConsentContent />
+        </Suspense>
+    );
+}
+

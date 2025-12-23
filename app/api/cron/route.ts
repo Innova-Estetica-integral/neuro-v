@@ -9,6 +9,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
+
 import { dispatchFlashOffers, checkFlashOfferConversions, expireFlashOffers } from '@/lib/flash-offer-engine';
 import { runPursuitScheduler } from '@/lib/pursuit/abandoned-cart';
 import { sendRenewalReminders, processAutoRenewals } from '@/lib/retention/ltv-matrix';

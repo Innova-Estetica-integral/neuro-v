@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -37,6 +38,12 @@ export default function NewClinicPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [showSecrets, setShowSecrets] = useState(false);
+    const [origin, setOrigin] = useState('');
+
+    useEffect(() => {
+        setOrigin(window.location.origin);
+    }, []);
+
 
     const [data, setData] = useState<OnboardingData>({
         name: '',
@@ -185,7 +192,8 @@ export default function NewClinicPage() {
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
                                         placeholder="clinica-los-andes"
                                     />
-                                    <p className="text-xs text-gray-500 mt-1">URL: {window.location.origin}/{data.slug}</p>
+                                    <p className="text-xs text-gray-500 mt-1">URL: {origin || '...'}/{data.slug}</p>
+
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -270,8 +278,8 @@ export default function NewClinicPage() {
                                                 type="button"
                                                 onClick={() => setData(prev => ({ ...prev, provider: prov }))}
                                                 className={`p-4 border-2 rounded-lg transition-all ${data.provider === prov
-                                                        ? 'border-blue-600 bg-blue-50'
-                                                        : 'border-gray-200 hover:border-gray-300'
+                                                    ? 'border-blue-600 bg-blue-50'
+                                                    : 'border-gray-200 hover:border-gray-300'
                                                     }`}
                                             >
                                                 <LucideCreditCard className="w-8 h-8 mx-auto mb-2 text-gray-700" />
@@ -292,8 +300,8 @@ export default function NewClinicPage() {
                                                 type="button"
                                                 onClick={() => setData(prev => ({ ...prev, environment: env }))}
                                                 className={`p-3 border-2 rounded-lg transition-all ${data.environment === env
-                                                        ? 'border-blue-600 bg-blue-50'
-                                                        : 'border-gray-200 hover:border-gray-300'
+                                                    ? 'border-blue-600 bg-blue-50'
+                                                    : 'border-gray-200 hover:border-gray-300'
                                                     }`}
                                             >
                                                 <div className="font-semibold capitalize">{env}</div>

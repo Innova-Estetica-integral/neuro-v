@@ -72,17 +72,28 @@ export async function POST(req: NextRequest) {
             .single();
 
         if (appointment) {
+            // Get current total spent
+            const { data: patientData } = await supabase
+                .from('patient')
+                .select('total_spent_clp')
+                .eq('id', appointment.participant_patient_id)
+                .single();
+
+            const currentTotal = patientData?.total_spent_clp || 0;
+            const newTotal = currentTotal + (result.amount || 0);
+
             // Update patient
             await supabase
                 .from('patient')
                 .update({
                     is_abandoned: false,
                     scarcity_level: 0,
-                    total_spent_clp: supabase.sql`total_spent_clp + ${result.amount}`,
+                    total_spent_clp: newTotal,
                     last_interaction_at: new Date().toISOString(),
                 })
                 .eq('id', appointment.participant_patient_id);
         }
+
 
         // Create audit log
         await createAuditLog({

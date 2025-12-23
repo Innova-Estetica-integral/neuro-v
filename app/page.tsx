@@ -10,8 +10,10 @@ import {
     LucideChevronRight,
     LucideMessageSquare,
     LucideDatabase,
-    LucideArrowRight
+    LucideArrowRight,
+    LucideCreditCard
 } from 'lucide-react';
+
 
 export default function CorporateHomePage() {
     return (

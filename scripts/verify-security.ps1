@@ -75,10 +75,10 @@ Write-Host "4. Testing Supabase connection..." -ForegroundColor Yellow
 
 if (Test-Path ".env.local") {
     Get-Content ".env.local" | ForEach-Object {
-        if ($_ -match "NEXT_PUBLIC_SUPABASE_URL=(.+)") {
+        if ($_ -match 'NEXT_PUBLIC_SUPABASE_URL=["'']?([^"'']+)["'']?') {
             $env:NEXT_PUBLIC_SUPABASE_URL = $matches[1]
         }
-        if ($_ -match "NEXT_PUBLIC_SUPABASE_ANON_KEY=(.+)") {
+        if ($_ -match 'NEXT_PUBLIC_SUPABASE_ANON_KEY=["'']?([^"'']+)["'']?') {
             $env:NEXT_PUBLIC_SUPABASE_ANON_KEY = $matches[1]
         }
     }
@@ -90,6 +90,7 @@ if (Test-Path ".env.local") {
                     "apikey" = $env:NEXT_PUBLIC_SUPABASE_ANON_KEY
                 } `
                 -Method Get `
+                -UseBasicParsing `
                 -ErrorAction Stop
             
             if ($response.StatusCode -eq 200) {

@@ -27,10 +27,11 @@ function getGoogleAdsClient() {
         refresh_token: process.env.GOOGLE_ADS_REFRESH_TOKEN
     });
 
-    return google.adwords({
+    return (google as any).adwords({
         version: 'v15',
         auth: oauth2Client
     });
+
 }
 
 /**

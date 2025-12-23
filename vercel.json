@@ -1,36 +1,4 @@
 {
-    "crons": [
-        {
-            "path": "/api/cron?job=pursuit",
-            "schedule": "*/15 * * * *"
-        },
-        {
-            "path": "/api/cron?job=flash-offers",
-            "schedule": "0 * * * *"
-        },
-        {
-            "path": "/api/cron?job=flash-check",
-            "schedule": "*/30 * * * *"
-        },
-        {
-            "path": "/api/cron?job=flash-expire",
-            "schedule": "0 * * * *"
-        },
-        {
-            "path": "/api/cron?job=renewals-30d",
-            "schedule": "0 9 * * *"
-        },
-        {
-            "path": "/api/cron?job=renewals-7d",
-            "schedule": "0 10 * * *"
-        },
-        {
-            "path": "/api/cron?job=renewals-1d",
-            "schedule": "0 14 * * *"
-        },
-        {
-            "path": "/api/cron?job=auto-renewals",
-            "schedule": "0 6 * * *"
-        }
-    ]
+    "cleanUrls": true,
+    "framework": "nextjs"
 }
