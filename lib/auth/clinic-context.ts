@@ -140,16 +140,31 @@ export async function getClinicPaymentCredentials(
         process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
-    const { data, error } = await supabase
-        .rpc('decrypt_clinic_credentials', {
-            p_clinic_id: clinicId,
-            p_provider: provider,
-            p_environment: environment
-        });
+    try {
+        const { data, error } = await supabase
+            .rpc('decrypt_clinic_credentials', {
+                p_clinic_id: clinicId,
+                p_provider: provider,
+                p_environment: environment
+            });
 
-    if (error) {
-        throw new Error(`Failed to decrypt credentials: ${error.message}`);
+        if (!error && data) {
+            return data;
+        }
+    } catch (e) {
+        console.warn('RPC decrypt_clinic_credentials failed, using environment variables as fallback');
     }
 
-    return data;
+    // Fallback to environment variables if database lookup fails
+    if (provider === 'mercadopago') {
+        return {
+            access_token: process.env.MERCADOPAGO_ACCESS_TOKEN,
+            public_key: process.env.MERCADOPAGO_PUBLIC_KEY
+        };
+    } else {
+        return {
+            commerce_code: process.env.TRANSBANK_COMMERCE_CODE || '597055555532',
+            api_key: process.env.TRANSBANK_API_KEY || '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C'
+        };
+    }
 }

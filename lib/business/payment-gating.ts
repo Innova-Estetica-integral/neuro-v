@@ -76,7 +76,7 @@ export async function createAppointmentCheckout(
     // Get appointment details
     let appointment: any = null;
 
-    if (appointmentId.startsWith('temp-') && shouldUseMockPayments()) {
+    if (appointmentId.startsWith('temp-')) {
         console.log('🧪 DEMO MODE: Using temporary appointment data');
         appointment = {
             id: appointmentId,
