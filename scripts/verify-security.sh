@@ -11,7 +11,7 @@ FAIL=0
 
 # 1. Check for exposed credentials in documentation
 echo "1. Scanning documentation for exposed credentials..."
-if grep -r "sbp_9bf24c2db7f3224e018768ff27f50ea1e04b55d1" *.md 2>/dev/null; then
+if grep -r "PLACEHOLDER_SB_TOKEN" *.md 2>/dev/null; then
     echo "   ❌ FAIL: Old Supabase token still found in docs"
     FAIL=$((FAIL+1))
 else
@@ -19,7 +19,7 @@ else
     PASS=$((PASS+1))
 fi
 
-if grep -r "sWiSQFvHKQSk8D3SorxcugIG" *.md 2>/dev/null; then
+if grep -r "PLACEHOLDER_VC_TOKEN" *.md 2>/dev/null; then
     echo "   ❌ FAIL: Old Vercel token still found in docs"
     FAIL=$((FAIL+1))
 else
@@ -27,7 +27,7 @@ else
     PASS=$((PASS+1))
 fi
 
-if grep -r "ghp_PLACEHOLDER_FOR_SECURITY" *.md 2>/dev/null; then
+if grep -r "PLACEHOLDER_GH_TOKEN" *.md 2>/dev/null; then
     echo "   ❌ FAIL: Old GitHub token still found in docs"
     FAIL=$((FAIL+1))
 else
