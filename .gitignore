@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Next.js
+/.next/
+/out/
+
+# Production
+/build
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env
+.env*.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# 📁 PROTECCIÓN TOTAL DE DOCUMENTACIÓN (Solo Local)
+# Excluimos todo lo que no sea código para asegurar el despliegue
+*.md
+*.txt
+*.sql
+*.log
+*.pdf
+!README.md
+!package.json
+!tsconfig.json
+!next.config.js
+!tailwind.config.ts
+!postcss.config.js
+!vercel.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
