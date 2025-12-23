@@ -18,10 +18,11 @@ export function SalesAssistant() {
     const [isOpen, setIsOpen] = useState(false);
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [messages, setMessages] = useState<Message[]>([
-        { role: 'bot', content: 'Hola, soy el Asistente de Crecimiento de NeuroV. ¿Te gustaría saber cómo podemos eliminar los no-shows en tu clínica?' }
+        { role: 'bot', content: 'Soy el Cerebro de Ventas de NeuroV. Estoy aquí para auditar el potencial de crecimiento de tu clínica. ¿Iniciamos el diagnóstico?' }
     ]);
     const [bantStep, setBantStep] = useState<BantStep>('initial');
     const [qualified, setQualified] = useState(false);
+    const [stats, setStats] = useState({ leads: 0, ticket: 0 });
     const { profile, forceClassify } = usePsychographic();
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -32,13 +33,12 @@ export function SalesAssistant() {
         }
     }, [messages]);
 
-    // Handle Voice (Web Speech API)
     const speak = (text: string) => {
         if (typeof window !== 'undefined' && window.speechSynthesis) {
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'es-CL';
-            utterance.rate = 1.0;
+            utterance.rate = 1.1; // Faster, more directive
             utterance.onstart = () => setIsSpeaking(true);
             utterance.onend = () => setIsSpeaking(false);
             window.speechSynthesis.speak(utterance);
@@ -51,44 +51,59 @@ export function SalesAssistant() {
     };
 
     const handleInitialResponse = (response: boolean) => {
-        setMessages(prev => [...prev, { role: 'user', content: response ? 'Sí, quiero saber más.' : 'No, solo estoy mirando.' }]);
+        setMessages(prev => [...prev, { role: 'user', content: response ? 'Empecemos el diagnóstico.' : 'Ahora no.' }]);
 
         if (response) {
             const currentProfile = forceClassify();
             const adaptiveIntro = currentProfile === 'analytic'
-                ? 'Excelente. Basados en tu interés técnico, te contaré cómo nuestro motor de cobro asegurado bajo normativa vigente protege tu flujo de caja.'
-                : '¡Perfecto! Vamos directo al grano: estamos recuperando hasta un 45% de ingresos perdidos por inasistencias en tiempo récord.';
+                ? 'Análisis clínico iniciado. NeuroV opera bajo el estándar FHIR R4 para garantizar interoperabilidad del 100%.'
+                : 'Perfecto. Vamos a calcular cuánto dinero estás dejando sobre la mesa por culpa de las inasistencias.';
 
             addBotMessage(adaptiveIntro);
 
             setTimeout(() => {
-                addBotMessage('Para ver si podemos ayudarte, necesito hacerte 3 preguntas rápidas. ¿Cuántos leads promedio recibes al mes?');
+                addBotMessage('¿Cuántos prospectos (leads) genera tu clínica mensualmente?');
                 setBantStep('leads');
-            }, 1000);
+            }, 800);
         } else {
-            addBotMessage('Entiendo. Estaré por aquí si cambias de opinión para acelerar tu facturación.');
+            addBotMessage('Entiendo. La ineficiencia es costosa. Estaré aquí cuando decidas detener la fuga de ingresos.');
         }
     };
 
-    const handleLeadsCount = (count: string) => {
-        setMessages(prev => [...prev, { role: 'user', content: `${count} leads` }]);
-        addBotMessage('Entendido. ¿Cuál es el ticket promedio de tus tratamientos estrella?');
+    const handleLeadsCount = (count: number, label: string) => {
+        setStats(prev => ({ ...prev, leads: count }));
+        setMessages(prev => [...prev, { role: 'user', content: label }]);
+        addBotMessage('Bien. ¿Cuál es el ticket promedio de tus tratamientos de alta gama? (Ej: Estética avanzada, Dental complejo)');
         setBantStep('ticket');
     };
 
-    const handleTicket = (ticket: string) => {
-        setMessages(prev => [...prev, { role: 'user', content: `$${ticket}` }]);
-        addBotMessage('Última pregunta: ¿Eres tú quien toma las decisiones comerciales o hay otros socios involucrados?');
+    const handleTicket = (price: number, label: string) => {
+        const totalPotential = stats.leads * price;
+        setStats(prev => ({ ...prev, ticket: price }));
+        setMessages(prev => [...prev, { role: 'user', content: label }]);
+
+        const isMinRevenue = totalPotential >= 30000; // $30k CLP threshold check (using simplified scale)
+
+        addBotMessage('Entendido. Finalmente: ¿Eres quien firma las decisiones tecnológicas o necesitas validar con socios?');
         setBantStep('authority');
     };
 
     const handleAuthority = (isDecider: boolean) => {
-        setMessages(prev => [...prev, { role: 'user', content: isDecider ? 'Yo decido.' : 'Hay socios adicionales.' }]);
-        setQualified(true);
+        setMessages(prev => [...prev, { role: 'user', content: isDecider ? 'Tengo autoridad total.' : 'Consulto con socios.' }]);
+
+        // Qualification Logic: Leads > 0 AND Ticket > 0 AND Authority
+        const isQualified = stats.leads > 0 && stats.ticket >= 50000 && isDecider;
+        setQualified(isQualified);
         setBantStep('qualified');
 
-        const finalMessage = '¡Felicidades! Tu clínica califica como Lead de Alta Prioridad. Basados en tus datos, estimamos un ROI del 214% en el primer semestre usando NeuroV. ¿Agendamos una demo para proyectar tu ROI real?';
-        addBotMessage(finalMessage);
+        if (isQualified) {
+            const closing = profile === 'impulsive'
+                ? 'Diagnóstico: CRÍTICO. Estás perdiendo una fortuna. Tu clínica califica para nuestro Revenue Engine. Tengo un cupo para demo MAÑANA.'
+                : 'Diagnóstico: ELEGIBLE. Proyectamos un incremento del 27.5% en facturación neta optimizando tu embudo actual. ¿Revisamos el modelo?';
+            addBotMessage(closing);
+        } else {
+            addBotMessage('Tu perfil actual no requiere nuestro motor de alta gama todavía. Te sugiero revisar nuestros recursos gratuitos de gestión.');
+        }
     };
 
     return (
@@ -97,19 +112,19 @@ export function SalesAssistant() {
             <div className="fixed bottom-8 right-8 z-[200]">
                 <PremiumButton
                     variant="primary"
-                    className="w-16 h-16 rounded-full shadow-2xl shine-effect p-0"
+                    className="w-16 h-16 rounded-full shadow-2xl glass-card p-0 flex items-center justify-center"
                     onClick={() => {
                         setIsOpen(!isOpen);
                         if (!isOpen && messages.length === 1) speak(messages[0].content);
                     }}
                 >
-                    {isOpen ? <LucideX className="w-8 h-8" /> : <LucideMessageSquare className="w-8 h-8" />}
+                    {isOpen ? <LucideX className="w-8 h-8" /> : <LucideTrendingUp className="w-8 h-8" />}
                 </PremiumButton>
                 {isSpeaking && (
                     <div className="absolute -top-3 -right-1">
-                        <span className="flex h-5 w-5">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-5 w-5 bg-indigo-500 flex items-center justify-center">
+                        <span className="flex h-6 w-6">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[hsl(var(--profile-accent))] opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-6 w-6 bg-[hsl(var(--profile-accent))] flex items-center justify-center">
                                 <LucideVolume2 className="w-3 h-3 text-white" />
                             </span>
                         </span>
@@ -123,19 +138,19 @@ export function SalesAssistant() {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="fixed bottom-32 right-8 w-[400px] z-[200] max-h-[600px] flex flex-col"
+                        className="fixed bottom-32 right-8 w-[420px] z-[200] flex flex-col"
                     >
-                        <GlassCard className="h-full flex flex-col border-indigo-500/20 shadow-[0_0_50px_rgba(99,102,241,0.2)] p-0">
+                        <GlassCard className="h-full flex flex-col p-0 overflow-hidden border-[hsl(var(--profile-accent))]/30">
                             {/* Header */}
-                            <div className="p-6 border-b border-white/5 bg-indigo-500/10 flex items-center gap-4">
-                                <div className="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center">
-                                    <LucideSmile className="w-6 h-6 text-white" />
+                            <div className="p-6 border-b border-white/10 bg-gradient-to-br from-[hsl(var(--profile-accent))]/20 to-transparent flex items-center gap-4">
+                                <div className="w-12 h-12 bg-[hsl(var(--profile-accent))] rounded-2xl flex items-center justify-center shadow-lg transform rotate-3">
+                                    <LucideCheckCircle2 className="w-7 h-7 text-white" />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-white uppercase tracking-tight">Ventas NeuroV</h4>
+                                    <h4 className="font-black text-white uppercase tracking-tighter text-lg">Cerebro de Ventas</h4>
                                     <div className="flex items-center gap-1.5">
-                                        <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                                        <span className="text-[10px] text-green-400 font-black uppercase tracking-widest">En Línea</span>
+                                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+                                        <span className="text-[10px] text-green-400 font-black uppercase tracking-widest">Protocolo Activo</span>
                                     </div>
                                 </div>
                             </div>
@@ -143,13 +158,13 @@ export function SalesAssistant() {
                             {/* Chat Window */}
                             <div
                                 ref={scrollRef}
-                                className="flex-1 overflow-y-auto p-6 space-y-4 min-h-[300px] max-h-[400px] custom-scrollbar"
+                                className="flex-1 overflow-y-auto p-6 space-y-6 min-h-[350px] max-h-[450px] custom-scrollbar bg-black/20"
                             >
                                 {messages.map((m, i) => (
-                                    <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                        <div className={`max-w-[80%] p-4 rounded-3xl text-sm font-medium ${m.role === 'user'
-                                                ? 'bg-indigo-600 text-white rounded-tr-none'
-                                                : 'bg-white/5 text-gray-300 border border-white/10 rounded-tl-none'
+                                    <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2`}>
+                                        <div className={`max-w-[85%] p-5 rounded-3xl text-sm font-bold leading-relaxed ${m.role === 'user'
+                                            ? 'bg-[hsl(var(--profile-accent))] text-white rounded-tr-none shadow-lg shadow-[hsl(var(--profile-accent))]/20'
+                                            : 'bg-white/5 text-gray-200 border border-white/10 rounded-tl-none backdrop-blur-md'
                                             }`}>
                                             {m.content}
                                         </div>
@@ -158,46 +173,57 @@ export function SalesAssistant() {
                             </div>
 
                             {/* Actions / Inputs */}
-                            <div className="p-6 bg-white/5 border-t border-white/5">
+                            <div className="p-6 bg-black/40 border-t border-white/10 backdrop-blur-xl">
                                 {bantStep === 'initial' && (
                                     <div className="flex gap-3">
-                                        <PremiumButton variant="secondary" size="sm" className="flex-1" onClick={() => handleInitialResponse(true)}>Crecimiento</PremiumButton>
-                                        <PremiumButton variant="outline" size="sm" className="flex-1" onClick={() => handleInitialResponse(false)}>Ver más tarde</PremiumButton>
+                                        <PremiumButton variant="primary" size="md" className="flex-1 font-black" onClick={() => handleInitialResponse(true)}>AUDITAR AHORA</PremiumButton>
+                                        <PremiumButton variant="outline" size="md" className="flex-1 opacity-60" onClick={() => handleInitialResponse(false)}>LUEGO</PremiumButton>
                                     </div>
                                 )}
 
                                 {bantStep === 'leads' && (
                                     <div className="grid grid-cols-2 gap-3">
-                                        <PremiumButton variant="outline" size="sm" onClick={() => handleLeadsCount('1-50')}>1-50</PremiumButton>
-                                        <PremiumButton variant="outline" size="sm" onClick={() => handleLeadsCount('50-200')}>50-200</PremiumButton>
-                                        <PremiumButton variant="outline" size="sm" onClick={() => handleLeadsCount('200-500')}>200-500</PremiumButton>
-                                        <PremiumButton variant="primary" size="sm" onClick={() => handleLeadsCount('500+')}>500+</PremiumButton>
+                                        <button onClick={() => handleLeadsCount(25, '0-50')} className="p-3 bg-white/5 border border-white/10 rounded-xl text-xs font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">0 - 50</button>
+                                        <button onClick={() => handleLeadsCount(125, '50-200')} className="p-3 bg-white/5 border border-white/10 rounded-xl text-xs font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">50 - 200</button>
+                                        <button onClick={() => handleLeadsCount(350, '200-500')} className="p-3 bg-white/5 border border-white/10 rounded-xl text-xs font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">200 - 500</button>
+                                        <button onClick={() => handleLeadsCount(1000, '500+')} className="p-3 bg-[hsl(var(--profile-accent))]/20 border border-[hsl(var(--profile-accent))] rounded-xl text-xs font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">500+</button>
                                     </div>
                                 )}
 
                                 {bantStep === 'ticket' && (
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <PremiumButton variant="outline" size="sm" onClick={() => handleTicket('50k - 100k')}>50k - 100k</PremiumButton>
-                                        <PremiumButton variant="primary" size="sm" onClick={() => handleTicket('150k+')}>150k+</PremiumButton>
+                                    <div className="grid grid-cols-1 gap-3">
+                                        <button onClick={() => handleTicket(45000, '< $50.000 CLP')} className="p-4 bg-white/5 border border-white/10 rounded-xl text-sm font-black text-white hover:bg-red-500/20 transition-colors">BAJO TICKET</button>
+                                        <button onClick={() => handleTicket(150000, '$150.000+ CLP')} className="p-4 bg-[hsl(var(--profile-accent))]/20 border border-[hsl(var(--profile-accent))] rounded-xl text-sm font-black text-white hover:bg-[hsl(var(--profile-accent))] transition-colors">TICKET PREMIUM</button>
                                     </div>
                                 )}
 
                                 {bantStep === 'authority' && (
                                     <div className="flex gap-3">
-                                        <PremiumButton variant="primary" size="sm" className="flex-1" onClick={() => handleAuthority(true)}>Yo decido</PremiumButton>
-                                        <PremiumButton variant="outline" size="sm" className="flex-1" onClick={() => handleAuthority(false)}>Somos varios</PremiumButton>
+                                        <PremiumButton variant="primary" size="md" className="flex-1 font-black" onClick={() => handleAuthority(true)}>SOY DECISOR</PremiumButton>
+                                        <PremiumButton variant="outline" size="md" className="flex-1" onClick={() => handleAuthority(false)}>SOCIOS</PremiumButton>
                                     </div>
                                 )}
 
-                                {bantStep === 'qualified' && (
-                                    <PremiumButton
-                                        variant="primary"
-                                        size="lg"
-                                        className="w-full shadow-indigo-500/50"
-                                        onClick={() => window.location.href = '/clinic-alpha?qualified=true'}
-                                    >
-                                        AGENDAR SESIÓN ESTRATÉGICA
-                                    </PremiumButton>
+                                {bantStep === 'qualified' && qualified && (
+                                    <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="space-y-4">
+                                        <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-2xl">
+                                            <p className="text-[10px] font-black text-green-400 uppercase tracking-widest text-center">Score: Máxima Prioridad</p>
+                                        </div>
+                                        <PremiumButton
+                                            variant="primary"
+                                            size="lg"
+                                            className="w-full shadow-lg shadow-[hsl(var(--profile-accent))]/40 py-6"
+                                            onClick={() => window.location.href = '/demo?qualified=true'}
+                                        >
+                                            ACCEDER A LA DEMO TÉCNICA
+                                        </PremiumButton>
+                                    </motion.div>
+                                )}
+
+                                {bantStep === 'qualified' && !qualified && (
+                                    <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-2xl text-center">
+                                        <p className="text-xs font-bold text-red-400">Acceso restringido: No cumples los requisitos mínimos para el motor de alta gama.</p>
+                                    </div>
                                 )}
                             </div>
                         </GlassCard>

@@ -3,48 +3,77 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-hex: #020617;
-  --primary: #6366f1;
-  --secondary: #a855f7;
-  --accent: #22d3ee;
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  /* Profile Dynamic Colors */
+  --profile-accent: 239 84% 67%;
+  /* Default - Indigo */
+  --profile-glow: rgba(99, 102, 241, 0.15);
+
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+}
+
+/* Profile Overrides */
+[data-profile='impulsive'] {
+  --profile-accent: 12 92% 50%;
+  /* Red-Orange */
+  --profile-glow: rgba(239, 68, 68, 0.2);
+}
+
+[data-profile='analytic'] {
+  --profile-accent: 217 91% 60%;
+  /* Blue-Indigo */
+  --profile-glow: rgba(59, 130, 246, 0.2);
+}
+
+[data-profile='price_sensitive'] {
+  --profile-accent: 160 84% 39%;
+  /* Green-Teal */
+  --profile-glow: rgba(16, 185, 129, 0.2);
+}
+
+[data-profile='hesitant'] {
+  --profile-accent: 215 16% 47%;
+  /* Slate-Gray */
+  --profile-glow: rgba(100, 116, 139, 0.2);
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background-color: var(--background-hex);
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
   min-height: 100vh;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
 }
 
 @layer components {
   .glass-dark {
-    @apply bg-slate-950/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+    @apply bg-black/60 backdrop-blur-[15px] border border-white/20 shadow-2xl;
   }
 
   .glass-light {
-    @apply bg-white/5 backdrop-blur-lg border border-white/20 shadow-xl;
+    @apply bg-white/10 backdrop-blur-[12px] border border-white/20;
   }
 
   .glass-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    @apply rounded-[2rem];
+    @apply bg-black/40 backdrop-blur-[15px] border border-white/20 transition-all duration-500 hover:bg-black/50 hover:border-white/30 rounded-[2rem];
+    box-shadow: 0 8px 32px 0 var(--profile-glow);
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-[hsl(var(--profile-accent))] to-white bg-[length:200%_auto];
   }
 
   .btn-premium {
-    @apply relative overflow-hidden transition-all duration-300 active:scale-95;
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95 border border-[hsl(var(--profile-accent))]/30;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
   }
 
   .btn-premium:hover {
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 25px var(--profile-glow);
+    border-color: hsl(var(--profile-accent));
   }
 
   .btn-premium::before {

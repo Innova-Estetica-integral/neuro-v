@@ -10,11 +10,14 @@ interface SalesBookingWizardProps {
     isQualified: boolean;
 }
 
+import { usePsychographic } from '@/lib/hooks/use-psychographic';
+
 export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
     const [step, setStep] = useState(1);
     const [selectedDate, setSelectedDate] = useState<string>('');
     const [selectedTime, setSelectedTime] = useState<string>('');
     const [bookingDone, setBookingDone] = useState(false);
+    const { profile } = usePsychographic();
 
     if (!isQualified) {
         return (
@@ -22,45 +25,83 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                 <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center text-red-400 mx-auto mb-6">
                     <LucideLock className="w-8 h-8" />
                 </div>
-                <h3 className="text-3xl font-black mb-4">Acceso Reservado</h3>
-                <p className="text-gray-400 max-w-lg mx-auto mb-10 leading-relaxed capitalize">
-                    Para mantener la exclusividad de nuestro motor de ingresos, solo agendamos demos con directores calificados. Habla con nuestro asistente virtual para calificar.
+                <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter">Acceso Reservado</h3>
+                <p className="text-gray-400 max-w-lg mx-auto mb-10 leading-relaxed font-bold">
+                    El Motor de Ingresos de NeuroV tiene cupos limitados por mes. Califica con nuestro Cerebro de Ventas para desbloquear la agenda.
                 </p>
                 <PremiumButton
                     variant="primary"
                     size="lg"
                     onClick={() => {
-                        // Logic to open assistant if it was closed
                         const assistantBtn = document.querySelector('button.btn-premium.w-16.h-16') as HTMLButtonElement;
                         if (assistantBtn) assistantBtn.click();
                     }}
                 >
-                    HABLAR CON ASISTENTE
+                    HABLAR CON CEREBRO DE VENTAS
                 </PremiumButton>
             </GlassCard>
         );
     }
 
     return (
-        <div id="booking-wizard" className="max-w-5xl mx-auto py-20 px-6">
+        <div id="agenda" className="max-w-6xl mx-auto py-20 px-6">
             <div className="text-center mb-16">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-4">
-                    <LucideTrendingUp className="w-4 h-4 text-indigo-400" />
-                    <span className="text-xs font-black text-indigo-300 tracking-widest uppercase text-gradient">Status: Lead de Alta Prioridad</span>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-[hsl(var(--profile-accent))]/10 border border-[hsl(var(--profile-accent))]/20 rounded-full mb-4">
+                    <LucideTrendingUp className="w-4 h-4 text-[hsl(var(--profile-accent))]" />
+                    <span className="text-xs font-black text-[hsl(var(--profile-accent))] tracking-widest uppercase">Estatus: Lead Calificado para Motor de Ingresos</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black italic">Agenda tu Sesión Estratégica</h2>
+                <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter italic leading-none">
+                    Agendar <span className="text-gradient">Demo Técnica</span>
+                </h2>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-12">
-                {/* Steps Sidebar */}
-                <div className="space-y-4">
-                    <StepIndicator active={step === 1} completed={step > 1} number={1} label="Selección de Horario" />
-                    <StepIndicator active={step === 2} completed={step > 2} number={2} label="Validación ROI Proyectado" />
-                    <StepIndicator active={step === 3} completed={bookingDone} number={3} label="Confirmación" />
+            <div className="grid lg:grid-cols-12 gap-12">
+                {/* Visual Triggers Column */}
+                <div className="lg:col-span-4 space-y-6">
+                    <StepIndicator active={step === 1} completed={step > 1} number={1} label="Horario" />
+                    <StepIndicator active={step === 2} completed={step > 2} number={2} label="Validación ROI" />
+                    <StepIndicator active={step === 3} completed={bookingDone} number={3} label="Confirmar" />
+
+                    <AnimatePresence>
+                        {profile === 'impulsive' && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="p-6 bg-red-500/10 border border-red-500/30 rounded-3xl text-center"
+                            >
+                                <p className="text-[10px] font-black text-red-400 uppercase tracking-widest mb-2">Urgencia Detectada</p>
+                                <p className="text-white font-black text-lg">⚠️ ÚLTIMOS 3 CUPOS</p>
+                                <p className="text-xs text-gray-400 mt-2">Para consultoría clínica este mes.</p>
+                                <div className="mt-4 flex justify-center gap-1">
+                                    {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />)}
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {(profile === 'hesitant' || profile === 'analytic') && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="p-6 bg-cyan-500/10 border border-cyan-500/30 rounded-3xl"
+                            >
+                                <p className="text-[10px] font-black text-cyan-400 uppercase tracking-widest mb-4">Prueba Social Técnica</p>
+                                <div className="space-y-4">
+                                    <div className="flex gap-3 items-center">
+                                        <div className="w-8 h-8 rounded-full bg-gray-600 shrink-0" />
+                                        <p className="text-[10px] text-gray-300 italic">"La implementación de NeuroV redujo mi no-show del 30% al 4% en solo 60 días."</p>
+                                    </div>
+                                    <div className="flex gap-3 items-center">
+                                        <div className="w-8 h-8 rounded-full bg-gray-600 shrink-0" />
+                                        <p className="text-[10px] text-gray-300 italic">"Lo mejor es la seguridad pgsodium; mis datos de pacientes nunca han estado tan seguros."</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 {/* Content Area */}
-                <div className="lg:col-span-2">
+                <div className="lg:col-span-8">
                     <AnimatePresence mode="wait">
                         {!bookingDone ? (
                             <motion.div
@@ -70,30 +111,30 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                                 exit={{ opacity: 0, x: -20 }}
                             >
                                 {step === 1 && (
-                                    <GlassCard className="p-8">
-                                        <div className="grid md:grid-cols-2 gap-8">
+                                    <GlassCard className="p-10 border-[hsl(var(--profile-accent))]/20">
+                                        <div className="grid md:grid-cols-2 gap-12">
                                             <div>
-                                                <label className="text-xs font-black text-gray-500 uppercase tracking-widest mb-4 block">Fecha</label>
-                                                <div className="grid grid-cols-4 gap-2">
-                                                    {[24, 25, 26, 27].map(d => (
+                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6 block">Calendario de Ingeniería</label>
+                                                <div className="grid grid-cols-4 gap-3">
+                                                    {[24, 26, 27, 28].map(d => (
                                                         <button
                                                             key={d}
                                                             onClick={() => setSelectedDate(`Dic ${d}`)}
-                                                            className={`p-3 rounded-xl border font-bold text-sm transition-all ${selectedDate === `Dic ${d}` ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-white/5 border-white/10 hover:border-white/30'}`}
+                                                            className={`p-4 rounded-2xl border font-black text-sm transition-all ${selectedDate === `Dic ${d}` ? 'bg-[hsl(var(--profile-accent))] border-[hsl(var(--profile-accent))] text-white shadow-lg' : 'bg-white/5 border-white/10 hover:border-white/30'}`}
                                                         >
-                                                            {d}<br /><span className="text-[8px] opacity-40">DIC</span>
+                                                            {d}<br /><span className="text-[8px] opacity-40 uppercase">Dic</span>
                                                         </button>
                                                     ))}
                                                 </div>
                                             </div>
                                             <div>
-                                                <label className="text-xs font-black text-gray-500 uppercase tracking-widest mb-4 block">Hora</label>
-                                                <div className="grid grid-cols-2 gap-2">
-                                                    {['10:00', '11:00', '15:30', '17:00'].map(t => (
+                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6 block">Horarios Disponibles (GMT-3)</label>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {['09:00', '11:00', '15:30', '16:45'].map(t => (
                                                         <button
                                                             key={t}
                                                             onClick={() => setSelectedTime(t)}
-                                                            className={`p-3 rounded-xl border font-bold text-sm transition-all ${selectedTime === t ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-white/5 border-white/10 hover:border-white/30'}`}
+                                                            className={`p-4 rounded-2xl border font-black text-sm transition-all ${selectedTime === t ? 'bg-[hsl(var(--profile-accent))] border-[hsl(var(--profile-accent))] text-white shadow-lg' : 'bg-white/5 border-white/10 hover:border-white/30'}`}
                                                         >
                                                             {t}
                                                         </button>
@@ -103,42 +144,42 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                                         </div>
                                         <PremiumButton
                                             disabled={!selectedDate || !selectedTime}
-                                            className="w-full mt-10"
+                                            className="w-full mt-12 py-8 text-lg font-black"
                                             onClick={() => setStep(2)}
                                         >
-                                            CONTINUAR A ROI
+                                            CONTINUAR A PROYECCIÓN ROI <LucideArrowRight className="ml-2 w-5 h-5" />
                                         </PremiumButton>
                                     </GlassCard>
                                 )}
 
                                 {step === 2 && (
-                                    <GlassCard className="p-8 border-indigo-500/30">
-                                        <div className="bg-indigo-500/10 p-6 rounded-3xl mb-8 flex items-center gap-6">
-                                            <div className="w-16 h-16 bg-indigo-500 rounded-2xl flex items-center justify-center">
-                                                <LucideFileText className="w-8 h-8 text-white" />
+                                    <GlassCard className="p-10 border-[hsl(var(--profile-accent))]/30">
+                                        <div className="bg-[hsl(var(--profile-accent))]/10 p-8 rounded-[2rem] mb-10 flex items-center gap-8 border border-[hsl(var(--profile-accent))]/20">
+                                            <div className="w-20 h-20 bg-[hsl(var(--profile-accent))] rounded-3xl flex items-center justify-center shadow-xl rotate-3">
+                                                <LucideFileText className="w-10 h-10 text-white" />
                                             </div>
                                             <div>
-                                                <h4 className="font-bold text-white uppercase italic">Informe ROI Proyectado</h4>
-                                                <p className="text-xs text-indigo-300 font-bold tracking-widest uppercase">Listo para la sesión</p>
+                                                <h4 className="font-black text-white uppercase tracking-tighter text-2xl italic">Protocolo de Retorno</h4>
+                                                <p className="text-xs text-[hsl(var(--profile-accent))] font-black tracking-widest uppercase mt-1">Estimación Técnica Generada</p>
                                             </div>
                                         </div>
-                                        <div className="space-y-6 mb-10 text-sm">
-                                            <div className="flex justify-between items-center p-4 bg-white/5 rounded-2xl border border-white/5">
-                                                <span className="text-gray-400">Recuperación No-Shows</span>
-                                                <span className="text-green-400 font-black">+143%</span>
+                                        <div className="grid md:grid-cols-2 gap-6 mb-12">
+                                            <div className="p-6 bg-black/40 rounded-3xl border border-white/10">
+                                                <span className="text-gray-500 text-[10px] uppercase font-black tracking-widest block mb-4">Eliminación No-Shows</span>
+                                                <span className="text-green-400 font-black text-4xl">Garantizada</span>
                                             </div>
-                                            <div className="flex justify-between items-center p-4 bg-white/5 rounded-2xl border border-white/5">
-                                                <span className="text-gray-400">Escalabilidad de Ingresos</span>
-                                                <span className="text-cyan-400 font-black">2.4x</span>
+                                            <div className="p-6 bg-black/40 rounded-3xl border border-white/10">
+                                                <span className="text-gray-500 text-[10px] uppercase font-black tracking-widest block mb-4">Escala de Conversión</span>
+                                                <span className="text-[hsl(var(--profile-accent))] font-black text-4xl">UP TO 275%</span>
                                             </div>
-                                            <div className="flex justify-between items-center p-4 bg-white/10 rounded-2xl border border-indigo-500/20">
-                                                <span className="text-white font-bold">Aumento Facturación Est.</span>
-                                                <span className="text-indigo-400 font-black text-xl">$4.2M - $8.1M</span>
+                                            <div className="md:col-span-2 p-8 bg-gradient-to-r from-[hsl(var(--profile-accent))]/10 to-transparent rounded-[2rem] border border-[hsl(var(--profile-accent))]/20 text-center">
+                                                <span className="text-white font-black uppercase tracking-widest text-xs mb-4 block">Impacto Neto Est. Proyectado</span>
+                                                <span className="text-white font-black text-5xl md:text-7xl tracking-tighter">$7.5M - $12.4M</span>
                                             </div>
                                         </div>
                                         <div className="flex gap-4">
-                                            <button onClick={() => setStep(1)} className="px-6 py-4 rounded-2xl border border-white/10 font-bold hover:bg-white/5">Volver</button>
-                                            <PremiumButton className="flex-1" onClick={() => setBookingDone(true)}>CONFIRMAR ASESORÍA</PremiumButton>
+                                            <button onClick={() => setStep(1)} className="px-8 py-4 rounded-2xl border border-white/10 font-bold hover:bg-white/5 transition-all">Atras</button>
+                                            <PremiumButton variant="primary" className="flex-1 font-black shadow-lg shadow-[hsl(var(--profile-accent))]/30" onClick={() => setBookingDone(true)}>CONFIRMAR DIAGNÓSTICO LIVE</PremiumButton>
                                         </div>
                                     </GlassCard>
                                 )}

@@ -17,6 +17,8 @@ export const metadata: Metadata = {
     description: "Plataforma de conversión optimizada con perfilado psicográfico para clínicas de estética",
 };
 
+import { ProfileWrapper } from '@/components/ProfileWrapper';
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -27,10 +29,12 @@ export default function RootLayout({
             <head>
                 <ColorSchemeScript defaultColorScheme="dark" />
             </head>
-            <body className="antialiased bg-[#0f172a]">
+            <body className="antialiased">
                 <MantineProvider theme={theme} defaultColorScheme="dark">
                     <ToastProvider>
-                        {children}
+                        <ProfileWrapper>
+                            {children}
+                        </ProfileWrapper>
                     </ToastProvider>
                 </MantineProvider>
             </body>
