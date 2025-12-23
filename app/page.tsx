@@ -178,62 +178,61 @@ function CorporateHomeContent() {
                 </section>
 
                 {/* Medical Grade Security Section (Sales Point 3) */}
-                <section id="seguridad" className="w-full px-4 sm:px-6 py-16 sm:py-32 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-indigo-600/5 z-0 sm:skew-y-[-3deg]" />
-
-                    <div className="relative z-10 max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 sm:gap-20 items-center">
-                        <div className="w-full">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full mb-6 sm:mb-8">
-                                <LucideLock className="w-3.5 h-3.5 text-green-400" />
-                                <span className="text-[10px] font-black text-green-300 tracking-widest uppercase">Fortaleza Inexpugnable</span>
-                            </div>
-                            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-6 sm:mb-8 leading-[1.1] tracking-tight">
-                                Tus datos son un activo, <br className="hidden sm:block" />
-                                <span className="text-gradient">no un riesgo</span>.
-                            </h2>
-                            <p className="text-base sm:text-xl text-gray-400 mb-8 sm:mb-10 leading-relaxed font-medium">
-                                Diseñamos la arquitectura más segura de la industria estética, superando los estándares exigidos por el Ministerio de Salud.
-                            </p>
-
-                            <ul className="space-y-5 sm:space-y-6">
-                                <SecurityFeature
-                                    icon={<LucideDatabase />}
-                                    title="Bóveda pgsodium"
-                                    desc="Cifrado asimétrico de grado militar para tus llaves de pago."
-                                />
-                                <SecurityFeature
-                                    icon={<LucideShieldCheck />}
-                                    title="Aislamiento RLS"
-                                    desc="Tus registros están blindados. Imposible filtrarlos entre clínicas."
-                                />
-                                <SecurityFeature
-                                    icon={<LucideServer />}
-                                    title="Ficha Inmutable"
-                                    desc="Trazabilidad total exigida por Ley para fichas digitales."
-                                />
-                            </ul>
-                        </div>
-
-                        <div className="relative w-full">
-                            <div className="absolute inset-0 bg-indigo-500/20 blur-[80px] rounded-full" />
-                            <GlassCard className="relative z-10 p-2 sm:p-4 border-white/20 w-full overflow-hidden">
-                                <div className="bg-[#0f172a] rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/5 font-mono text-[9px] sm:text-sm overflow-x-auto custom-scrollbar">
-                                    <div className="flex gap-1.5 mb-4 opacity-40">
-                                        <div className="w-2 h-2 rounded-full bg-red-400" />
-                                        <div className="w-2 h-2 rounded-full bg-yellow-400" />
-                                        <div className="w-2 h-2 rounded-full bg-green-400" />
-                                    </div>
-                                    <div className="space-y-1.5 sm:space-y-2 whitespace-nowrap sm:whitespace-normal">
-                                        <p className="text-indigo-400">CREATE POLICY clinic_isolation ON appointments</p>
-                                        <p className="text-purple-400 pl-3 sm:pl-4">FOR SELECT TO verified_clinic</p>
-                                        <p className="text-cyan-400 pl-3 sm:pl-4">USING (clinic_id = current_setting('app.id')::uuid);</p>
-                                        <div className="h-2 sm:h-4" />
-                                        <p className="text-gray-500">// Security Layer Active: RLS</p>
-                                        <p className="text-green-400 font-bold tracking-widest uppercase mt-4 text-[8px] sm:text-xs">[PG_SODIUM: ACTIVE]</p>
-                                        <p className="text-green-400 font-bold tracking-widest uppercase text-[8px] sm:text-xs">[STATUS: SECURE]</p>
-                                    </div>
+                <section id="seguridad" className="w-full relative py-16 sm:py-32 overflow-hidden bg-indigo-900/5">
+                    <div className="max-w-[1400px] mx-auto px-6 sm:px-12">
+                        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 sm:gap-24 items-center">
+                            <div className="w-full order-1">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full mb-6">
+                                    <LucideLock className="w-3 h-3 text-green-400" />
+                                    <span className="text-[10px] font-black text-green-300 tracking-widest uppercase">Fortaleza Inexpugnable</span>
                                 </div>
-                            </GlassCard>
+                                <h2 className="text-2xl sm:text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tighter">
+                                    Tus datos son un activo, <br className="hidden sm:block" />
+                                    <span className="text-gradient">no un riesgo</span>.
+                                </h2>
+                                <p className="text-sm sm:text-xl text-gray-400 mb-8 leading-relaxed font-medium">
+                                    Diseñamos la arquitectura más segura de la industria estética, superando los estándares exigidos por el Ministerio de Salud.
+                                </p>
+
+                                <ul className="space-y-6">
+                                    <SecurityFeature
+                                        icon={<LucideDatabase />}
+                                        title="Bóveda pgsodium"
+                                        desc="Cifrado militar para tus credenciales."
+                                    />
+                                    <SecurityFeature
+                                        icon={<LucideShieldCheck />}
+                                        title="Aislamiento RLS"
+                                        desc="Tus registros están blindados e inaccesibles."
+                                    />
+                                    <SecurityFeature
+                                        icon={<LucideServer />}
+                                        title="Ficha Inmutable"
+                                        desc="Trazabilidad total exigida por Ley."
+                                    />
+                                </ul>
+                            </div>
+
+                            <div className="w-full order-2 relative">
+                                <div className="absolute inset-0 bg-indigo-500/20 blur-[100px] rounded-full" />
+                                <GlassCard className="relative z-10 p-4 border-white/10 w-full overflow-hidden">
+                                    <div className="bg-[#0f172a] rounded-xl p-4 sm:p-6 border border-white/5 font-mono text-[10px] sm:text-sm overflow-x-auto custom-scrollbar">
+                                        <div className="flex gap-2 mb-4 opacity-40">
+                                            <div className="w-2 h-2 rounded-full bg-red-400" />
+                                            <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                                            <div className="w-2 h-2 rounded-full bg-green-400" />
+                                        </div>
+                                        <div className="space-y-1 sm:space-y-2 whitespace-nowrap sm:whitespace-normal">
+                                            <p className="text-indigo-400">CREATE POLICY clinic_isolation</p>
+                                            <p className="text-purple-400 pl-4">FOR SELECT TO verified_clinic</p>
+                                            <p className="text-cyan-400 pl-4">USING (clinic_id = current_setting('app.id'));</p>
+                                            <div className="h-4" />
+                                            <p className="text-gray-500">// Security Active: RLS</p>
+                                            <p className="text-green-400 font-bold tracking-widest uppercase mt-4 text-[8px] sm:text-xs">PG_SODIUM: SECURE</p>
+                                        </div>
+                                    </div>
+                                </GlassCard>
+                            </div>
                         </div>
                     </div>
                 </section>
