@@ -53,13 +53,12 @@ function CorporateHomeContent() {
             {/* Navbar */}
             <nav className="fixed top-0 w-full z-[100] backdrop-blur-md border-b border-white/5 bg-black/20">
                 <div className="container mx-auto px-6 h-20 flex justify-between items-center">
-                    <div className="flex items-center gap-3 group cursor-pointer">
-                        <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform">
-                            <LucideZap className="w-6 h-6 text-white" />
+                    <div className="flex items-center gap-3 group cursor-pointer shrink-0">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform">
+                            <LucideZap className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                         </div>
-                        <span className="text-2xl font-black tracking-tighter">
+                        <span className="text-xl sm:text-2xl font-black tracking-tighter">
                             NEURO<span className="text-indigo-500">V</span>
-                            <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded ml-2 align-top uppercase">Revenue Engine</span>
                         </span>
                     </div>
 
@@ -95,7 +94,7 @@ function CorporateHomeContent() {
                             </span>
                         </div>
 
-                        <h1 className="text-5xl md:text-8xl font-black mb-8 leading-[1] tracking-tight">
+                        <h1 className="text-4xl sm:text-5xl md:text-8xl font-black mb-8 leading-[1.1] sm:leading-[1] tracking-tight">
                             {profile === 'analytic' ? (
                                 <>Interoperabilidad <span className="text-gradient">FHIR R4</span> & Conversión Psico-Digital</>
                             ) : (
@@ -113,8 +112,8 @@ function CorporateHomeContent() {
                         <div className="flex flex-col sm:row items-center justify-center gap-6">
                             <PremiumButton
                                 variant="secondary"
-                                size="xl"
-                                className="shine-effect"
+                                size="lg"
+                                className="shine-effect w-full sm:w-auto"
                                 onClick={() => window.location.href = '/clinic-alpha'}
                                 icon={<LucideArrowRight />}
                             >

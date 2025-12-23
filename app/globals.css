@@ -47,7 +47,7 @@ body {
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-[hsl(var(--profile-accent))] to-white bg-[length:200%_auto];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-[hsl(var(--profile-accent))] via-[hsl(var(--accent-cyan))] to-white bg-[length:200%_auto];
   }
 
   .btn-premium {

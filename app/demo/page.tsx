@@ -38,12 +38,12 @@ function DemoContent() {
             {/* Nav */}
             <nav className="flex justify-between items-center mb-16">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center font-black">NV</div>
-                    <span className="font-black tracking-widest uppercase text-sm">NeuroV Demo Protocol</span>
+                    <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center font-black shrink-0 text-xs">NV</div>
+                    <span className="font-black tracking-widest uppercase text-[10px] sm:text-sm">NeuroV Demo Protocol</span>
                 </div>
-                <div className="flex items-center gap-4">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Step {step} of 3</span>
-                    <div className="w-32 h-1 bg-white/5 rounded-full overflow-hidden">
+                <div className="flex items-center gap-2 sm:gap-4">
+                    <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-gray-500 whitespace-nowrap">Step {step} of 3</span>
+                    <div className="w-16 sm:w-32 h-1 bg-white/5 rounded-full overflow-hidden">
                         <motion.div
                             className="h-full bg-indigo-500"
                             initial={{ width: 0 }}
@@ -66,20 +66,20 @@ function DemoContent() {
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                                 <div>
                                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/30 rounded-full mb-6">
-                                        <LucideZap className="w-4 h-4 text-indigo-400" />
-                                        <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Protocolo de Ingesta</span>
+                                        <LucideZap className="w-3 h-3 sm:w-4 sm:h-4 text-indigo-400" />
+                                        <span className="text-[8px] sm:text-[10px] font-black text-indigo-400 uppercase tracking-widest">Protocolo de Ingesta</span>
                                     </div>
-                                    <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-8">
+                                    <h2 className="text-3xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-6 sm:mb-8">
                                         Captura del <span className="text-indigo-500">GCLID</span> y Atribución
                                     </h2>
-                                    <p className="text-xl text-gray-400 leading-relaxed mb-8">
+                                    <p className="text-base sm:text-xl text-gray-400 leading-relaxed mb-6 sm:mb-8">
                                         NeuroV captura instantáneamente los parámetros de seguimiento de Google y Facebook Ads. No perdemos ni un solo bit de información de atribución desde el primer click.
                                     </p>
                                     <PremiumButton variant="primary" onClick={() => setStep(2)}>SIGUIENTE NIVEL <LucideArrowRight className="ml-2 w-5 h-5" /></PremiumButton>
                                 </div>
 
-                                <GlassCard className="p-8 border-indigo-500/20 bg-indigo-950/20">
-                                    <div className="font-mono text-sm space-y-4">
+                                <GlassCard className="p-4 sm:p-8 border-indigo-500/20 bg-indigo-950/20 overflow-x-hidden">
+                                    <div className="font-mono text-[10px] sm:text-sm space-y-4">
                                         <div className="flex items-center gap-4 text-gray-500 border-b border-white/5 pb-4">
                                             <LucideCode2 className="w-4 h-4" />
                                             <span>Incoming Lead data_stream</span>
@@ -163,10 +163,10 @@ function DemoContent() {
                                         <LucideDatabase className="w-4 h-4 text-cyan-400" />
                                         <span className="text-[10px] font-black text-cyan-400 uppercase tracking-widest">Bóveda de Credenciales</span>
                                     </div>
-                                    <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-8">
+                                    <h2 className="text-3xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-6 sm:mb-8">
                                         Seguridad de Grado <span className="text-cyan-400">Clínico</span>
                                     </h2>
-                                    <p className="text-xl text-gray-400 leading-relaxed mb-8">
+                                    <p className="text-base sm:text-xl text-gray-400 leading-relaxed mb-6 sm:mb-8">
                                         Implementamos pgsodium para el cifrado de datos sensibles a nivel de base de datos. Cada paciente y cada credencial vive aislada bajo RLS (Row Level Security).
                                     </p>
                                     <PremiumButton variant="primary" onClick={() => setStep(3)}>LOGÍSTICA DE AGENDA <LucideArrowRight className="ml-2 w-5 h-5" /></PremiumButton>
@@ -188,10 +188,10 @@ function DemoContent() {
                                     <LucideCalendar className="w-4 h-4 text-emerald-400" />
                                     <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Motor de Conversión</span>
                                 </div>
-                                <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-8">
+                                <h2 className="text-3xl sm:text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-6 sm:mb-8">
                                     Agenda <span className="text-emerald-500">Smart-Gated</span>
                                 </h2>
-                                <p className="text-xl text-gray-400 leading-relaxed">
+                                <p className="text-base sm:text-xl text-gray-400 leading-relaxed">
                                     Nuestra tecnología no solo agenda; filtra. Protegemos el tiempo de tus especialistas mediante Payment-Gating y calificación Neuro-Psicológica previa.
                                 </p>
                             </div>
@@ -229,7 +229,7 @@ function DemoContent() {
                                 <PremiumButton
                                     variant="primary"
                                     size="lg"
-                                    className="px-12 py-8 text-xl font-black shadow-xl shadow-indigo-500/40"
+                                    className="w-full sm:w-auto px-8 sm:px-12 py-6 sm:py-8 text-lg sm:text-xl font-black shadow-xl shadow-indigo-500/40"
                                     onClick={() => window.location.href = '/#agenda?qualified=true'}
                                 >
                                     RESERVAR CONSULTORÍA DE INGENIERÍA

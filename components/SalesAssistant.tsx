@@ -109,16 +109,16 @@ export function SalesAssistant() {
     return (
         <>
             {/* Toggle Button */}
-            <div className="fixed bottom-8 right-8 z-[200]">
+            <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-[200]">
                 <PremiumButton
                     variant="primary"
-                    className="w-16 h-16 rounded-full shadow-2xl glass-card p-0 flex items-center justify-center"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl glass-card p-0 flex items-center justify-center"
                     onClick={() => {
                         setIsOpen(!isOpen);
                         if (!isOpen && messages.length === 1) speak(messages[0].content);
                     }}
                 >
-                    {isOpen ? <LucideX className="w-8 h-8" /> : <LucideTrendingUp className="w-8 h-8" />}
+                    {isOpen ? <LucideX className="w-6 h-6 sm:w-8 sm:h-8" /> : <LucideTrendingUp className="w-6 h-6 sm:w-8 sm:h-8" />}
                 </PremiumButton>
                 {isSpeaking && (
                     <div className="absolute -top-3 -right-1">
@@ -138,9 +138,9 @@ export function SalesAssistant() {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="fixed bottom-32 right-8 w-[420px] z-[200] flex flex-col"
+                        className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-8 sm:bottom-32 sm:w-[420px] max-h-[80vh] z-[200] flex flex-col"
                     >
-                        <GlassCard className="h-full flex flex-col p-0 overflow-hidden border-[hsl(var(--profile-accent))]/30">
+                        <GlassCard className="h-full flex flex-col p-0 overflow-hidden border-[hsl(var(--profile-accent))]/30 shadow-2xl">
                             {/* Header */}
                             <div className="p-6 border-b border-white/10 bg-gradient-to-br from-[hsl(var(--profile-accent))]/20 to-transparent flex items-center gap-4">
                                 <div className="w-12 h-12 bg-[hsl(var(--profile-accent))] rounded-2xl flex items-center justify-center shadow-lg transform rotate-3">

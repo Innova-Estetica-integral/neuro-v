@@ -50,7 +50,7 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                     <LucideTrendingUp className="w-4 h-4 text-[hsl(var(--profile-accent))]" />
                     <span className="text-xs font-black text-[hsl(var(--profile-accent))] tracking-widest uppercase">Estatus: Lead Calificado para Motor de Ingresos</span>
                 </div>
-                <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter italic leading-none">
+                <h2 className="text-4xl md:text-8xl font-black uppercase tracking-tighter italic leading-none">
                     Agendar <span className="text-gradient">Demo Técnica</span>
                 </h2>
             </div>
@@ -111,8 +111,8 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                                 exit={{ opacity: 0, x: -20 }}
                             >
                                 {step === 1 && (
-                                    <GlassCard className="p-10 border-[hsl(var(--profile-accent))]/20">
-                                        <div className="grid md:grid-cols-2 gap-12">
+                                    <GlassCard className="p-6 sm:p-10 border-[hsl(var(--profile-accent))]/20">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                                             <div>
                                                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6 block">Calendario de Ingeniería</label>
                                                 <div className="grid grid-cols-4 gap-3">
@@ -144,7 +144,7 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                                         </div>
                                         <PremiumButton
                                             disabled={!selectedDate || !selectedTime}
-                                            className="w-full mt-12 py-8 text-lg font-black"
+                                            className="w-full mt-8 sm:mt-12 py-6 sm:py-8 text-base sm:text-lg font-black"
                                             onClick={() => setStep(2)}
                                         >
                                             CONTINUAR A PROYECCIÓN ROI <LucideArrowRight className="ml-2 w-5 h-5" />
@@ -153,28 +153,28 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                                 )}
 
                                 {step === 2 && (
-                                    <GlassCard className="p-10 border-[hsl(var(--profile-accent))]/30">
-                                        <div className="bg-[hsl(var(--profile-accent))]/10 p-8 rounded-[2rem] mb-10 flex items-center gap-8 border border-[hsl(var(--profile-accent))]/20">
-                                            <div className="w-20 h-20 bg-[hsl(var(--profile-accent))] rounded-3xl flex items-center justify-center shadow-xl rotate-3">
-                                                <LucideFileText className="w-10 h-10 text-white" />
+                                    <GlassCard className="p-6 sm:p-10 border-[hsl(var(--profile-accent))]/30">
+                                        <div className="bg-[hsl(var(--profile-accent))]/10 p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] mb-8 sm:mb-10 flex flex-col sm:row items-center gap-4 sm:gap-8 border border-[hsl(var(--profile-accent))]/20 text-center sm:text-left">
+                                            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[hsl(var(--profile-accent))] rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-xl rotate-3 shrink-0">
+                                                <LucideFileText className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                                             </div>
                                             <div>
-                                                <h4 className="font-black text-white uppercase tracking-tighter text-2xl italic">Protocolo de Retorno</h4>
-                                                <p className="text-xs text-[hsl(var(--profile-accent))] font-black tracking-widest uppercase mt-1">Estimación Técnica Generada</p>
+                                                <h4 className="font-black text-white uppercase tracking-tighter text-xl sm:text-2xl italic">Protocolo de Retorno</h4>
+                                                <p className="text-[10px] text-[hsl(var(--profile-accent))] font-black tracking-widest uppercase mt-1">Estimación Técnica Generada</p>
                                             </div>
                                         </div>
-                                        <div className="grid md:grid-cols-2 gap-6 mb-12">
-                                            <div className="p-6 bg-black/40 rounded-3xl border border-white/10">
-                                                <span className="text-gray-500 text-[10px] uppercase font-black tracking-widest block mb-4">Eliminación No-Shows</span>
-                                                <span className="text-green-400 font-black text-4xl">Garantizada</span>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12">
+                                            <div className="p-4 sm:p-6 bg-black/40 rounded-2xl sm:rounded-3xl border border-white/10">
+                                                <span className="text-gray-500 text-[8px] sm:text-[10px] uppercase font-black tracking-widest block mb-1 sm:mb-4">Eliminación No-Shows</span>
+                                                <span className="text-green-400 font-black text-3xl sm:text-4xl">Garantizada</span>
                                             </div>
-                                            <div className="p-6 bg-black/40 rounded-3xl border border-white/10">
-                                                <span className="text-gray-500 text-[10px] uppercase font-black tracking-widest block mb-4">Escala de Conversión</span>
-                                                <span className="text-[hsl(var(--profile-accent))] font-black text-4xl">UP TO 275%</span>
+                                            <div className="p-4 sm:p-6 bg-black/40 rounded-2xl sm:rounded-3xl border border-white/10">
+                                                <span className="text-gray-500 text-[8px] sm:text-[10px] uppercase font-black tracking-widest block mb-1 sm:mb-4">Escala de Conversión</span>
+                                                <span className="text-[hsl(var(--profile-accent))] font-black text-3xl sm:text-4xl">UP TO 275%</span>
                                             </div>
-                                            <div className="md:col-span-2 p-8 bg-gradient-to-r from-[hsl(var(--profile-accent))]/10 to-transparent rounded-[2rem] border border-[hsl(var(--profile-accent))]/20 text-center">
-                                                <span className="text-white font-black uppercase tracking-widest text-xs mb-4 block">Impacto Neto Est. Proyectado</span>
-                                                <span className="text-white font-black text-5xl md:text-7xl tracking-tighter">$7.5M - $12.4M</span>
+                                            <div className="md:col-span-2 p-6 sm:p-8 bg-gradient-to-r from-[hsl(var(--profile-accent))]/10 to-transparent rounded-[1.5rem] sm:rounded-[2rem] border border-[hsl(var(--profile-accent))]/20 text-center">
+                                                <span className="text-white font-black uppercase tracking-widest text-[10px] mb-2 block">Impacto Neto Est. Proyectado</span>
+                                                <span className="text-white font-black text-3xl sm:text-5xl md:text-7xl tracking-tighter">$7.5M - $12.4M</span>
                                             </div>
                                         </div>
                                         <div className="flex gap-4">
@@ -209,13 +209,13 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
 
 function StepIndicator({ active, completed, number, label }: { active: boolean, completed: boolean, number: number, label: string }) {
     return (
-        <div className={`p-6 rounded-3xl border flex items-center gap-6 transition-all duration-500 ${active ? 'bg-indigo-500/10 border-indigo-500/30' : 'bg-white/5 border-white/5'}`}>
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black transition-all ${completed ? 'bg-green-500 text-white' : active ? 'bg-indigo-500 text-white' : 'bg-white/10 text-gray-500'}`}>
-                {completed ? <LucideCheckCircle2 className="w-6 h-6" /> : number}
+        <div className={`p-4 sm:p-6 rounded-2xl sm:rounded-3xl border flex items-center gap-4 sm:gap-6 transition-all duration-500 ${active ? 'bg-indigo-500/10 border-indigo-500/30' : 'bg-white/5 border-white/5'}`}>
+            <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center font-black transition-all ${completed ? 'bg-green-500 text-white' : active ? 'bg-indigo-500 text-white' : 'bg-white/10 text-gray-500'} shrink-0`}>
+                {completed ? <LucideCheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" /> : number}
             </div>
             <div>
-                <p className={`text-[10px] font-black uppercase tracking-widest ${active ? 'text-indigo-300' : 'text-gray-600'}`}>PASO {number}</p>
-                <p className={`font-bold ${active ? 'text-white' : 'text-gray-500'}`}>{label}</p>
+                <p className={`text-[8px] sm:text-[10px] font-black uppercase tracking-widest ${active ? 'text-indigo-300' : 'text-gray-600'}`}>PASO {number}</p>
+                <p className={`text-sm sm:text-base font-bold ${active ? 'text-white' : 'text-gray-500'}`}>{label}</p>
             </div>
         </div>
     );
