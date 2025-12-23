@@ -46,7 +46,7 @@ export default function CorporateHomePage() {
 
                     <div className="flex items-center gap-4">
                         <a
-                            href="/demo"
+                            href="/clinic-alpha"
                             className="bg-indigo-600 hover:bg-indigo-500 px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95 flex items-center gap-2"
                         >
                             Ver Demo <LucideChevronRight className="w-4 h-4" />
@@ -81,7 +81,7 @@ export default function CorporateHomePage() {
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                             <a
-                                href="/demo"
+                                href="/clinic-alpha"
                                 className="group w-full sm:w-auto px-10 py-5 bg-white text-black rounded-2xl font-black text-lg flex items-center justify-center gap-3 hover:bg-indigo-50 transition-all active:scale-95"
                             >
                                 PROBAR DEMO <LucideArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
