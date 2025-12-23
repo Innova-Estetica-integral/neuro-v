@@ -114,24 +114,24 @@ export function SalesAssistant() {
                 animate={{ scale: 1 }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 w-16 h-16 sm:w-20 sm:h-20 bg-indigo-600 rounded-full shadow-[0_0_40px_rgba(79,70,229,0.6)] flex items-center justify-center z-[200] border-2 border-white/30 text-white cursor-pointer"
+                className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-[1.5rem] sm:rounded-[2rem] shadow-[0_8px_32px_rgba(99,102,241,0.4)] flex items-center justify-center z-[200] text-white cursor-pointer"
                 onClick={() => {
                     setIsOpen(!isOpen);
                     if (!isOpen && messages.length === 1) speak(messages[0].content);
                 }}
             >
                 {isOpen ? (
-                    <LucideX size={32} className="sm:w-10 sm:h-10" strokeWidth={3} />
+                    <LucideX size={32} className="sm:w-10 sm:h-10" strokeWidth={1.5} />
                 ) : (
-                    <LucideBrainCircuit size={32} className="sm:w-10 sm:h-10" strokeWidth={3} />
+                    <LucideBrainCircuit size={32} className="sm:w-10 sm:h-10" strokeWidth={1.5} />
                 )}
 
                 {isSpeaking && (
-                    <div className="absolute -top-2 -right-2">
-                        <span className="flex h-6 w-6">
+                    <div className="absolute -top-1 -right-1">
+                        <span className="flex h-5 w-5">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-6 w-6 bg-white flex items-center justify-center shadow-lg">
-                                <LucideVolume2 className="w-3 h-3 text-indigo-600" />
+                            <span className="relative inline-flex rounded-full h-5 w-5 bg-white flex items-center justify-center shadow-lg">
+                                <LucideVolume2 size={10} className="text-indigo-600" />
                             </span>
                         </span>
                     </div>
