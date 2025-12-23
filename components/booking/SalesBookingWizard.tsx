@@ -21,18 +21,18 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
 
     if (!isQualified) {
         return (
-            <GlassCard className="max-w-lg mx-auto py-12 px-6 text-center border-red-500/10">
-                <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center text-red-500 mx-auto mb-6">
-                    <LucideLock className="w-6 h-6" />
+            <GlassCard className="max-w-md mx-auto py-10 px-8 text-center border-red-500/10 shadow-[0_20px_50px_rgba(239,68,68,0.05)]">
+                <div className="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 mx-auto mb-6">
+                    <LucideLock className="w-6 h-6 border-none" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black mb-3 uppercase tracking-tighter">Acceso Reservado</h3>
-                <p className="text-sm text-gray-400 max-w-xs mx-auto mb-8 leading-relaxed">
+                <h3 className="text-xl font-black mb-3 uppercase tracking-tighter">Acceso Reservado</h3>
+                <p className="text-xs text-gray-400 max-w-[280px] mx-auto mb-8 leading-relaxed font-medium">
                     El Motor de Ingresos de NeuroV tiene cupos limitados por mes. Califica con nuestro Cerebro de Ventas para desbloquear la agenda.
                 </p>
                 <PremiumButton
                     variant="primary"
                     size="md"
-                    className="w-full sm:w-auto"
+                    className="w-full rounded-2xl font-black text-xs py-4"
                     onClick={() => {
                         const assistantBtn = document.querySelector('button.fixed.bottom-6.right-6') as HTMLButtonElement;
                         if (assistantBtn) assistantBtn.click();
