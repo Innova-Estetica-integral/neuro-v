@@ -109,28 +109,34 @@ export function SalesAssistant() {
     return (
         <>
             {/* Toggle Button */}
-            <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-[200]">
-                <PremiumButton
-                    variant="primary"
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl glass-card p-0 flex items-center justify-center"
-                    onClick={() => {
-                        setIsOpen(!isOpen);
-                        if (!isOpen && messages.length === 1) speak(messages[0].content);
-                    }}
-                >
-                    {isOpen ? <LucideX className="w-8 h-8 sm:w-10 sm:h-10" /> : <LucideTrendingUp className="w-8 h-8 sm:w-10 sm:h-10" />}
-                </PremiumButton>
+            <motion.button
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 w-16 h-16 sm:w-20 sm:h-20 bg-indigo-600 rounded-full shadow-[0_0_40px_rgba(79,70,229,0.6)] flex items-center justify-center z-[200] border-2 border-white/30 text-white cursor-pointer"
+                onClick={() => {
+                    setIsOpen(!isOpen);
+                    if (!isOpen && messages.length === 1) speak(messages[0].content);
+                }}
+            >
+                {isOpen ? (
+                    <LucideX size={32} className="sm:w-10 sm:h-10" strokeWidth={3} />
+                ) : (
+                    <LucideTrendingUp size={32} className="sm:w-10 sm:h-10" strokeWidth={3} />
+                )}
+
                 {isSpeaking && (
-                    <div className="absolute -top-3 -right-1">
+                    <div className="absolute -top-2 -right-2">
                         <span className="flex h-6 w-6">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[hsl(var(--profile-accent))] opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-6 w-6 bg-[hsl(var(--profile-accent))] flex items-center justify-center">
-                                <LucideVolume2 className="w-3 h-3 text-white" />
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-6 w-6 bg-white flex items-center justify-center shadow-lg">
+                                <LucideVolume2 className="w-3 h-3 text-indigo-600" />
                             </span>
                         </span>
                     </div>
                 )}
-            </div>
+            </motion.button>
 
             <AnimatePresence>
                 {isOpen && (
