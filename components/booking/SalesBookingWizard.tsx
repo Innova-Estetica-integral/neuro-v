@@ -62,16 +62,42 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                     <StepIndicator active={step === 2} completed={step > 2} number={2} label="Validación ROI" />
                     <StepIndicator active={step === 3} completed={bookingDone} number={3} label="Confirmar" />
 
-                    {/* Unified Professional Standard Trigger */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="p-6 bg-gray-700/10 border border-gray-700/30 rounded-3xl text-center"
-                    >
-                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Estándar Profesional</p>
-                        <p className="text-white font-black text-lg">✅ Agenda tu Demo Técnica</p>
-                        <p className="text-xs text-gray-400 mt-2">Descubre cómo NeuroV puede transformar tu práctica.</p>
-                    </motion.div>
+                    <AnimatePresence>
+                        {profile === 'impulsive' && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="p-6 bg-indigo-500/10 border border-indigo-500/30 rounded-3xl text-center"
+                            >
+                                <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">Urgencia Detectada</p>
+                                <p className="text-white font-black text-lg">⚠️ ÚLTIMOS 3 CUPOS</p>
+                                <p className="text-xs text-gray-400 mt-2">Para consultoría clínica este mes.</p>
+                                <div className="mt-4 flex justify-center gap-1">
+                                    {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />)}
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {(profile === 'hesitant' || profile === 'analytic') && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="p-6 bg-cyan-500/10 border border-cyan-500/30 rounded-3xl"
+                            >
+                                <p className="text-[10px] font-black text-cyan-400 uppercase tracking-widest mb-4">Prueba Social Técnica</p>
+                                <div className="space-y-4">
+                                    <div className="flex gap-3 items-center">
+                                        <div className="w-8 h-8 rounded-full bg-gray-600 shrink-0" />
+                                        <p className="text-[10px] text-gray-300 italic">"La implementación de NeuroV redujo mi no-show del 30% al 4% en solo 60 días."</p>
+                                    </div>
+                                    <div className="flex gap-3 items-center">
+                                        <div className="w-8 h-8 rounded-full bg-gray-600 shrink-0" />
+                                        <p className="text-[10px] text-gray-300 italic">"Lo mejor es la seguridad pgsodium; mis datos de pacientes nunca han estado tan seguros."</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 {/* Content Area */}
