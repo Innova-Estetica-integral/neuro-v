@@ -40,7 +40,11 @@ body {
   }
 
   .btn-premium {
-    @apply relative overflow-hidden transition-all duration-300 active:scale-95 hover:shadow-[0_0_20px_rgba(99, 102, 241, 0.4)];
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95;
+  }
+
+  .btn-premium:hover {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
   }
 
   .btn-premium::before {
