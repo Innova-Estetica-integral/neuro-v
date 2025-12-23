@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LucideMessageSquare, LucideX, LucideMic, LucideVolume2, LucideSend, LucideCheckCircle2, LucideTrendingUp, LucideSmile } from 'lucide-react';
+import { LucideMessageSquare, LucideX, LucideMic, LucideVolume2, LucideSend, LucideCheckCircle2, LucideTrendingUp, LucideSmile, LucideBrainCircuit } from 'lucide-react';
 import { usePsychographic } from '@/lib/hooks/use-psychographic';
 import { PremiumButton } from './ui/PremiumButton';
 import { GlassCard } from './ui/GlassCard';
@@ -123,7 +123,7 @@ export function SalesAssistant() {
                 {isOpen ? (
                     <LucideX size={32} className="sm:w-10 sm:h-10" strokeWidth={3} />
                 ) : (
-                    <LucideTrendingUp size={32} className="sm:w-10 sm:h-10" strokeWidth={3} />
+                    <LucideBrainCircuit size={32} className="sm:w-10 sm:h-10" strokeWidth={3} />
                 )}
 
                 {isSpeaking && (
