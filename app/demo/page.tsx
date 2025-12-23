@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LucideShieldCheck, LucideShieldAlert, LucideDatabase, LucideCode2, LucideKey, LucideCalendar, LucideZap, LucideArrowRight, LucideLock } from 'lucide-react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { PremiumButton } from '@/components/ui/PremiumButton';
 import { useSearchParams } from 'next/navigation';
 
-export default function DemoPage() {
+function DemoContent() {
     const searchParams = useSearchParams();
     const isQualified = searchParams.get('qualified') === 'true';
     const [step, setStep] = useState(1);
@@ -245,5 +245,13 @@ export default function DemoPage() {
             <div className="fixed top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-500/10 blur-[150px] rounded-full pointer-events-none -z-10" />
             <div className="fixed bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-500/10 blur-[150px] rounded-full pointer-events-none -z-10" />
         </div>
+    );
+}
+
+export default function DemoPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center"><div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div>}>
+            <DemoContent />
+        </Suspense>
     );
 }
