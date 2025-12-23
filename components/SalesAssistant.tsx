@@ -118,7 +118,7 @@ export function SalesAssistant() {
                         if (!isOpen && messages.length === 1) speak(messages[0].content);
                     }}
                 >
-                    {isOpen ? <LucideX className="w-6 h-6 sm:w-8 sm:h-8" /> : <LucideTrendingUp className="w-6 h-6 sm:w-8 sm:h-8" />}
+                    {isOpen ? <LucideX className="w-8 h-8 sm:w-10 sm:h-10" /> : <LucideTrendingUp className="w-8 h-8 sm:w-10 sm:h-10" />}
                 </PremiumButton>
                 {isSpeaking && (
                     <div className="absolute -top-3 -right-1">
