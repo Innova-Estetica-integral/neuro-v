@@ -138,12 +138,13 @@ export function EnhancedWorkflow() {
                         <motion.div
                             className="relative mx-auto mb-6 w-full flex justify-center"
                             animate={{
-                                scale: step.animation === 'pulse' ? [1, 1.05, 1] : 1,
-                                rotate: step.animation === 'rotate' ? [0, 360] : 0,
-                                y: step.animation === 'bounce' ? [0, -15, 0] : 0,
+                                scale: step.animation === 'pulse' ? [1, 1.25, 1] : 1,
+                                rotate: step.animation === 'rotate' ? [0, 360, 0] : step.animation === 'shake' ? [0, -10, 10, -10, 0] : 0,
+                                y: step.animation === 'bounce' ? [0, -30, 0] : step.animation === 'slide' ? [0, -15, 0] : 0,
+                                x: step.animation === 'slide' ? [0, 15, 0] : 0,
                             }}
                             transition={{
-                                duration: 2.5,
+                                duration: step.animation === 'rotate' ? 4 : 2,
                                 repeat: Infinity,
                                 ease: 'easeInOut'
                             }}

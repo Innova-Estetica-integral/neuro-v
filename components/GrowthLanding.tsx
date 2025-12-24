@@ -27,7 +27,7 @@ export function GrowthLanding() {
     return (
         <div className="space-y-32">
             {/* Hero Section - Growth Focus */}
-            <section className="container mx-auto px-6 pt-32 text-center relative">
+            <section className="container mx-auto px-6 pt-64 sm:pt-72 text-center relative">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-purple-600/20 blur-[150px] rounded-full pointer-events-none" />
 
                 <motion.div
@@ -70,14 +70,20 @@ export function GrowthLanding() {
             </section>
 
             {/* Interactive Workflow Demo */}
-            <section id="demo" className="container mx-auto px-6">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-black mb-4">Mira NeuroV en Acción</h2>
-                    <p className="text-gray-400 font-medium">Así es como nuestra IA llena tu agenda en tiempo real</p>
-                </div>
+            <section className="py-2 px-6">
+                <div className="max-w-5xl mx-auto flex flex-col gap-4">
+                    <div className="text-center">
+                        <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-primary-200 to-white mb-2 tracking-tight">
+                            Mira NeuroV en Acción
+                        </h2>
+                        <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                            Así es como nuestra IA llena tu agenda en tiempo real
+                        </p>
+                    </div>
 
-                <div className="max-w-5xl mx-auto">
-                    <EnhancedWorkflow />
+                    <div className="w-full">
+                        <EnhancedWorkflow />
+                    </div>
                 </div>
             </section>
 
