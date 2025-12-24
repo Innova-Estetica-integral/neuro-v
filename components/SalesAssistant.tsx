@@ -15,11 +15,16 @@ type Message = {
 
 type BantStep = 'initial' | 'leads' | 'ticket' | 'authority' | 'qualified';
 
-export function SalesAssistant() {
+export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'growth' }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isSpeaking, setIsSpeaking] = useState(false);
+
+    const initialMessage = mode === 'technical'
+        ? 'Protocolo de Auditoría NeuroV activo. ¿Iniciamos el diagnóstico de interoperabilidad y conversión?'
+        : '¡Hola! Soy tu Cerebro de Ventas. ¿Quieres ver cuánta plata estás dejando sobre la mesa y cómo podemos recuperarla hoy?';
+
     const [messages, setMessages] = useState<Message[]>([
-        { role: 'bot', content: 'Soy el Cerebro de Ventas de NeuroV. Estoy aquí para auditar el potencial de crecimiento de tu clínica. ¿Iniciamos el diagnóstico?' }
+        { role: 'bot', content: initialMessage }
     ]);
     const [bantStep, setBantStep] = useState<BantStep>('initial');
     const [qualified, setQualified] = useState(false);
