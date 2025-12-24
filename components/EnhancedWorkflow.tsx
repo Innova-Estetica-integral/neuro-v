@@ -114,7 +114,7 @@ export function EnhancedWorkflow() {
     const Icon = step.icon;
 
     return (
-        <div className="relative w-full aspect-square bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+        <div className="relative w-full min-h-[700px] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
             {/* Animated Background Grid */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{
