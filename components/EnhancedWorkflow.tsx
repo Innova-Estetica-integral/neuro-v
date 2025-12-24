@@ -136,7 +136,7 @@ export function EnhancedWorkflow() {
                     >
                         {/* Animated Icon with Glow */}
                         <motion.div
-                            className="relative mx-auto mb-10"
+                            className="relative mx-auto mb-8"
                             animate={{
                                 scale: step.animation === 'pulse' ? [1, 1.15, 1] : 1,
                                 rotate: step.animation === 'rotate' ? [0, 360] : 0,
@@ -148,8 +148,8 @@ export function EnhancedWorkflow() {
                                 ease: 'easeInOut'
                             }}
                         >
-                            <div className={`w-48 h-48 sm:w-56 sm:h-56 mx-auto bg-gradient-to-br ${step.color} rounded-[3rem] flex items-center justify-center shadow-2xl relative`}>
-                                <Icon className="w-24 h-24 sm:w-28 sm:h-28 text-white drop-shadow-2xl" strokeWidth={1.5} />
+                            <div className={`w-40 h-40 sm:w-48 sm:h-48 mx-auto bg-gradient-to-br ${step.color} rounded-[2.5rem] flex items-center justify-center shadow-2xl relative`}>
+                                <Icon className="w-20 h-20 sm:w-24 sm:h-24 text-white drop-shadow-2xl" strokeWidth={1.5} />
 
                                 {/* Multi-layer Glow */}
                                 <motion.div
@@ -170,12 +170,12 @@ export function EnhancedWorkflow() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="flex items-center justify-center gap-3 mb-6"
+                            className="flex items-center justify-center gap-2 mb-4"
                         >
-                            <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center text-white font-black text-2xl sm:text-3xl shadow-xl border-2 border-white/20`}>
+                            <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-xl border-2 border-white/20`}>
                                 {step.id}
                             </div>
-                            <LucideSparkles className="w-7 h-7 sm:w-8 sm:h-8 text-yellow-400 animate-pulse drop-shadow-lg" />
+                            <LucideSparkles className="w-6 h-6 sm:w-7 sm:h-7 text-yellow-400 animate-pulse drop-shadow-lg" />
                         </motion.div>
 
                         {/* Title */}
@@ -183,7 +183,7 @@ export function EnhancedWorkflow() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
-                            className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-3 tracking-tight leading-tight px-4"
+                            className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 tracking-tight leading-tight px-4"
                         >
                             {step.title}
                         </motion.h3>
@@ -193,7 +193,7 @@ export function EnhancedWorkflow() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
-                            className="text-gray-300 text-base sm:text-lg md:text-xl font-medium mb-8 px-4"
+                            className="text-gray-300 text-sm sm:text-base md:text-lg font-medium mb-6 px-4"
                         >
                             {step.subtitle}
                         </motion.p>
@@ -203,15 +203,15 @@ export function EnhancedWorkflow() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
-                            className="grid grid-cols-2 gap-4 max-w-xl mx-auto px-4"
+                            className="grid grid-cols-2 gap-3 max-w-md mx-auto px-4"
                         >
-                            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all">
-                                <p className="text-xs font-black text-indigo-400 uppercase tracking-widest mb-2">Métrica</p>
-                                <p className="text-xl sm:text-2xl font-black text-white leading-tight">{step.metric}</p>
+                            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-all">
+                                <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1">Métrica</p>
+                                <p className="text-lg sm:text-xl font-black text-white leading-tight">{step.metric}</p>
                             </div>
-                            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all">
-                                <p className="text-xs font-black text-emerald-400 uppercase tracking-widest mb-2">Impacto</p>
-                                <p className="text-xl sm:text-2xl font-black text-white leading-tight">{step.impact}</p>
+                            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-all">
+                                <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-1">Impacto</p>
+                                <p className="text-lg sm:text-xl font-black text-white leading-tight">{step.impact}</p>
                             </div>
                         </motion.div>
                     </motion.div>
