@@ -114,7 +114,7 @@ export function EnhancedWorkflow() {
     const Icon = step.icon;
 
     return (
-        <div className="relative w-full min-h-[700px] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+        <div className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
             {/* Animated Background Grid */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{
@@ -124,23 +124,23 @@ export function EnhancedWorkflow() {
             </div>
 
             {/* Main Content */}
-            <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 py-8">
+            <div className="relative z-10 h-full flex flex-col items-start justify-center px-8 py-8">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={currentStep}
-                        initial={{ opacity: 0, scale: 0.8, rotateX: -30 }}
-                        animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-                        exit={{ opacity: 0, scale: 0.8, rotateX: 30 }}
+                        initial={{ opacity: 0, scale: 0.8, x: -30 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.8, x: 30 }}
                         transition={{ duration: 0.7, ease: 'easeInOut' }}
-                        className="text-center w-full"
+                        className="text-left w-full"
                     >
                         {/* Animated Icon with Glow */}
                         <motion.div
-                            className="relative mx-auto mb-8"
+                            className="relative mb-6"
                             animate={{
-                                scale: step.animation === 'pulse' ? [1, 1.15, 1] : 1,
+                                scale: step.animation === 'pulse' ? [1, 1.05, 1] : 1,
                                 rotate: step.animation === 'rotate' ? [0, 360] : 0,
-                                y: step.animation === 'bounce' ? [0, -30, 0] : 0,
+                                y: step.animation === 'bounce' ? [0, -15, 0] : 0,
                             }}
                             transition={{
                                 duration: 2.5,
@@ -148,8 +148,8 @@ export function EnhancedWorkflow() {
                                 ease: 'easeInOut'
                             }}
                         >
-                            <div className={`w-40 h-40 sm:w-48 sm:h-48 mx-auto bg-gradient-to-br ${step.color} rounded-[2.5rem] flex items-center justify-center shadow-2xl relative`}>
-                                <Icon className="w-20 h-20 sm:w-24 sm:h-24 text-white drop-shadow-2xl" strokeWidth={1.5} />
+                            <div className={`w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br ${step.color} rounded-[2rem] flex items-center justify-center shadow-2xl relative`}>
+                                <Icon className="w-16 h-16 sm:w-20 sm:h-20 text-white drop-shadow-2xl" strokeWidth={1.5} />
 
                                 {/* Multi-layer Glow */}
                                 <motion.div
@@ -167,33 +167,33 @@ export function EnhancedWorkflow() {
 
                         {/* Step Number Badge */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="flex items-center justify-center gap-2 mb-4"
+                            className="flex items-center justify-start gap-3 mb-4"
                         >
-                            <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-xl border-2 border-white/20`}>
+                            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br ${step.color} flex items-center justify-center text-white font-black text-lg sm:text-xl shadow-xl border-2 border-white/20`}>
                                 {step.id}
                             </div>
-                            <LucideSparkles className="w-6 h-6 sm:w-7 sm:h-7 text-yellow-400 animate-pulse drop-shadow-lg" />
+                            <LucideSparkles className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400 animate-pulse drop-shadow-lg" />
                         </motion.div>
 
                         {/* Title */}
                         <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.3 }}
-                            className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 tracking-tight leading-tight px-4"
+                            className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 tracking-tight leading-tight"
                         >
                             {step.title}
                         </motion.h3>
 
                         {/* Subtitle */}
                         <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.4 }}
-                            className="text-gray-300 text-sm sm:text-base md:text-lg font-medium mb-6 px-4"
+                            className="text-gray-300 text-sm sm:text-base md:text-lg font-medium mb-6"
                         >
                             {step.subtitle}
                         </motion.p>
@@ -203,15 +203,15 @@ export function EnhancedWorkflow() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
-                            className="grid grid-cols-2 gap-3 max-w-md mx-auto px-4"
+                            className="grid grid-cols-2 gap-3 max-w-md mr-auto"
                         >
-                            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-all">
+                            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-all">
                                 <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1">Métrica</p>
-                                <p className="text-lg sm:text-xl font-black text-white leading-tight">{step.metric}</p>
+                                <p className="text-base sm:text-lg font-black text-white leading-tight">{step.metric}</p>
                             </div>
-                            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-all">
+                            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-all">
                                 <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-1">Impacto</p>
-                                <p className="text-lg sm:text-xl font-black text-white leading-tight">{step.impact}</p>
+                                <p className="text-base sm:text-lg font-black text-white leading-tight">{step.impact}</p>
                             </div>
                         </motion.div>
                     </motion.div>
