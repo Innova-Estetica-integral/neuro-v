@@ -65,7 +65,7 @@ export function AnimatedWorkflow() {
     const Icon = step.icon;
 
     return (
-        <div className="relative w-full aspect-video bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+        <div className="relative w-full min-h-[600px] py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
             {/* Animated Background Grid */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{
@@ -108,7 +108,7 @@ export function AnimatedWorkflow() {
                     >
                         {/* Animated Icon */}
                         <motion.div
-                            className={`w-32 h-32 mx-auto mb-8 bg-gradient-to-br ${step.color} rounded-3xl flex items-center justify-center shadow-2xl relative`}
+                            className={`w-40 h-40 sm:w-48 sm:h-48 mx-auto mb-12 bg-gradient-to-br ${step.color} rounded-3xl flex items-center justify-center shadow-2xl relative`}
                             animate={{
                                 scale: step.animation === 'pulse' ? [1, 1.1, 1] : 1,
                                 rotate: step.animation === 'rotate' ? [0, 360] : 0,
@@ -120,7 +120,7 @@ export function AnimatedWorkflow() {
                                 ease: 'easeInOut'
                             }}
                         >
-                            <Icon className="w-16 h-16 text-white" />
+                            <Icon className="w-20 h-20 sm:w-24 sm:h-24 text-white" />
 
                             {/* Glow Effect */}
                             <motion.div
@@ -137,10 +137,10 @@ export function AnimatedWorkflow() {
                             transition={{ delay: 0.2 }}
                             className="flex items-center justify-center gap-2 mb-4"
                         >
-                            <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${step.color} flex items-center justify-center text-white font-black text-sm`}>
+                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center text-white font-black text-xl shadow-lg`}>
                                 {step.id}
                             </div>
-                            <LucideSparkles className="w-4 h-4 text-yellow-400 animate-pulse" />
+                            <LucideSparkles className="w-6 h-6 text-yellow-400 animate-pulse" />
                         </motion.div>
 
                         {/* Title */}
@@ -148,7 +148,7 @@ export function AnimatedWorkflow() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
-                            className="text-3xl md:text-4xl font-black text-white mb-3 tracking-tight"
+                            className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-4 tracking-tight"
                         >
                             {step.title}
                         </motion.h3>
@@ -158,7 +158,7 @@ export function AnimatedWorkflow() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
-                            className="text-gray-400 text-lg font-medium"
+                            className="text-gray-400 text-xl sm:text-2xl font-medium max-w-2xl mx-auto"
                         >
                             {step.description}
                         </motion.p>
@@ -176,8 +176,8 @@ export function AnimatedWorkflow() {
                                     setIsPlaying(false);
                                 }}
                                 className={`transition-all ${index === currentStep
-                                        ? 'w-12 h-2 bg-white'
-                                        : 'w-2 h-2 bg-white/30 hover:bg-white/50'
+                                    ? 'w-12 h-2 bg-white'
+                                    : 'w-2 h-2 bg-white/30 hover:bg-white/50'
                                     } rounded-full`}
                             />
                         ))}
