@@ -6,6 +6,7 @@ import { GlassCard } from './ui/GlassCard';
 import { PremiumButton } from './ui/PremiumButton';
 import { WorkflowMockup } from './WorkflowMockup';
 import { AnimatedWorkflow } from './AnimatedWorkflow';
+import { EnhancedWorkflow } from './EnhancedWorkflow';
 import { analytics } from '@/lib/analytics/tracker';
 import { parseUTM } from '@/lib/utils/utm';
 import { useSearchParams } from 'next/navigation';
@@ -76,7 +77,7 @@ export function GrowthLanding() {
                 </div>
 
                 <div className="max-w-5xl mx-auto">
-                    <AnimatedWorkflow />
+                    <EnhancedWorkflow />
                 </div>
             </section>
 
