@@ -114,7 +114,7 @@ export function EnhancedWorkflow() {
     const Icon = step.icon;
 
     return (
-        <div className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+        <div className="relative w-full min-h-[500px] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
             {/* Animated Background Grid */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{
@@ -134,9 +134,9 @@ export function EnhancedWorkflow() {
                         transition={{ duration: 0.7, ease: 'easeInOut' }}
                         className="text-left w-full"
                     >
-                        {/* Animated Icon with Glow */}
+                        {/* Animated Icon with Glow - Centered */}
                         <motion.div
-                            className="relative mb-6"
+                            className="relative mx-auto mb-6 w-full flex justify-center"
                             animate={{
                                 scale: step.animation === 'pulse' ? [1, 1.05, 1] : 1,
                                 rotate: step.animation === 'rotate' ? [0, 360] : 0,
@@ -218,12 +218,12 @@ export function EnhancedWorkflow() {
                 </AnimatePresence>
             </div>
 
-            {/* ROI Badge - Bottom Center */}
+            {/* ROI Badge - Bottom Left */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.6 }}
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-4 py-2 rounded-full font-black text-xs sm:text-sm shadow-2xl border-2 border-white/20 flex items-center gap-2"
+                className="absolute bottom-4 left-6 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-4 py-2 rounded-full font-black text-xs sm:text-sm shadow-2xl border-2 border-white/20 flex items-center gap-2"
             >
                 <LucideZap className="w-4 h-4" />
                 ROI: +474% Año 1
