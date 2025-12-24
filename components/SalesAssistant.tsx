@@ -28,7 +28,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
 
     const initialMessage = mode === 'technical'
         ? 'Protocolo de Auditoría NeuroV activo. ¿Iniciamos el diagnóstico de interoperabilidad y conversión?'
-        : '¡Hola! Soy tu Cerebro de Ventas. ¿Quieres ver cuánta plata estás dejando sobre la mesa y cómo podemos recuperarla hoy?';
+        : 'Hola, soy el Cerebro de Ventas de NeuroV. Analicemos el potencial de optimización de tu clínica. ¿Comenzamos?';
 
     const [messages, setMessages] = useState<Message[]>([
         { role: 'bot', content: initialMessage }
@@ -67,27 +67,27 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
         const messages: Record<string, Record<PsychProfile, string>> = {
             intro: {
                 analytic: 'Protocolo de auditoría BANT iniciado. Analizando viabilidad técnica e interoperabilidad de su flujo de pacientes.',
-                impulsive: '¡Perfecto! Vamos a ver cuánta plata estás dejando sobre la mesa ahora mismo. Hagamos el scanner.',
-                price_sensitive: 'Excelente decisión. El objetivo es maximizar tu ROI reduciendo costos operativos por inasistencias.',
-                hesitant: 'No se preocupe, es un diagnóstico preventivo. Vamos paso a paso para evaluar si NeuroV es adecuado para usted.'
+                impulsive: 'Perfecto. Vamos a identificar oportunidades de optimización inmediatas en tu operación.',
+                price_sensitive: 'Excelente. El objetivo es maximizar tu ROI reduciendo costos operativos por inasistencias.',
+                hesitant: 'Entendido. Haremos un diagnóstico objetivo para evaluar si NeuroV se ajusta a tus necesidades.'
             },
             leads_q: {
                 analytic: 'Pregunta 1/3: ¿Cuál es su volumen promedio de adquisición de prospectos (leads) mensuales?',
-                impulsive: 'Primero: ¿Cuánta gente te escribe al mes preguntando por servicios? (Leads)',
-                price_sensitive: 'Para calcular el retorno: ¿Cuántos contactos generas mensualmente hoy?',
-                hesitant: 'Para empezar, cuéntenos más o menos cuántos interesados recibe su clínica cada mes.'
+                impulsive: 'Primera pregunta: ¿Cuántos leads o consultas recibes mensualmente?',
+                price_sensitive: 'Para calcular el retorno: ¿Cuántos contactos comerciales generas mensualmente?',
+                hesitant: 'Comencemos: ¿Aproximadamente cuántos interesados recibe tu clínica cada mes?'
             },
             ticket_q: {
                 analytic: 'Pregunta 2/3: Para el cálculo de rentabilidad, ¿cuál es el ticket promedio de sus procedimientos de alta gama?',
-                impulsive: 'Bien. Cuando vendes algo premium, ¿cuánto cuesta ese tratamiento? (Aprox)',
-                price_sensitive: '¿De cuánto es el valor de tus servicios con mayor margen de utilidad?',
-                hesitant: 'Entiendo. ¿Y cuál suele ser el valor promedio de sus tratamientos principales?'
+                impulsive: '¿Cuál es el valor promedio de tus tratamientos principales?',
+                price_sensitive: '¿Cuál es el ticket promedio de tus servicios con mayor margen?',
+                hesitant: '¿Cuál suele ser el valor promedio de tus tratamientos?'
             },
             authority_q: {
                 analytic: 'Pregunta 3/3: ¿Posee usted la facultad de firma para implementaciones de arquitectura digital o requiere validación de socios?',
-                impulsive: 'Última: ¿Tú eres quien manda o tienes que pedirle permiso a alguien para ganar más plata hoy?',
-                price_sensitive: 'Finalmente: ¿Eres el tomador de decisiones o el encargado de evaluar la inversión?',
-                hesitant: 'Y por último, para saber cómo proceder: ¿Es usted quien decide las nuevas tecnologías o lo ve con un equipo?'
+                impulsive: 'Última pregunta: ¿Tomas las decisiones de inversión en tecnología o lo evalúas con socios?',
+                price_sensitive: '¿Eres el tomador de decisiones de inversión o lo evalúas en equipo?',
+                hesitant: 'Finalmente: ¿Tomas las decisiones tecnológicas o las evalúas con tu equipo?'
             }
         };
         return messages[step][profile];
@@ -114,8 +114,8 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
         setMessages(prev => [...prev, { role: 'user', content: label }]);
 
         const reaction = countAtStep > 200
-            ? (profile === 'analytic' ? 'Volumen significativo detectado. Optimizaremos la conversión.' : '¡Eso es mucha gente! Estás perdiendo una fortuna en no-shows.')
-            : (profile === 'analytic' ? 'Volumen base. Enfoque en maximizar el valor de cada prospecto.' : 'Buen flujo. Vamos a blindar ese agendamiento.');
+            ? (profile === 'analytic' ? 'Volumen significativo detectado. Optimizaremos la conversión.' : 'Excelente volumen. Hay gran potencial de optimización aquí.')
+            : (profile === 'analytic' ? 'Volumen base. Enfoque en maximizar el valor de cada prospecto.' : 'Buen flujo. Vamos a maximizar la conversión de cada lead.');
 
         addBotMessage(reaction, false);
 
@@ -131,8 +131,8 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
 
         const potentialFuga = stats.leads * 0.25 * price; // 25% avg no-show
         const reaction = price > 100000
-            ? (profile === 'analytic' ? 'Servicios Premium confirmados. El riesgo financiero por inasistencia es alto.' : '¡Wow! Con esos precios, cada paciente que no llega es un golpe duro al bolsillo.')
-            : (profile === 'analytic' ? 'Servicios estándar. Buscaremos escalabilidad estructural.' : 'Entiendo. Vamos a asegurar que nadie se pierda su cita.');
+            ? (profile === 'analytic' ? 'Servicios Premium confirmados. El riesgo financiero por inasistencia es alto.' : 'Servicios premium. El impacto de cada no-show es significativo.')
+            : (profile === 'analytic' ? 'Servicios estándar. Buscaremos escalabilidad estructural.' : 'Perfecto. Optimizaremos la confirmación de cada cita.');
 
         addBotMessage(reaction, false);
 
