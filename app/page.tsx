@@ -26,6 +26,9 @@ import { Suspense } from 'react';
 import { TechnicalLanding } from '@/components/TechnicalLanding';
 import { GrowthLanding } from '@/components/GrowthLanding';
 import { useState, useEffect } from 'react';
+import { analytics } from '@/lib/analytics/tracker';
+import { parseUTM, shouldRedirectToGrowth } from '@/lib/utils/utm';
+import { useRouter } from 'next/navigation';
 
 function BookingSection() {
     const searchParams = useSearchParams();
@@ -48,6 +51,29 @@ export default function CorporateHomePage() {
 
 function CorporateHomeContent() {
     const { profile } = usePsychographic();
+    const searchParams = useSearchParams();
+    const router = useRouter();
+
+    // UTM-based routing and tracking
+    useEffect(() => {
+        const utm = parseUTM(searchParams);
+
+        // Track UTM parameters
+        analytics.trackUTM(utm);
+
+        // Auto-redirect social media traffic to Growth page
+        if (shouldRedirectToGrowth(utm)) {
+            router.push(`/growth?${searchParams.toString()}`);
+            return;
+        }
+
+        // Track page view
+        analytics.page('technical_landing', {
+            profile,
+            utm,
+            timestamp: new Date().toISOString()
+        });
+    }, [searchParams, profile, router]);
 
     return (
         <div className="min-h-screen bg-[#020617] text-white selection:bg-indigo-500/30 bg-mesh relative overflow-x-hidden">

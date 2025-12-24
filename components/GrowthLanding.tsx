@@ -4,8 +4,24 @@ import { motion } from 'framer-motion';
 import { LucideVideo, LucideTrendingUp, LucideArrowRight, LucidePlay, LucideMessageSquare, LucideInstagram, LucideCalendar, LucideWallet } from 'lucide-react';
 import { GlassCard } from './ui/GlassCard';
 import { PremiumButton } from './ui/PremiumButton';
+import { WorkflowMockup } from './WorkflowMockup';
+import { analytics } from '@/lib/analytics/tracker';
+import { parseUTM } from '@/lib/utils/utm';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 export function GrowthLanding() {
+    const searchParams = useSearchParams();
+
+    // Track page view and UTM parameters
+    useEffect(() => {
+        const utm = parseUTM(searchParams);
+        analytics.trackUTM(utm);
+        analytics.page('growth_landing', {
+            utm,
+            timestamp: new Date().toISOString()
+        });
+    }, [searchParams]);
     return (
         <div className="space-y-32">
             {/* Hero Section - Growth Focus */}
@@ -51,40 +67,15 @@ export function GrowthLanding() {
                 </motion.div>
             </section>
 
-            {/* Video Feature Section */}
+            {/* Interactive Workflow Demo */}
             <section id="demo" className="container mx-auto px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-black mb-4">Mira NeuroV en Acción</h2>
                     <p className="text-gray-400 font-medium">Así es como nuestra IA llena tu agenda en tiempo real</p>
                 </div>
 
-                <div className="max-w-5xl mx-auto relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000" />
-                    <GlassCard className="aspect-video relative overflow-hidden flex items-center justify-center border-white/10 p-0 shadow-2xl">
-                        {/* Placeholder for Video Player UI */}
-                        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1576091160550-217359f4ecf8?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
-
-                        <div className="relative z-10 text-center">
-                            <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                className="w-24 h-24 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center text-white shadow-2xl group/btn"
-                            >
-                                <LucidePlay className="w-10 h-10 fill-white group-hover:fill-indigo-400 transition-colors" />
-                            </motion.button>
-                            <p className="mt-6 text-white font-black uppercase tracking-widest text-sm">VIDEO EXPLICATIVO (NeuroV Workflow)</p>
-                        </div>
-
-                        {/* Video Controls Mock */}
-                        <div className="absolute bottom-0 left-0 w-full p-8 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="flex gap-4">
-                                <div className="w-8 h-2 bg-indigo-500 rounded-full" />
-                                <div className="w-24 h-2 bg-white/20 rounded-full" />
-                            </div>
-                            <div className="text-[10px] font-black text-white/60 tracking-widest">02:45 / 04:20</div>
-                        </div>
-                    </GlassCard>
+                <div className="max-w-5xl mx-auto">
+                    <WorkflowMockup />
                 </div>
             </section>
 

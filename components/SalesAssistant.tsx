@@ -7,6 +7,7 @@ import { usePsychographic } from '@/lib/hooks/use-psychographic';
 import { PsychProfile } from '@/lib/ai/psychographic-profiler';
 import { PremiumButton } from './ui/PremiumButton';
 import { GlassCard } from './ui/GlassCard';
+import { analytics } from '@/lib/analytics/tracker';
 
 type Message = {
     role: 'bot' | 'user';
@@ -18,6 +19,12 @@ type BantStep = 'initial' | 'leads' | 'ticket' | 'authority' | 'qualified';
 export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'growth' }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isSpeaking, setIsSpeaking] = useState(false);
+
+    // Track when assistant is opened
+    const handleOpen = () => {
+        setIsOpen(true);
+        analytics.salesAssistant.opened(mode);
+    };
 
     const initialMessage = mode === 'technical'
         ? 'Protocolo de Auditoría NeuroV activo. ¿Iniciamos el diagnóstico de interoperabilidad y conversión?'
@@ -151,6 +158,16 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
 
         setQualified(isQualified);
         setBantStep('qualified');
+
+        // Track qualification result
+        const qualificationStatus = isElite ? 'elite' : 'growth';
+        analytics.salesAssistant.qualified(qualificationStatus, potentialMonthlyRevenue);
+        analytics.salesAssistant.stepCompleted('authority', {
+            isDecider,
+            isElite,
+            potentialMonthlyRevenue,
+            qualificationStatus
+        });
 
         if (isElite) {
             const closing = {
@@ -296,7 +313,10 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
                                             variant="primary"
                                             size="lg"
                                             className="w-full shadow-2xl shadow-indigo-600/40 py-6 rounded-2xl font-black"
-                                            onClick={() => window.location.href = '/demo?qualified=true'}
+                                            onClick={() => {
+                                                analytics.salesAssistant.ctaClicked('/demo?qualified=true');
+                                                window.location.href = '/demo?qualified=true';
+                                            }}
                                         >
                                             ACCEDER AL PROTOCOLO
                                         </PremiumButton>
