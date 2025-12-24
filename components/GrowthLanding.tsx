@@ -25,7 +25,7 @@ export function GrowthLanding() {
     return (
         <div className="space-y-32">
             {/* Hero Section - Growth Focus */}
-            <section className="container mx-auto px-6 pt-20 text-center relative">
+            <section className="container mx-auto px-6 pt-32 text-center relative">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-purple-600/20 blur-[150px] rounded-full pointer-events-none" />
 
                 <motion.div
