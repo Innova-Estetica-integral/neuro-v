@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LucideMessageSquare, LucideX, LucideMic, LucideVolume2, LucideSend, LucideCheckCircle2, LucideTrendingUp, LucideSmile, LucideBrainCircuit } from 'lucide-react';
 import { usePsychographic } from '@/lib/hooks/use-psychographic';
+import { PsychProfile } from '@/lib/ai/psychographic-profiler';
 import { PremiumButton } from './ui/PremiumButton';
 import { GlassCard } from './ui/GlassCard';
 
@@ -50,59 +51,111 @@ export function SalesAssistant() {
         if (shouldSpeak) speak(content);
     };
 
+    const getAdaptiveMessage = (step: string, context?: any) => {
+        const messages: Record<string, Record<PsychProfile, string>> = {
+            intro: {
+                analytic: 'Protocolo de auditoría BANT iniciado. Analizando viabilidad técnica e interoperabilidad de su flujo de pacientes.',
+                impulsive: '¡Perfecto! Vamos a ver cuánta plata estás dejando sobre la mesa ahora mismo. Hagamos el scanner.',
+                price_sensitive: 'Excelente decisión. El objetivo es maximizar tu ROI reduciendo costos operativos por inasistencias.',
+                hesitant: 'No se preocupe, es un diagnóstico preventivo. Vamos paso a paso para evaluar si NeuroV es adecuado para usted.'
+            },
+            leads_q: {
+                analytic: 'Pregunta 1/3: ¿Cuál es su volumen promedio de adquisición de prospectos (leads) mensuales?',
+                impulsive: 'Primero: ¿Cuánta gente te escribe al mes preguntando por servicios? (Leads)',
+                price_sensitive: 'Para calcular el retorno: ¿Cuántos contactos generas mensualmente hoy?',
+                hesitant: 'Para empezar, cuéntenos más o menos cuántos interesados recibe su clínica cada mes.'
+            },
+            ticket_q: {
+                analytic: 'Pregunta 2/3: Para el cálculo de rentabilidad, ¿cuál es el ticket promedio de sus procedimientos de alta gama?',
+                impulsive: 'Bien. Cuando vendes algo premium, ¿cuánto cuesta ese tratamiento? (Aprox)',
+                price_sensitive: '¿De cuánto es el valor de tus servicios con mayor margen de utilidad?',
+                hesitant: 'Entiendo. ¿Y cuál suele ser el valor promedio de sus tratamientos principales?'
+            },
+            authority_q: {
+                analytic: 'Pregunta 3/3: ¿Posee usted la facultad de firma para implementaciones de arquitectura digital o requiere validación de socios?',
+                impulsive: 'Última: ¿Tú eres quien manda o tienes que pedirle permiso a alguien para ganar más plata hoy?',
+                price_sensitive: 'Finalmente: ¿Eres el tomador de decisiones o el encargado de evaluar la inversión?',
+                hesitant: 'Y por último, para saber cómo proceder: ¿Es usted quien decide las nuevas tecnologías o lo ve con un equipo?'
+            }
+        };
+        return messages[step][profile];
+    };
+
     const handleInitialResponse = (response: boolean) => {
         setMessages(prev => [...prev, { role: 'user', content: response ? 'Empecemos el diagnóstico.' : 'Ahora no.' }]);
 
         if (response) {
             const currentProfile = forceClassify();
-            const adaptiveIntro = currentProfile === 'analytic'
-                ? 'Análisis clínico iniciado. NeuroV opera bajo el estándar FHIR R4 para garantizar interoperabilidad del 100%.'
-                : 'Perfecto. Vamos a calcular cuánto dinero estás dejando sobre la mesa por culpa de las inasistencias.';
-
-            addBotMessage(adaptiveIntro);
+            addBotMessage(getAdaptiveMessage('intro'));
 
             setTimeout(() => {
-                addBotMessage('¿Cuántos prospectos (leads) genera tu clínica mensualmente?');
+                addBotMessage(getAdaptiveMessage('leads_q'));
                 setBantStep('leads');
-            }, 800);
+            }, 1000);
         } else {
             addBotMessage('Entiendo. La ineficiencia es costosa. Estaré aquí cuando decidas detener la fuga de ingresos.');
         }
     };
 
-    const handleLeadsCount = (count: number, label: string) => {
-        setStats(prev => ({ ...prev, leads: count }));
+    const handleLeadsCount = (countAtStep: number, label: string) => {
+        setStats(prev => ({ ...prev, leads: countAtStep }));
         setMessages(prev => [...prev, { role: 'user', content: label }]);
-        addBotMessage('Bien. ¿Cuál es el ticket promedio de tus tratamientos de alta gama? (Ej: Estética avanzada, Dental complejo)');
-        setBantStep('ticket');
+
+        const reaction = countAtStep > 200
+            ? (profile === 'analytic' ? 'Volumen significativo detectado. Optimizaremos la conversión.' : '¡Eso es mucha gente! Estás perdiendo una fortuna en no-shows.')
+            : (profile === 'analytic' ? 'Volumen base. Enfoque en maximizar el valor de cada prospecto.' : 'Buen flujo. Vamos a blindar ese agendamiento.');
+
+        addBotMessage(reaction, false);
+
+        setTimeout(() => {
+            addBotMessage(getAdaptiveMessage('ticket_q'));
+            setBantStep('ticket');
+        }, 800);
     };
 
     const handleTicket = (price: number, label: string) => {
-        const totalPotential = stats.leads * price;
         setStats(prev => ({ ...prev, ticket: price }));
         setMessages(prev => [...prev, { role: 'user', content: label }]);
 
-        const isMinRevenue = totalPotential >= 30000; // $30k CLP threshold check (using simplified scale)
+        const potentialFuga = stats.leads * 0.25 * price; // 25% avg no-show
+        const reaction = price > 100000
+            ? (profile === 'analytic' ? 'Servicios Premium confirmados. El riesgo financiero por inasistencia es alto.' : '¡Wow! Con esos precios, cada paciente que no llega es un golpe duro al bolsillo.')
+            : (profile === 'analytic' ? 'Servicios estándar. Buscaremos escalabilidad estructural.' : 'Entiendo. Vamos a asegurar que nadie se pierda su cita.');
 
-        addBotMessage('Entendido. Finalmente: ¿Eres quien firma las decisiones tecnológicas o necesitas validar con socios?');
-        setBantStep('authority');
+        addBotMessage(reaction, false);
+
+        setTimeout(() => {
+            addBotMessage(getAdaptiveMessage('authority_q'));
+            setBantStep('authority');
+        }, 800);
     };
 
     const handleAuthority = (isDecider: boolean) => {
         setMessages(prev => [...prev, { role: 'user', content: isDecider ? 'Tengo autoridad total.' : 'Consulto con socios.' }]);
 
-        // Qualification Logic: Leads > 0 AND Ticket > 0 AND Authority
-        const isQualified = stats.leads > 0 && stats.ticket >= 50000 && isDecider;
+        // ADVANCED QUALIFICATION ENGINE
+        const potentialMonthlyRevenue = stats.leads * stats.ticket;
+        const potentialWaste = potentialMonthlyRevenue * 0.20; // 20% waste estimation
+
+        // Elite Threshold: $5M CLP Monthly Potential + High Ticket + Decider
+        const isQualified = stats.ticket >= 150000 && isDecider && potentialMonthlyRevenue >= 5000000;
+
         setQualified(isQualified);
         setBantStep('qualified');
 
         if (isQualified) {
-            const closing = profile === 'impulsive'
-                ? 'Diagnóstico: CRÍTICO. Estás perdiendo una fortuna. Tu clínica califica para nuestro Revenue Engine. Tengo un cupo para demo MAÑANA.'
-                : 'Diagnóstico: ELEGIBLE. Proyectamos un incremento del 27.5% en facturación neta optimizando tu embudo actual. ¿Revisamos el modelo?';
-            addBotMessage(closing);
+            const closing = {
+                analytic: `AUDITORÍA POSITIVA: El potencial de su clínica supera el umbral de eficiencia. Detectamos una fuga estimada de $${(potentialWaste / 1000000).toFixed(1)}M mensuales. Califica para integración FHIR R4 inmediata.`,
+                impulsive: `¡DIAGNÓSTICO CRÍTICO! Estás quemando casi $${(potentialWaste / 1000).toFixed(0)} mil pesos al mes. Tu clínica es categoría ELITE. Tengo un cupo para demo MAÑANA.`,
+                price_sensitive: `ROI PROYECTADO: 4.8x. NeuroV se paga solo rescatando 3 pacientes premium al mes. Tu clínica califica para nuestro programa de alto impacto.`,
+                hesitant: `EXCELENTES NOTICIAS. Tras el análisis, confirmamos que su clínica posee la estructura necesaria para escalar con seguridad. Hemos detectado una oportunidad de crecimiento masiva.`
+            };
+            addBotMessage(closing[profile]);
         } else {
-            addBotMessage('Tu perfil actual no requiere nuestro motor de alta gama todavía. Te sugiero revisar nuestros recursos gratuitos de gestión.');
+            const rejection = isDecider
+                ? 'Su estructura actual es ideal para nuestra fase de "Crecimiento Acelerado". El Motor de Ingresos Elite está reservado para volúmenes superiores, pero tengo algo para usted.'
+                : 'Para activar el protocolo de seguridad, requerimos la validación del decisor principal. Mientras tanto, analice este reporte de impacto proyectado.';
+            addBotMessage(rejection);
         }
     };
 
@@ -190,16 +243,27 @@ export function SalesAssistant() {
 
                                 {bantStep === 'leads' && (
                                     <div className="grid grid-cols-2 gap-3">
-                                        {['0-50', '50-200', '200-500', '500+'].map((range, idx) => (
-                                            <button key={range} onClick={() => handleLeadsCount(idx * 100, range)} className="p-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black text-white hover:bg-indigo-600 transition-all uppercase tracking-widest">{range} Leads</button>
+                                        {[
+                                            { range: '0-50', val: 25 },
+                                            { range: '50-200', val: 125 },
+                                            { range: '200-500', val: 350 },
+                                            { range: '500+', val: 600 }
+                                        ].map((item) => (
+                                            <button
+                                                key={item.range}
+                                                onClick={() => handleLeadsCount(item.val, `${item.range} Leads`)}
+                                                className="p-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black text-white hover:bg-indigo-600 transition-all uppercase tracking-widest"
+                                            >
+                                                {item.range} Leads
+                                            </button>
                                         ))}
                                     </div>
                                 )}
 
                                 {bantStep === 'ticket' && (
                                     <div className="grid grid-cols-1 gap-3">
-                                        <button onClick={() => handleTicket(45000, '< $50k')} className="p-4 bg-white/5 border border-white/5 rounded-2xl text-xs font-black text-white hover:bg-red-500/20 transition-all uppercase tracking-widest">Bajo Ticket</button>
-                                        <button onClick={() => handleTicket(150000, '$150k+')} className="p-4 bg-indigo-600 rounded-2xl text-xs font-black text-white hover:bg-indigo-500 transition-all uppercase tracking-widest">Ticket Premium</button>
+                                        <button onClick={() => handleTicket(45000, 'Ticket Estándar (< $50k)')} className="p-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black text-white hover:bg-red-500/20 transition-all uppercase tracking-widest">Procedimientos Estándar</button>
+                                        <button onClick={() => handleTicket(180000, 'Ticket Premium ($150k+)')} className="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl text-[10px] font-black text-white hover:shadow-lg hover:shadow-indigo-500/30 transition-all uppercase tracking-widest">Tratamientos Alta Gama</button>
                                     </div>
                                 )}
 
@@ -224,8 +288,19 @@ export function SalesAssistant() {
                                 )}
 
                                 {bantStep === 'qualified' && !qualified && (
-                                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-center">
-                                        <p className="text-[10px] font-black text-red-400 uppercase tracking-widest leading-relaxed">Acceso denegado: motor reservado para alta gama</p>
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-indigo-500/5 border border-indigo-500/10 rounded-2xl text-center">
+                                            <p className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-4">Protocolo de Crecimiento Activado</p>
+                                            <p className="text-gray-400 text-xs font-medium leading-relaxed mb-6">Su clínica está en una fase de expansión. Le enviaremos nuestra "Guía de Ingeniería de Ingresos" para alcanzar el umbral Elite.</p>
+                                            <PremiumButton
+                                                variant="outline"
+                                                size="sm"
+                                                className="w-full text-[10px] border-indigo-500/30 text-indigo-300 font-black"
+                                                onClick={() => window.open('https://neurov.com/webinar', '_blank')}
+                                            >
+                                                DESCARGAR GUÍA DE ESCALA
+                                            </PremiumButton>
+                                        </div>
                                     </div>
                                 )}
                             </div>
