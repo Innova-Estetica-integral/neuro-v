@@ -100,7 +100,7 @@ function CorporateHomeContent() {
 
                     <div className="flex items-center gap-4">
                         <PremiumButton variant="primary" size="sm" onClick={() => document.getElementById('agenda')?.scrollIntoView({ behavior: 'smooth' })}>
-                            AGENDAR DEMO TÉCNICA
+                            RESERVAR DEMO
                         </PremiumButton>
                     </div>
                 </div>
