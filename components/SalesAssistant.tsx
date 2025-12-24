@@ -133,29 +133,40 @@ export function SalesAssistant() {
     const handleAuthority = (isDecider: boolean) => {
         setMessages(prev => [...prev, { role: 'user', content: isDecider ? 'Tengo autoridad total.' : 'Consulto con socios.' }]);
 
-        // ADVANCED QUALIFICATION ENGINE
+        // ADVANCED QUALIFICATION ENGINE (Optimized for maximum conversion)
         const potentialMonthlyRevenue = stats.leads * stats.ticket;
         const potentialWaste = potentialMonthlyRevenue * 0.20; // 20% waste estimation
 
-        // Elite Threshold: $5M CLP Monthly Potential + High Ticket + Decider
-        const isQualified = stats.ticket >= 150000 && isDecider && potentialMonthlyRevenue >= 5000000;
+        // Inclusive Logic: If you have business, you qualify.
+        // We use "status" to keep the premium feel without rejecting anyone.
+        const isElite = stats.ticket >= 150000 && potentialMonthlyRevenue >= 5000000;
+
+        // EVERYONE qualifies for a demo as long as they have some potential
+        const isQualified = potentialMonthlyRevenue > 0;
 
         setQualified(isQualified);
         setBantStep('qualified');
 
-        if (isQualified) {
+        if (isElite) {
             const closing = {
-                analytic: `AUDITORÍA POSITIVA: El potencial de su clínica supera el umbral de eficiencia. Detectamos una fuga estimada de $${(potentialWaste / 1000000).toFixed(1)}M mensuales. Califica para integración FHIR R4 inmediata.`,
-                impulsive: `¡DIAGNÓSTICO CRÍTICO! Estás quemando casi $${(potentialWaste / 1000).toFixed(0)} mil pesos al mes. Tu clínica es categoría ELITE. Tengo un cupo para demo MAÑANA.`,
-                price_sensitive: `ROI PROYECTADO: 4.8x. NeuroV se paga solo rescatando 3 pacientes premium al mes. Tu clínica califica para nuestro programa de alto impacto.`,
-                hesitant: `EXCELENTES NOTICIAS. Tras el análisis, confirmamos que su clínica posee la estructura necesaria para escalar con seguridad. Hemos detectado una oportunidad de crecimiento masiva.`
+                analytic: `AUDITORÍA POSITIVA (CATEGORÍA ELITE): Detectamos una fuga estimada de $${(potentialWaste / 1000000).toFixed(1)}M mensuales. Su estructura es prioritaria para integración técnica.`,
+                impulsive: `¡DIAGNÓSTICO CRÍTICO! Estás perdiendo casi $${(potentialWaste / 1000).toFixed(0)} mil pesos al mes. Tu clínica es categoría ELITE. Reserva tu cupo técnico ahora.`,
+                price_sensitive: `ROI PROYECTADO: 5.2x. El sistema se paga solo con el primer paciente rescatado. Su clínica califica para nuestro programa de alto impacto.`,
+                hesitant: `EXCELENTES NOTICIAS. Tras el análisis, confirmamos que su clínica posee una estructura robusta. Es el momento perfecto para blindar sus ingresos.`
             };
             addBotMessage(closing[profile]);
         } else {
-            const rejection = isDecider
-                ? 'Su estructura actual es ideal para nuestra fase de "Crecimiento Acelerado". El Motor de Ingresos Elite está reservado para volúmenes superiores, pero tengo algo para usted.'
-                : 'Para activar el protocolo de seguridad, requerimos la validación del decisor principal. Mientras tanto, analice este reporte de impacto proyectado.';
-            addBotMessage(rejection);
+            const highGrowth = {
+                analytic: `DIAGNÓSTICO: ALTO POTENCIAL. Hemos identificado una oportunidad de optimización de ingresos de $${(potentialWaste / 1000).toFixed(0)} mil pesos. Califica para nuestro programa de Crecimiento Acelerado.`,
+                impulsive: `¡BUENAS NOTICIAS! Tienes un potencial de crecimiento masivo. Vamos a detener esa fuga de dinero hoy mismo. Agenda tu sesión técnica.`,
+                price_sensitive: `EVALUACIÓN POSITIVA: NeuroV escalará su rentabilidad de forma inmediata. Su clínica califica para el acceso de implementación rápida.`,
+                hesitant: `TODO LISTO. Hemos verificado que NeuroV puede ayudarle a dar el siguiente paso con total seguridad. Su clínica es elegible para nuestra demo técnica.`
+            };
+            addBotMessage(highGrowth[profile]);
+
+            if (!isDecider) {
+                addBotMessage("Tip: Como consulta con socios, le enviaremos un reporte de impacto para que puedan evaluarlo juntos en la sesión.");
+            }
         }
     };
 
@@ -274,7 +285,7 @@ export function SalesAssistant() {
                                     </div>
                                 )}
 
-                                {bantStep === 'qualified' && qualified && (
+                                {bantStep === 'qualified' && (
                                     <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="space-y-4">
                                         <PremiumButton
                                             variant="primary"
@@ -285,23 +296,6 @@ export function SalesAssistant() {
                                             ACCEDER AL PROTOCOLO
                                         </PremiumButton>
                                     </motion.div>
-                                )}
-
-                                {bantStep === 'qualified' && !qualified && (
-                                    <div className="space-y-4">
-                                        <div className="p-6 bg-indigo-500/5 border border-indigo-500/10 rounded-2xl text-center">
-                                            <p className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-4">Protocolo de Crecimiento Activado</p>
-                                            <p className="text-gray-400 text-xs font-medium leading-relaxed mb-6">Su clínica está en una fase de expansión. Le enviaremos nuestra "Guía de Ingeniería de Ingresos" para alcanzar el umbral Elite.</p>
-                                            <PremiumButton
-                                                variant="outline"
-                                                size="sm"
-                                                className="w-full text-[10px] border-indigo-500/30 text-indigo-300 font-black"
-                                                onClick={() => window.open('https://neurov.com/webinar', '_blank')}
-                                            >
-                                                DESCARGAR GUÍA DE ESCALA
-                                            </PremiumButton>
-                                        </div>
-                                    </div>
                                 )}
                             </div>
                         </div>
