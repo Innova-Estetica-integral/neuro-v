@@ -7,6 +7,7 @@ import { usePsychographic } from '@/lib/hooks/use-psychographic';
 import { PsychProfile } from '@/lib/ai/psychographic-profiler';
 import { PremiumButton } from './ui/PremiumButton';
 import { GlassCard } from './ui/GlassCard';
+import { CyberAvatar } from './CyberAvatar';
 import { analytics } from '@/lib/analytics/tracker';
 
 type Message = {
@@ -45,6 +46,11 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
     }, [messages]);
+
+    // Debug: verificar que el componente se renderiza
+    useEffect(() => {
+        console.log('🤖 SalesAssistant renderizado en modo:', mode);
+    }, [mode]);
 
     const speak = (text: string) => {
         if (typeof window !== 'undefined' && window.speechSynthesis) {
@@ -200,10 +206,14 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
                 animate={{ scale: 1 }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-[1.5rem] sm:rounded-[2rem] shadow-[0_8px_32px_rgba(99,102,241,0.4)] flex items-center justify-center z-[200] text-white cursor-pointer"
+                className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-[1.5rem] sm:rounded-[2rem] shadow-[0_8px_32px_rgba(99,102,241,0.4)] flex items-center justify-center z-[250] text-white cursor-pointer"
                 onClick={() => {
-                    setIsOpen(!isOpen);
-                    if (!isOpen && messages.length === 1) speak(messages[0].content);
+                    if (!isOpen) {
+                        handleOpen();
+                        if (messages.length === 1) speak(messages[0].content);
+                    } else {
+                        setIsOpen(false);
+                    }
                 }}
             >
                 {isOpen ? (
@@ -230,100 +240,128 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-8 sm:bottom-32 sm:w-[420px] max-h-[85vh] z-[200] flex flex-col"
+                        className="fixed inset-4 sm:left-auto sm:right-8 sm:bottom-8 sm:top-8 sm:w-[420px] z-[200] flex flex-col"
                     >
-                        <div className="h-full flex flex-col overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0a0f1e]/90 backdrop-blur-2xl shadow-[0_32px_64px_rgba(0,0,0,0.6)]">
-                            {/* Seamless Header */}
-                            <div className="p-8 pb-4 flex items-center gap-4 relative overflow-hidden">
-                                <div className="absolute top-0 left-0 w-full h-32 bg-indigo-500/10 blur-[60px] pointer-events-none" />
-                                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg relative z-10">
-                                    <LucideBrainCircuit size={24} className="text-white" />
-                                </div>
-                                <div className="relative z-10">
-                                    <h4 className="font-black text-white uppercase tracking-tighter text-lg leading-none mb-1">Cerebro de Ventas</h4>
-                                    <div className="flex items-center gap-1.5">
-                                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
-                                        <span className="text-[10px] text-green-400 font-black uppercase tracking-widest">Protocolo Activo</span>
-                                    </div>
-                                </div>
+                        <div className="h-full flex flex-col overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#0a0f1e]/60 backdrop-blur-2xl shadow-[0_32px_64px_rgba(0,0,0,0.6)] relative">
+                            {/* Video de fondo */}
+                            <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] z-0">
+                                <video
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="w-full h-full object-cover opacity-30"
+                                >
+                                    <source src="/grok-video-d03d2654.mp4" type="video/mp4" />
+                                    <source src="/grok-video-d03d2654.webm" type="video/webm" />
+                                </video>
+                                {/* Overlay oscuro para legibilidad */}
+                                <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900/80" />
                             </div>
 
-                            {/* Transparent Message Area */}
-                            <div
-                                ref={scrollRef}
-                                className="flex-1 overflow-y-auto px-8 py-4 space-y-6 min-h-[300px] max-h-[450px] custom-scrollbar"
-                            >
-                                {messages.map((m, i) => (
-                                    <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2`}>
-                                        <div className={`max-w-[85%] p-4 rounded-2xl text-[13px] font-bold leading-relaxed ${m.role === 'user'
-                                            ? 'bg-indigo-600 text-white rounded-tr-none shadow-lg shadow-indigo-600/20'
-                                            : 'bg-white/5 text-gray-200 border border-white/5 rounded-tl-none'
-                                            }`}>
-                                            {m.content}
+                            {/* Contenido del chat - ahora con z-index mayor */}
+                            <div className="relative z-10 h-full flex flex-col">
+                                {/* Seamless Header */}
+                                <div className="p-8 pb-4 flex items-center gap-4 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-full h-32 bg-indigo-500/10 blur-[60px] pointer-events-none" />
+                                    {/* Avatar cibernético */}
+                                    <div className="relative z-10">
+                                        <CyberAvatar size={64} isActive={isSpeaking} />
+                                    </div>
+                                    <div className="relative z-10 flex-1">
+                                        <h4 className="font-black text-white uppercase tracking-tighter text-lg leading-none mb-1">Asistente NeuroV</h4>
+                                        <div className="flex items-center gap-1.5">
+                                            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.6)]" />
+                                            <span className="text-[10px] text-cyan-400 font-black uppercase tracking-widest">
+                                                {isSpeaking ? 'Hablando...' : 'En Línea'}
+                                            </span>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
 
-                            {/* Integrated Actions Area */}
-                            <div className="p-8 pt-4 pb-10">
-                                {bantStep === 'initial' && (
-                                    <div className="flex flex-col gap-3">
-                                        <PremiumButton variant="primary" size="lg" className="w-full font-black rounded-2xl py-4 shadow-xl shadow-indigo-600/20" onClick={() => handleInitialResponse(true)}>AUDITAR AHORA</PremiumButton>
-                                        <button className="text-gray-500 text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors py-2" onClick={() => handleInitialResponse(false)}>LUEGO</button>
-                                    </div>
-                                )}
+                                {/* Transparent Message Area */}
+                                <div
+                                    ref={scrollRef}
+                                    className="flex-1 overflow-y-auto px-8 py-4 space-y-6 custom-scrollbar"
+                                >
+                                    {messages.map((m, i) => (
+                                        <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start gap-3'} animate-in fade-in slide-in-from-bottom-2`}>
+                                            {/* Avatar del bot */}
+                                            {m.role === 'bot' && (
+                                                <div className="shrink-0">
+                                                    <CyberAvatar size={32} isActive={false} />
+                                                </div>
+                                            )}
+                                            <div className={`max-w-[75%] p-4 rounded-2xl text-[13px] font-medium leading-relaxed backdrop-blur-xl ${m.role === 'user'
+                                                ? 'bg-gradient-to-r from-indigo-500/30 to-purple-500/30 border border-indigo-400/40 text-indigo-100 rounded-tr-none shadow-lg shadow-indigo-500/20'
+                                                : 'bg-white/10 border border-cyan-400/30 text-cyan-50 rounded-tl-none shadow-lg shadow-cyan-500/10'
+                                                }`}>
+                                                {m.content}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
 
-                                {bantStep === 'leads' && (
-                                    <div className="grid grid-cols-2 gap-3">
-                                        {[
-                                            { range: '0-50', val: 25 },
-                                            { range: '50-200', val: 125 },
-                                            { range: '200-500', val: 350 },
-                                            { range: '500+', val: 600 }
-                                        ].map((item) => (
-                                            <button
-                                                key={item.range}
-                                                onClick={() => handleLeadsCount(item.val, `${item.range} Leads`)}
-                                                className="p-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black text-white hover:bg-indigo-600 transition-all uppercase tracking-widest"
+                                {/* Integrated Actions Area */}
+                                <div className="p-8 pt-4 pb-10">
+                                    {bantStep === 'initial' && (
+                                        <div className="flex flex-col gap-3">
+                                            <PremiumButton variant="primary" size="lg" className="w-full font-black rounded-2xl py-4 shadow-xl shadow-indigo-600/20" onClick={() => handleInitialResponse(true)}>AUDITAR AHORA</PremiumButton>
+                                            <button className="text-gray-500 text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors py-2" onClick={() => handleInitialResponse(false)}>LUEGO</button>
+                                        </div>
+                                    )}
+
+                                    {bantStep === 'leads' && (
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {[
+                                                { range: '0-50', val: 25 },
+                                                { range: '50-200', val: 125 },
+                                                { range: '200-500', val: 350 },
+                                                { range: '500+', val: 600 }
+                                            ].map((item) => (
+                                                <button
+                                                    key={item.range}
+                                                    onClick={() => handleLeadsCount(item.val, `${item.range} Leads`)}
+                                                    className="p-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black text-white hover:bg-indigo-600 transition-all uppercase tracking-widest"
+                                                >
+                                                    {item.range} Leads
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {bantStep === 'ticket' && (
+                                        <div className="grid grid-cols-1 gap-3">
+                                            <button onClick={() => handleTicket(45000, 'Ticket Estándar (< $50k)')} className="p-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black text-white hover:bg-red-500/20 transition-all uppercase tracking-widest">Procedimientos Estándar</button>
+                                            <button onClick={() => handleTicket(180000, 'Ticket Premium ($150k+)')} className="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl text-[10px] font-black text-white hover:shadow-lg hover:shadow-indigo-500/30 transition-all uppercase tracking-widest">Tratamientos Alta Gama</button>
+                                        </div>
+                                    )}
+
+                                    {bantStep === 'authority' && (
+                                        <div className="flex flex-col gap-3">
+                                            <PremiumButton variant="primary" size="md" className="w-full font-black rounded-2xl py-4" onClick={() => handleAuthority(true)}>SOY DECISOR</PremiumButton>
+                                            <button className="text-gray-500 text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors py-2" onClick={() => handleAuthority(false)}>TENGO SOCIOS</button>
+                                        </div>
+                                    )}
+
+                                    {bantStep === 'qualified' && (
+                                        <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="space-y-4">
+                                            <PremiumButton
+                                                variant="primary"
+                                                size="lg"
+                                                className="w-full shadow-2xl shadow-indigo-600/40 py-6 rounded-2xl font-black"
+                                                onClick={() => {
+                                                    analytics.salesAssistant.ctaClicked('/demo?qualified=true');
+                                                    window.location.href = '/demo?qualified=true';
+                                                }}
                                             >
-                                                {item.range} Leads
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-
-                                {bantStep === 'ticket' && (
-                                    <div className="grid grid-cols-1 gap-3">
-                                        <button onClick={() => handleTicket(45000, 'Ticket Estándar (< $50k)')} className="p-4 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black text-white hover:bg-red-500/20 transition-all uppercase tracking-widest">Procedimientos Estándar</button>
-                                        <button onClick={() => handleTicket(180000, 'Ticket Premium ($150k+)')} className="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl text-[10px] font-black text-white hover:shadow-lg hover:shadow-indigo-500/30 transition-all uppercase tracking-widest">Tratamientos Alta Gama</button>
-                                    </div>
-                                )}
-
-                                {bantStep === 'authority' && (
-                                    <div className="flex flex-col gap-3">
-                                        <PremiumButton variant="primary" size="md" className="w-full font-black rounded-2xl py-4" onClick={() => handleAuthority(true)}>SOY DECISOR</PremiumButton>
-                                        <button className="text-gray-500 text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors py-2" onClick={() => handleAuthority(false)}>TENGO SOCIOS</button>
-                                    </div>
-                                )}
-
-                                {bantStep === 'qualified' && (
-                                    <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="space-y-4">
-                                        <PremiumButton
-                                            variant="primary"
-                                            size="lg"
-                                            className="w-full shadow-2xl shadow-indigo-600/40 py-6 rounded-2xl font-black"
-                                            onClick={() => {
-                                                analytics.salesAssistant.ctaClicked('/demo?qualified=true');
-                                                window.location.href = '/demo?qualified=true';
-                                            }}
-                                        >
-                                            ACCEDER AL PROTOCOLO
-                                        </PremiumButton>
-                                    </motion.div>
-                                )}
+                                                ACCEDER AL PROTOCOLO
+                                            </PremiumButton>
+                                        </motion.div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        </div> {/* Cierre del contenedor con video */}
                     </motion.div>
                 )}
             </AnimatePresence>

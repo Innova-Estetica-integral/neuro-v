@@ -59,7 +59,6 @@ function GrowthPageContent() {
 
             <main className="relative">
                 <GrowthLanding />
-
                 <BookingSection />
                 <SalesAssistant mode="growth" />
 

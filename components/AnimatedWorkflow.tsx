@@ -80,16 +80,16 @@ export function AnimatedWorkflow() {
                     <motion.div
                         key={i}
                         className="absolute w-1 h-1 bg-indigo-400/30 rounded-full"
-                        initial={{ x: Math.random() * 100 + '%', y: '100%' }}
+                        initial={{ x: (i * 5) + '%', y: '100%' }}
                         animate={{
                             y: '-10%',
-                            x: Math.random() * 100 + '%',
+                            x: ((i * 5) + 10) + '%',
                         }}
                         transition={{
-                            duration: Math.random() * 10 + 10,
+                            duration: (i % 10) + 10,
                             repeat: Infinity,
                             ease: 'linear',
-                            delay: Math.random() * 5
+                            delay: (i % 5)
                         }}
                     />
                 ))}
