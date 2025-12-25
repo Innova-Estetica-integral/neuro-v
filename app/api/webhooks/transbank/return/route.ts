@@ -131,7 +131,6 @@ export async function POST(req: NextRequest) {
 
                 await billingService.processBillingAfterPayment(
                     appointmentData.clinic_id,
-                    appointmentId,
                     billingRequest
                 );
             }

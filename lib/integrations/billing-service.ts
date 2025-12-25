@@ -12,7 +12,7 @@ class BillingService {
         this.provider = new OpenFacturaProvider();
     }
 
-    async processBillingAfterPayment(clinicId: string, request: BillingRequest, clinicRut: string, apiKey: string): Promise<BillingResponse> {
+    async processBillingAfterPayment(clinicId: string, request: BillingRequest, clinicRut: string = '', apiKey: string = ''): Promise<BillingResponse> {
         console.log(`[BillingService] Initiating boleta for clinic ${clinicId} (Customer: ${request.customerName})`);
 
         // In a real flow, clinicRut and apiKey would be fetched from the clinic_integrations table
