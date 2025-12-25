@@ -64,7 +64,7 @@ const DonnaFloatingAssistant = () => {
             if (bestVoice) utterance.voice = bestVoice;
 
             utterance.lang = 'es-CL';
-            utterance.rate = 1.1;
+            utterance.rate = 1.0;
             utterance.pitch = 1.05;
 
             utterance.onstart = () => setIsSpeaking(true);
@@ -79,7 +79,7 @@ const DonnaFloatingAssistant = () => {
             speak(chat.content);
             const timer = setTimeout(() => {
                 handleSend('start');
-            }, 16000); // Adjusted for the new message length
+            }, 16000); // Restored to 16 seconds
             return () => clearTimeout(timer);
         }
     }, [isOpen, step, chat.content]);

@@ -74,7 +74,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
                 if (bestVoice) utterance.voice = bestVoice;
 
                 utterance.lang = 'es-CL';
-                utterance.rate = 1.1; // Increased for better fluidity
+                utterance.rate = 1.0; // Reset to 1.0
                 utterance.pitch = 1.05; // Slightly warmer tone
                 utterance.volume = 1;
 
@@ -138,7 +138,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
             setTimeout(() => {
                 addBotMessage(getAdaptiveMessage('leads_q'));
                 setBantStep('leads');
-            }, 12000); // Adjusted to 12 seconds
+            }, 12000); // Restored to 12 seconds
         } else {
             addBotMessage('Entiendo. La ineficiencia es costosa. Estaré aquí cuando decidas detener la fuga de ingresos.');
         }
