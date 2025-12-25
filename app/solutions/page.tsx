@@ -69,15 +69,32 @@ const DonnaFloatingAssistant = () => {
         setInput('');
 
         setTimeout(() => {
-            if (userMsg.toLowerCase().includes('reporte') || userMsg.includes('Lanzar')) {
-                const response = `Entendido. Protocolo de Intervención activado. Lanzo Flash Offer a base de datos para cubrir los ${executiveData.agendaGaps} espacios vacíos de mañana. Priorizando pacientes de alto LTV (${executiveData.ltv}). ¿Deseas que sincronice los leads con Meta API?`;
-                setChat(prev => [...prev, { role: 'donna', content: response, type: 'status' }]);
-                speak(response);
+            const lowerMsg = userMsg.toLowerCase();
+            let response = '';
+            let type: 'status' | 'alert' | undefined = undefined;
+
+            // Executive Intent Engine
+            if (lowerMsg.includes('lanzar') || lowerMsg.includes('flash') || lowerMsg.includes('ofrecer')) {
+                response = `Ejecutando Protocolo Flash Offer. Interviniendo base de datos para cubrir los ${executiveData.agendaGaps} espacios vacíos detectados. Prioridad: Segmento Platinum (${executiveData.ltv}). ¿Confirmas sincronización con Meta API para optimizar el CPA?`;
+                type = 'status';
+            } else if (lowerMsg.includes('sync') || lowerMsg.includes('sincronizar') || lowerMsg.includes('meta')) {
+                response = `Sincronización con Meta API en curso. Enviando datos de conversión offline para retroalimentar el algoritmo. Estatus: ${executiveData.metaAds}. Esperamos una reducción del 15% en CPA en las próximas 48 horas.`;
+                type = 'status';
+            } else if (lowerMsg.includes('agenda') || lowerMsg.includes('lunes') || lowerMsg.includes('hueco') || lowerMsg.includes('turno')) {
+                response = `Análisis de Agenda: He detectado ${executiveData.agendaGaps} brechas críticas esta semana. Mi recomendación es activar el re-agendamiento automatizado para pacientes con alta tasa de cancelación. ¿Deseas activar este módulo?`;
+            } else if (lowerMsg.includes('roi') || lowerMsg.includes('dinero') || lowerMsg.includes('rentabilidad') || lowerMsg.includes('costo')) {
+                response = `Reporte Financiero: Tu ROI actual es de ${executiveData.roi}. Estamos operando con una eficiencia superior al promedio del sector. He detectado una fuga de $200 USD/mes en leads no contactados en menos de 5 min. ¿Intervengo?`;
+                type = 'alert';
+            } else if (lowerMsg.includes('paciente') || lowerMsg.includes('vip') || lowerMsg.includes('platinum') || lowerMsg.includes('ltv')) {
+                response = `Seguridad de Cartera: Tu segmento Platinum tiene un LTV promedio de ${executiveData.ltv}. He blindado estas cuentas con un protocolo de atención prioritaria 24/7. El sistema de lealtad está operando al 100% de efectividad.`;
+            } else if (lowerMsg.includes('quien') || lowerMsg.includes('donna') || lowerMsg.includes('nombre') || lowerMsg.includes('hola')) {
+                response = `Hola. Soy Donna, tu Directora de Operaciones. Mi arquitectura está diseñada para la soberanía administrativa de tu clínica. Estoy monitoreando tus métricas en tiempo real. ¿En qué área necesitas mi intervención?`;
             } else {
-                const generic = 'Protocolo reconocido. Mi análisis de Meta Ads indica que podemos reducir el CPA un 15% automatizando la re-agendación. ¿Deseas activar este módulo de soberanía financiera?';
-                setChat(prev => [...prev, { role: 'donna', content: generic }]);
-                speak(generic);
+                response = 'Orden reconocida bajo Protocolo General. Mi análisis de Meta Ads indica que podemos segmentar mejor los anuncios usando el perfilado psicográfico acumulado. ¿Deseas que prepare un reporte de ahorro proyectado?';
             }
+
+            setChat(prev => [...prev, { role: 'donna', content: response, type }]);
+            speak(response);
             setStep(prev => prev + 1);
         }, 1200);
     };
