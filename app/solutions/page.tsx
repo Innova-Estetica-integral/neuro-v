@@ -21,17 +21,27 @@ import {
     Plus,
     Lock,
     Search,
-    BrainCircuit
+    BrainCircuit,
+    Clock,
+    Calendar
 } from 'lucide-react';
 
 const DonnaFloatingAssistant = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [step, setStep] = useState(0);
     const [isSpeaking, setIsSpeaking] = useState(false);
-    const [chat, setChat] = useState<{ role: 'donna' | 'user', content: string }[]>([
-        { role: 'donna', content: 'Hola, soy Donna, tu Directora de Operaciones. Antes de mostrarte el futuro de tu clínica, cuéntame: ¿A qué rubro te dedicas?' }
+    const [chat, setChat] = useState<{ role: 'donna' | 'user' | 'system', content: string, type?: 'status' | 'alert' }[]>([
+        { role: 'donna', content: 'Protocolo de Inicio: Ejecutando diagnóstico de infraestructura... Hola, soy Donna, tu Directora de Operaciones. He detectado 3 puntos críticos de intervención para maximizar tu rentabilidad hoy.', type: 'status' }
     ]);
     const [input, setInput] = useState('');
+
+    // Executive Data Simulation
+    const [executiveData] = useState({
+        roi: '+12.4%',
+        metaAds: 'Optimizado',
+        agendaGaps: 3,
+        ltv: '$2,450'
+    });
 
     const speak = (text: string) => {
         if (!window.speechSynthesis) return;
@@ -47,36 +57,29 @@ const DonnaFloatingAssistant = () => {
 
     useEffect(() => {
         if (isOpen && step === 0 && chat.length === 1) {
-            // Pequena demora para que la transicion de apertura termine
             setTimeout(() => speak(chat[0].content), 500);
         }
     }, [isOpen]);
 
-    const handleSend = () => {
-        if (!input.trim()) return;
+    const handleSend = (presetMsg?: string) => {
+        const userMsg = presetMsg || input;
+        if (!userMsg.trim()) return;
 
-        const userMsg = input;
         setChat(prev => [...prev, { role: 'user', content: userMsg }]);
         setInput('');
 
         setTimeout(() => {
-            if (step === 0) {
-                const welcome = `¡Excelente! Para un negocio de ${userMsg}, mi trabajo es liberarte de la carga operativa. Yo me encargo del agendamiento proactivo, los cobros automáticos y la emisión de boletas SII sin que muevas un dedo.`;
-                setChat(prev => [...prev, { role: 'donna', content: welcome }]);
-                speak(welcome);
-
-                setTimeout(() => {
-                    const marketing = 'Pero lo más importante es mi motor de marketing: Recopilo cada dato de tus pacientes y lo envío directamente a las API de Meta. Esto entrena a tus campañas para buscar solo a pacientes de alto valor, reduciendo tus costos de publicidad a la mitad.';
-                    setChat(prev => [...prev, { role: 'donna', content: marketing }]);
-                    speak(marketing);
-                }, 5000);
-                setStep(1);
+            if (userMsg.toLowerCase().includes('reporte') || userMsg.includes('Lanzar')) {
+                const response = `Entendido. Protocolo de Intervención activado. Lanzo Flash Offer a base de datos para cubrir los ${executiveData.agendaGaps} espacios vacíos de mañana. Priorizando pacientes de alto LTV (${executiveData.ltv}). ¿Deseas que sincronice los leads con Meta API?`;
+                setChat(prev => [...prev, { role: 'donna', content: response, type: 'status' }]);
+                speak(response);
             } else {
-                const closing = 'Entiendo perfectamente. Mi objetivo es que tú solo te preocupes de operar, mientras yo gestiono el crecimiento. ¿Te gustaría agendar una demo para ver cómo conectamos tu clínica a Meta?';
-                setChat(prev => [...prev, { role: 'donna', content: closing }]);
-                speak(closing);
+                const generic = 'Protocolo reconocido. Mi análisis de Meta Ads indica que podemos reducir el CPA un 15% automatizando la re-agendación. ¿Deseas activar este módulo de soberanía financiera?';
+                setChat(prev => [...prev, { role: 'donna', content: generic }]);
+                speak(generic);
             }
-        }, 1000);
+            setStep(prev => prev + 1);
+        }, 1200);
     };
 
     return (
@@ -87,17 +90,19 @@ const DonnaFloatingAssistant = () => {
                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.8, y: 20 }}
-                        className="absolute bottom-28 right-0 w-[350px] sm:w-[420px] bg-white rounded-[3rem] shadow-[0_64px_128px_-32px_rgba(0,0,0,0.3)] border border-gray-100 overflow-hidden"
+                        className="absolute bottom-28 right-0 w-[380px] sm:w-[450px] bg-white rounded-[3rem] shadow-[0_64px_128px_-32px_rgba(0,0,0,0.3)] border border-gray-100 overflow-hidden"
                     >
-                        <div className="bg-gray-900 p-8 flex items-center gap-5">
-                            <div className={`w-14 h-14 bg-white/20 backdrop-blur-xl border border-white/40 rounded-2xl flex items-center justify-center transition-all ${isSpeaking ? 'scale-110 shadow-[0_0_30px_rgba(255,255,255,0.4)]' : ''}`}>
-                                <BrainCircuit className="text-gray-900 w-8 h-8 drop-shadow-sm" />
+                        {/* Executive Header */}
+                        <div className="bg-gray-950 p-8 flex items-center gap-5 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl -mr-10 -mt-10" />
+                            <div className={`w-14 h-14 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center justify-center transition-all ${isSpeaking ? 'scale-110 shadow-[0_0_30px_rgba(0,242,255,0.3)]' : ''}`}>
+                                <BrainCircuit className="text-[#00f2ff] w-8 h-8 drop-shadow-[0_0_8px_rgba(0,242,255,0.6)]" />
                             </div>
                             <div>
-                                <h4 className="text-white font-black text-sm uppercase tracking-widest">Donna Executive</h4>
+                                <h4 className="text-white font-black text-xs uppercase tracking-widest">Donna Executive <span className="text-indigo-500 ml-1">V7.5</span></h4>
                                 <div className="flex items-center gap-2 mt-1">
                                     <div className={`w-2 h-2 rounded-full ${isSpeaking ? 'bg-emerald-400 animate-pulse' : 'bg-gray-600'}`} />
-                                    <p className="text-indigo-400 text-[10px] font-black uppercase tracking-widest">{isSpeaking ? 'En Línea - Hablando' : 'Directora de Operaciones'}</p>
+                                    <p className="text-indigo-400 text-[9px] font-black uppercase tracking-widest">Soberanía OPS Activada</p>
                                 </div>
                             </div>
                             <button
@@ -108,7 +113,25 @@ const DonnaFloatingAssistant = () => {
                             </button>
                         </div>
 
-                        <div className="h-[400px] overflow-y-auto p-8 space-y-6 bg-gray-50/50 scroll-smooth">
+                        {/* Executive Dashboard Card (Real-time Intervention Data) */}
+                        <div className="px-8 pt-8 pb-4 bg-gray-50/50">
+                            <div className="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 grid grid-cols-3 gap-4">
+                                <div className="text-center border-r border-gray-100">
+                                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">ROI Mensual</p>
+                                    <p className="text-sm font-black text-emerald-600">{executiveData.roi}</p>
+                                </div>
+                                <div className="text-center border-r border-gray-100">
+                                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Agenda Gaps</p>
+                                    <p className="text-sm font-black text-amber-500">{executiveData.agendaGaps}</p>
+                                </div>
+                                <div className="text-center">
+                                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Meta Ads</p>
+                                    <p className="text-[10px] font-black text-indigo-600 uppercase">ÓPTIMO</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="h-[350px] overflow-y-auto p-8 pt-4 space-y-6 bg-gray-50/50 scroll-smooth">
                             {chat.map((msg, i) => (
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
@@ -116,36 +139,58 @@ const DonnaFloatingAssistant = () => {
                                     key={i}
                                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
-                                    <div className={`max-w-[85%] p-6 rounded-[2.5rem] text-sm font-medium leading-[1.6] ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-white text-gray-700 shadow-sm border border-gray-100 rounded-tl-none'}`}>
+                                    <div className={`max-w-[85%] p-6 rounded-[2.5rem] text-[13px] font-medium leading-[1.6] ${msg.role === 'user'
+                                        ? 'bg-indigo-600 text-white rounded-tr-none'
+                                        : msg.type === 'status'
+                                            ? 'bg-gray-900 text-white rounded-tl-none border-l-4 border-indigo-500'
+                                            : 'bg-white text-gray-700 shadow-sm border border-gray-100 rounded-tl-none'
+                                        }`}>
+                                        {msg.role === 'donna' && <span className="block text-[8px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-2">Protocolo Director</span>}
                                         {msg.content}
                                     </div>
                                 </motion.div>
                             ))}
 
                             {isSpeaking && (
-                                <div className="flex gap-1.5 items-end justify-center py-6">
+                                <div className="flex gap-1.5 items-end justify-center py-4">
                                     {[0.1, 0.4, 0.2, 0.6, 0.3, 0.5, 0.2].map((delay, i) => (
                                         <motion.div
                                             key={i}
-                                            animate={{ height: [10, 40, 10] }}
+                                            animate={{ height: [8, 30, 8] }}
                                             transition={{ duration: 0.6, repeat: Infinity, delay }}
-                                            className="w-1.5 bg-indigo-500/40 rounded-full"
+                                            className="w-1 bg-indigo-500/30 rounded-full"
                                         />
                                     ))}
                                 </div>
                             )}
                         </div>
 
-                        <div className="p-8 bg-white border-t border-gray-100 flex gap-4">
+                        {/* Executive Action Protocols */}
+                        <div className="px-8 pb-4 flex gap-2 overflow-x-auto no-scrollbar">
+                            <button
+                                onClick={() => handleSend("Lanzar Flash Offer p/ Agenda")}
+                                className="whitespace-nowrap px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-indigo-100 hover:bg-indigo-100 transition-all"
+                            >
+                                <Zap size={10} className="inline mr-1" /> Protocolo Flash Offer
+                            </button>
+                            <button
+                                onClick={() => handleSend("Sincronizar Meta Ads")}
+                                className="whitespace-nowrap px-4 py-2 bg-emerald-50 text-emerald-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-emerald-100 hover:bg-emerald-100 transition-all"
+                            >
+                                <TrendingUp size={10} className="inline mr-1" /> Sync Meta API
+                            </button>
+                        </div>
+
+                        <div className="p-8 pt-2 bg-white border-t border-gray-50 flex gap-4">
                             <input
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                                placeholder="Escribe o responde por voz..."
-                                className="flex-1 bg-gray-50/50 border-none rounded-2xl px-6 py-4 text-sm font-medium focus:ring-2 focus:ring-indigo-600 outline-none transition-all"
+                                placeholder="Orden de intervención..."
+                                className="flex-1 bg-gray-50/80 border-none rounded-2xl px-6 py-4 text-xs font-medium focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-gray-300"
                             />
                             <button
-                                onClick={handleSend}
+                                onClick={() => handleSend()}
                                 className="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center hover:bg-indigo-600 transition-all shadow-xl shadow-gray-200"
                             >
                                 <Send size={22} />
@@ -159,27 +204,31 @@ const DonnaFloatingAssistant = () => {
                 whileHover={{ scale: 1.1, rotate: -2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-20 h-20 bg-white/40 backdrop-blur-3xl rounded-2xl flex items-center justify-center shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3),rgba(255,255,255,0.5)_0_0_0_1px_inset,0_0_40px_rgba(0,242,255,0.25)] group overflow-hidden border border-white/50"
+                className="relative w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-[0_45px_100px_-25px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.8),0_0_60px_rgba(0,242,255,0.35)] group overflow-hidden"
                 style={{
-                    background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(0,242,255,0.05) 100%)'
+                    background: 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 60%, rgba(0,242,255,0.05) 100%)'
                 }}
             >
-                {/* Visual Diamond Shimmer (Cyan Tinted) */}
+                {/* Primary Pure Shimmer (Slow Sweep) */}
                 <motion.div
-                    animate={{ x: [-150, 300] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -skew-x-12"
+                    animate={{ x: [-150, 250] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-[30deg]"
                 />
 
-                {/* Cyber-Cyan Neural Icon (Finer & More Delicate) */}
-                <div className="relative z-10 flex flex-col items-center">
+                {/* Secondary Cyber-Cyan Glow Reflection (Fast Sweep) */}
+                <motion.div
+                    animate={{ x: [-200, 250] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent -skew-x-[30deg]"
+                />
+
+                {/* Cyber-Cyan Neural Icon (Immersive Translucency) */}
+                <div className="relative z-10 flex flex-col items-center opacity-60">
                     <BrainCircuit
-                        className="w-10 h-10 stroke-[1.2] text-[#00f2ff] drop-shadow-[0_0_12px_rgba(0,242,255,0.6)]"
+                        className="w-10 h-10 stroke-[1.1] text-[#00f2ff] drop-shadow-[0_0_12px_rgba(0,242,255,0.8)]"
                     />
                 </div>
-
-                {/* Pulse Status */}
-                <div className="absolute top-3 right-3 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white shadow-lg animate-pulse" />
             </motion.button>
         </div>
     );
@@ -196,10 +245,10 @@ const Nav = () => {
     }, []);
 
     return (
-        <nav className={`fixed top-0 w-full z-[100] transition-all duration-700 ${isScrolled ? 'bg-white/95 backdrop-blur-2xl border-b border-gray-100 py-4 shadow-sm' : 'bg-transparent py-10'}`}>
+        <nav className={`fixed top-0 w-full z-[100] transition-all duration-700 ${isScrolled ? 'bg-white/10 backdrop-blur-md border-b border-white/20 py-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'bg-transparent py-10'}`}>
             <div className="max-w-7xl mx-auto px-6 sm:px-12 flex justify-between items-center">
                 <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.location.href = '/'}>
-                    <div className="w-10 h-10 bg-white/40 backdrop-blur-xl border border-white/50 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-[0_10px_20px_rgba(0,242,255,0.15)]">
+                    <div className="w-10 h-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-[0_8px_16px_rgba(0,242,255,0.1)]">
                         <BrainCircuit className="w-6 h-6 text-[#00f2ff] stroke-[1.2] drop-shadow-[0_0_8px_rgba(0,242,255,0.6)]" />
                     </div>
                     <span className="text-xl font-black uppercase tracking-tighter text-gray-900">NeuroV <span className="text-indigo-600">V7.5</span></span>
@@ -209,7 +258,7 @@ const Nav = () => {
                     <a href="#inteligencia" className="hover:text-gray-900 transition-colors">Inteligencia</a>
                     <a href="#marketing" className="hover:text-gray-900 transition-colors">Marketing</a>
                     <a href="#superioridad" className="hover:text-gray-900 transition-colors">Diferencial</a>
-                    <button className="bg-indigo-600 text-white px-10 py-4 rounded-full hover:bg-black transition-all font-black shadow-2xl shadow-indigo-100 flex items-center gap-2">
+                    <button className="bg-indigo-600 text-white px-10 py-4 rounded-full hover:bg-indigo-700 transition-all font-black shadow-2xl shadow-indigo-100 flex items-center gap-2 hover:scale-105 active:scale-95">
                         SESIÓN ESTRATÉGICA <ArrowRight size={14} />
                     </button>
                 </div>
@@ -226,7 +275,7 @@ const Nav = () => {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: "100%" }}
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="lg:hidden fixed inset-y-0 right-0 w-[85%] bg-white z-[110] p-8 flex flex-col gap-6 font-bold text-[11px] uppercase tracking-[0.25em] text-left shadow-[-20px_0_60px_-15px_rgba(0,0,0,0.1)] border-l border-gray-100"
+                        className="lg:hidden fixed inset-y-0 right-0 w-[85%] bg-white/10 backdrop-blur-xl z-[110] p-8 flex flex-col gap-6 font-bold text-[11px] uppercase tracking-[0.25em] text-left shadow-[-20px_0_60px_-15px_rgba(0,0,0,0.1)] border-l border-white/20"
                     >
                         <div className="flex justify-between items-center mb-10">
                             <span className="text-[9px] font-black text-gray-300 tracking-[0.3em] uppercase">Executive Menu</span>
@@ -253,7 +302,10 @@ const Nav = () => {
                                 <p className="text-[9px] font-black text-indigo-400 mb-2 tracking-widest uppercase">Estatus Donna</p>
                                 <p className="text-gray-600 normal-case font-medium leading-relaxed italic">"Directora, la agenda de mañana está al 94%."</p>
                             </div>
-                            <button className="w-full bg-gray-900 text-white py-5 rounded-2xl font-black shadow-2xl active:scale-95 transition-all text-[10px] tracking-[0.2em]">AGENDA AUDITORÍA</button>
+                            <button className="w-full bg-indigo-600/10 backdrop-blur-xl border border-indigo-200 text-indigo-700 py-5 rounded-2xl font-black shadow-xl active:scale-95 transition-all text-[10px] tracking-[0.2em] relative overflow-hidden group flex items-center justify-center gap-2">
+                                <span className="relative z-10">AGENDA AUDITORÍA</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                            </button>
                         </div>
                     </motion.div>
                 )}
@@ -291,8 +343,9 @@ export default function SolutionsV5() {
                                 El fin de la carga administrativa. Donna toma el mando de tu agenda, marketing y finanzas para que tú te enfoques en la excelencia clínica.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
-                                <button className="px-12 py-7 bg-gray-900 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-black transition-all shadow-3xl hover:translate-y-[-4px] active:translate-y-0">
-                                    Transformar mi Clínica
+                                <button className="px-12 py-7 bg-indigo-600 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-[0_20px_40px_-12px_rgba(79,70,229,0.4)] hover:translate-y-[-4px] active:translate-y-0 relative overflow-hidden group">
+                                    <span className="relative z-10">Transformar mi Clínica</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                                 </button>
                                 <button className="px-12 py-7 bg-white border border-gray-200 text-gray-900 rounded-full font-black text-xs uppercase tracking-widest hover:border-indigo-600 transition-all">
                                     Ver Demo en Vivo
@@ -447,9 +500,9 @@ export default function SolutionsV5() {
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-10">
-                        <div className="p-12 rounded-[3.5rem] bg-gray-50 border border-gray-100">
+                        <div className="p-12 rounded-[3.5rem] bg-gray-50 border border-gray-100 opacity-80">
                             <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-8">
-                                <Plus className="text-gray-400" />
+                                <Clock className="text-gray-400" />
                             </div>
                             <h4 className="text-2xl font-black mb-4 italic text-gray-400 line-through">Agendas Pasivas</h4>
                             <p className="text-gray-500 font-medium leading-relaxed">Solo guardan turnos. TÚ tienes que hacer el marketing, las confirmaciones y el cobro manual.</p>
@@ -466,11 +519,11 @@ export default function SolutionsV5() {
                             <p className="text-white/70 font-medium leading-relaxed">Un motor de ventas que gestiona la clínica por ti. Donna es proactiva: ella llena la agenda, no espera a que se llene.</p>
                         </div>
 
-                        <div className="p-12 rounded-[3.5rem] bg-gray-50 border border-gray-100">
+                        <div className="p-12 rounded-[3.5rem] bg-gray-50 border border-gray-100 opacity-80">
                             <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-8">
-                                <Plus className="text-gray-400" />
+                                <Users className="text-gray-400" />
                             </div>
-                            <h4 className="text-2xl font-black mb-12 italic text-gray-400 line-through">Secretarias WA</h4>
+                            <h4 className="text-2xl font-black mb-4 italic text-gray-400 line-through">Secretarias WA</h4>
                             <p className="text-gray-500 font-medium leading-relaxed">Costes fijos altos, errores humanos y horario limitado. Donna nunca duerme y nunca olvida un cierre.</p>
                         </div>
                     </div>
