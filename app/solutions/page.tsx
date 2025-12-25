@@ -159,7 +159,7 @@ const DonnaFloatingAssistant = () => {
                 whileHover={{ scale: 1.1, rotate: -2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-24 h-24 bg-white/40 backdrop-blur-3xl rounded-3xl flex items-center justify-center shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2),inset_0_0_0_1px_rgba(255,255,255,0.4)] group overflow-hidden border border-white/50"
+                className="relative w-24 h-24 bg-white/40 backdrop-blur-3xl rounded-3xl flex items-center justify-center shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3),rgba(255,255,255,0.5)_0_0_0_1px_inset,0_0_30px_rgba(99,102,241,0.2)] group overflow-hidden border border-white/50"
                 style={{
                     background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 100%)'
                 }}
