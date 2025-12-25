@@ -46,13 +46,31 @@ const DonnaFloatingAssistant = () => {
     const speak = (text: string) => {
         if (typeof window === 'undefined' || !window.speechSynthesis) return;
         window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'es-CL';
-        utterance.rate = 1.05;
-        utterance.pitch = 1.1;
-        utterance.onstart = () => setIsSpeaking(true);
-        utterance.onend = () => setIsSpeaking(false);
-        window.speechSynthesis.speak(utterance);
+
+        setTimeout(() => {
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voices = window.speechSynthesis.getVoices();
+
+            // High quality selection (Prioritizing FEMALE)
+            const bestVoice = voices.find(v =>
+                (v.name.includes('Google') || v.name.includes('Natural')) &&
+                (v.lang.startsWith('es')) &&
+                (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('mujer') || v.name.toLowerCase().includes('femenin') || v.name.includes('Helena'))
+            ) || voices.find(v =>
+                v.lang.includes('es-CL') &&
+                (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('mujer') || v.name.includes('Helena'))
+            ) || voices.find(v => v.lang.startsWith('es') && (v.name.toLowerCase().includes('female') || v.name.includes('Helena') || v.name.includes('Maria')));
+
+            if (bestVoice) utterance.voice = bestVoice;
+
+            utterance.lang = 'es-CL';
+            utterance.rate = 0.98;
+            utterance.pitch = 1.05;
+
+            utterance.onstart = () => setIsSpeaking(true);
+            utterance.onend = () => setIsSpeaking(false);
+            window.speechSynthesis.speak(utterance);
+        }, 100);
     };
 
     // Unified Flow Control: Speech + Auto-transition
