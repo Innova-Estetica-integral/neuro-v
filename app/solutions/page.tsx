@@ -23,7 +23,8 @@ import {
     Search,
     BrainCircuit,
     Clock,
-    Calendar
+    Calendar,
+    Minus
 } from 'lucide-react';
 
 const DonnaFloatingAssistant = () => {
@@ -93,7 +94,7 @@ const DonnaFloatingAssistant = () => {
                 const detectedType = Object.entries(types).find(([k]) => lowerMsg.includes(k))?.[1] || userMsg;
                 setUserContext(prev => ({ ...prev, businessType: detectedType }));
 
-                response = `Entendido. Perfilando arquitectura para sector ${detectedType}. Director, para optimizar tu soberanía operativa necesito saber: ¿Dónde detectas hoy la mayor fuga de ingresos o tiempo?`;
+                response = `Entendido. Perfilando arquitectura para sector ${detectedType}. Director, para optimizar tu autonomía operativa necesito saber: ¿Dónde detectas hoy la mayor fuga de ingresos o tiempo?`;
                 options = ['Agendas Vacías / No-Shows', 'Costo de Marketing Alto (CPA)', 'Carga Administrativa Manual', 'Seguimiento de Pacientes'];
             } else if (!userContext.mainChallenge) {
                 // Determine Main Challenge
@@ -102,9 +103,9 @@ const DonnaFloatingAssistant = () => {
                 if (lowerMsg.includes('agenda') || lowerMsg.includes('hueco') || lowerMsg.includes('vac')) {
                     response = `Protocolo de Optimización de Agenda: Para ${userContext.businessType}, NeuroV activa el motor "Flash Offer". Si detecto un hueco, el sistema contacta autónomamente a pacientes de alto valor para llenarlo. ¿Deseas ver cómo Donna recupera esos ingresos?`;
                 } else if (lowerMsg.includes('marketing') || lowerMsg.includes('costo') || lowerMsg.includes('anuncio') || lowerMsg.includes('cpa')) {
-                    response = `Protocolo de Soberanía Financiera: En el sector ${userContext.businessType}, la clave es la "Data Real". NeuroV sincroniza conversiones offline con Meta API para bajar tu CPA un 15% - 30%. ¿Activamos el blindaje de pauta?`;
+                    response = `Protocolo de Control Financiero: En el sector ${userContext.businessType}, la clave es la "Data Real". NeuroV sincroniza conversiones offline con Meta API para bajar tu CPA un 15% - 30%. ¿Activamos el blindaje de pauta?`;
                 } else {
-                    response = `Análisis de Soberanía: Para solucionar ${userMsg}, NeuroV centraliza la inteligencia operativa 24/7. ¿Sabías que puedo reducir tu carga administrativa en un 80% mediante asistentes automáticos?`;
+                    response = `Análisis de Gestión: Para solucionar ${userMsg}, NeuroV centraliza la inteligencia operativa 24/7. ¿Sabías que puedo reducir tu carga administrativa en un 80% mediante asistentes automáticos?`;
                 }
                 options = ['Ver Demostración', 'Hablar con Consultor', 'Seguir Diagnóstico'];
             } else {
@@ -116,16 +117,15 @@ const DonnaFloatingAssistant = () => {
                     response = `Sincronización con Meta API en curso. Enviando datos de conversión offline para retroalimentar el algoritmo. Estatus: ${executiveData.metaAds}.`;
                     type = 'status';
                 } else if (lowerMsg.includes('roi') || lowerMsg.includes('dinero') || lowerMsg.includes('rentabilidad')) {
-                    response = `Reporte Financiero: Tu ROI actual es de ${executiveData.roi}. He detectado una fuga de ingresos por falta de seguimiento inmediato. ¿Intervengo?`;
-                    type = 'alert';
+                    response = `Hola. Soy Donna, tu Directora de Operaciones. Mi arquitectura está diseñada para la gestión administrativa de tu clínica. Estoy monitoreando tus métricas en tiempo real. ¿En qué área necesitas mi intervención?`;
                 } else {
-                    response = `Reporte de Soberanía para ${userContext.businessType}: El sistema está operando en modo de alta eficiencia para resolver ${userContext.mainChallenge}. ¿En qué otro pilar necesitas mi diagnóstico?`;
+                    response = 'Orden reconocida bajo Protocolo General. Mi análisis de Meta Ads indica que podemos segmentar mejor los anuncios usando el perfilado psicográfico acumulado. ¿Deseas que prepare un reporte de ahorro proyectado?';
                 }
-            }
 
-            setChat(prev => [...prev, { role: 'donna', content: response, type, options }]);
-            speak(response);
-            setStep(prev => prev + 1);
+                setChat(prev => [...prev, { role: 'donna', content: response, type, options }]);
+                speak(response);
+                setStep(prev => prev + 1);
+            }
         }, 1200);
     };
 
@@ -149,15 +149,25 @@ const DonnaFloatingAssistant = () => {
                                 <h4 className="text-white font-black text-xs uppercase tracking-widest">Donna Executive <span className="text-indigo-500 ml-1">V7.5</span></h4>
                                 <div className="flex items-center gap-2 mt-1">
                                     <div className={`w-2 h-2 rounded-full ${isSpeaking ? 'bg-emerald-400 animate-pulse' : 'bg-gray-600'}`} />
-                                    <p className="text-indigo-400 text-[9px] font-black uppercase tracking-widest">Soberanía OPS Activada</p>
+                                    <p className="text-indigo-400 text-[9px] font-black uppercase tracking-widest">Excelencia OPS Activada</p>
                                 </div>
                             </div>
-                            <button
-                                onClick={() => { setIsOpen(false); window.speechSynthesis.cancel(); }}
-                                className="ml-auto p-3 text-gray-500 hover:text-white transition-colors"
-                            >
-                                <X size={24} />
-                            </button>
+                            <div className="ml-auto flex items-center gap-1">
+                                <button
+                                    onClick={() => { setIsOpen(false); window.speechSynthesis.cancel(); }}
+                                    className="p-2 text-gray-500 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                                    title="Minimizar"
+                                >
+                                    <Minus size={20} />
+                                </button>
+                                <button
+                                    onClick={() => { setIsOpen(false); window.speechSynthesis.cancel(); }}
+                                    className="p-2 text-gray-500 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                                    title="Cerrar"
+                                >
+                                    <X size={20} />
+                                </button>
+                            </div>
                         </div>
 
                         {/* Executive Dashboard Card (Real-time Intervention Data) */}
@@ -266,6 +276,13 @@ const DonnaFloatingAssistant = () => {
             <motion.button
                 whileHover={{ scale: 1.1, rotate: -2 }}
                 whileTap={{ scale: 0.9 }}
+                initial={false}
+                animate={{
+                    opacity: isOpen ? 0 : 1,
+                    scale: isOpen ? 0.8 : 1,
+                    pointerEvents: isOpen ? 'none' : 'auto',
+                    y: isOpen ? 20 : 0
+                }}
                 onClick={() => setIsOpen(!isOpen)}
                 className="relative w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-[0_45px_100px_-25px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.8),0_0_60px_rgba(0,242,255,0.35)] group overflow-hidden"
                 style={{
