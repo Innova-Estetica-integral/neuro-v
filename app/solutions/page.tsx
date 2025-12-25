@@ -24,34 +24,26 @@ import {
     BrainCircuit,
     Clock,
     Calendar,
-    Minus
+    Minus,
+    Volume2
 } from 'lucide-react';
 
 const DonnaFloatingAssistant = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [step, setStep] = useState(0);
     const [isSpeaking, setIsSpeaking] = useState(false);
-    const [chat, setChat] = useState<{ role: 'donna' | 'user' | 'system', content: string, type?: 'status' | 'alert', options?: string[] }[]>([
-        {
-            role: 'donna',
-            content: 'Protocolo de Inicio: Ejecutando diagnóstico de infraestructura... Hola, soy Donna, tu Directora de Operaciones. He detectado 3 puntos críticos de intervención para maximizar tu rentabilidad hoy. Antes de proceder: ¿Qué tipo de organización o clínica técnica diriges?',
-            type: 'status',
-            options: ['Estética/Medicina', 'Dental/Ortodoncia', 'Salud Mental/Psicología', 'Kinesiología/Fisio', 'Otro Sector']
-        }
-    ]);
     const [userContext, setUserContext] = useState<{ businessType?: string, mainChallenge?: string }>({});
     const [input, setInput] = useState('');
 
-    // Executive Data Simulation
-    const [executiveData] = useState({
-        roi: '+12.4%',
-        metaAds: 'Optimizado',
-        agendaGaps: 3,
-        ltv: '$2,450'
+    // Initial Welcome Flow
+    const [chat, setChat] = useState<{ role: 'donna', content: string, options?: string[] }>({
+        role: 'donna',
+        content: "Hola, soy Dona, la asistente virtual de Neuro-V.\n\nMi misión es liberar la carga operativa y potenciar el marketing, logrando que tu empresa funcione prácticamente en 'piloto automático'.\n\nEstoy lista para mejorar tu sistema, pero primero necesito entender tu entorno digital. Empecemos con un diagnóstico para identificar tus puntos clave de crecimiento.",
+        options: []
     });
 
     const speak = (text: string) => {
-        if (!window.speechSynthesis) return;
+        if (typeof window === 'undefined' || !window.speechSynthesis) return;
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'es-CL';
@@ -62,255 +54,207 @@ const DonnaFloatingAssistant = () => {
         window.speechSynthesis.speak(utterance);
     };
 
+    // Unified Flow Control: Speech + Auto-transition
     useEffect(() => {
-        if (isOpen && step === 0 && chat.length === 1) {
-            setTimeout(() => speak(chat[0].content), 500);
+        if (isOpen && step === 0) {
+            speak(chat.content);
+            const timer = setTimeout(() => {
+                handleSend('start');
+            }, 8000); // 8 seconds to read the greeting
+            return () => clearTimeout(timer);
         }
-    }, [isOpen]);
+    }, [isOpen, step, chat.content]);
 
     const handleSend = (presetMsg?: string) => {
         const userMsg = presetMsg || input;
         if (!userMsg.trim()) return;
-
-        setChat(prev => [...prev, { role: 'user', content: userMsg }]);
         setInput('');
 
         setTimeout(() => {
-            const lowerMsg = userMsg.toLowerCase();
-            let response = '';
-            let type: 'status' | 'alert' | undefined = undefined;
-            let options: string[] | undefined = undefined;
+            let nextResponse = '';
+            let nextOptions: string[] = [];
 
-            // Consultative Flow Logic
-            if (!userContext.businessType) {
-                // Determine Business Type
-                const types = {
-                    'estética': 'Estética/Médica',
-                    'dental': 'Dental/Odontológica',
-                    'psicología': 'Salud Mental',
-                    'kine': 'Kinesiología',
-                    'fisioterapia': 'Kinesiología'
-                };
-                const detectedType = Object.entries(types).find(([k]) => lowerMsg.includes(k))?.[1] || userMsg;
-                setUserContext(prev => ({ ...prev, businessType: detectedType }));
-
-                response = `Entendido. Perfilando arquitectura para sector ${detectedType}. Director, para optimizar tu autonomía operativa necesito saber: ¿Dónde detectas hoy la mayor fuga de ingresos o tiempo?`;
-                options = ['Agendas Vacías / No-Shows', 'Costo de Marketing Alto (CPA)', 'Carga Administrativa Manual', 'Seguimiento de Pacientes'];
-            } else if (!userContext.mainChallenge) {
-                // Determine Main Challenge
+            if (step === 0) {
+                nextResponse = "¿Cuál es tu área principal de especialización?";
+                nextOptions = ['Estética/Medicina', 'Dental/Ortodoncia', 'Salud Mental/Psicología', 'Kinesiología/Fisio', 'Otro Sector'];
+                setStep(1);
+            } else if (step === 1) {
+                setUserContext(prev => ({ ...prev, businessType: userMsg }));
+                nextResponse = `Entendido. Perfilando el sector ${userMsg}. Para optimizar tu autonomía, necesito saber: ¿Dónde detectas hoy la mayor fuga de ingresos o tiempo?`;
+                nextOptions = ['Agendas Vacías', 'Carga Administrativa', 'Costo de Marketing Alto', 'Seguimiento de Pacientes'];
+                setStep(2);
+            } else if (step === 2) {
                 setUserContext(prev => ({ ...prev, mainChallenge: userMsg }));
-
-                if (lowerMsg.includes('agenda') || lowerMsg.includes('hueco') || lowerMsg.includes('vac')) {
-                    response = `Protocolo de Optimización de Agenda: Para ${userContext.businessType}, NeuroV activa el motor "Flash Offer". Si detecto un hueco, el sistema contacta autónomamente a pacientes de alto valor para llenarlo. ¿Deseas ver cómo Donna recupera esos ingresos?`;
-                } else if (lowerMsg.includes('marketing') || lowerMsg.includes('costo') || lowerMsg.includes('anuncio') || lowerMsg.includes('cpa')) {
-                    response = `Protocolo de Control Financiero: En el sector ${userContext.businessType}, la clave es la "Data Real". NeuroV sincroniza conversiones offline con Meta API para bajar tu CPA un 15% - 30%. ¿Activamos el blindaje de pauta?`;
+                if (userMsg.includes('Agendas') || userMsg.includes('Marketing')) {
+                    nextResponse = "Activaré el motor 'Flash Offer' para cubrir huecos detectados contactando pacientes de alto valor de forma autónoma. ¿Deseas ver una demostración estratégica?";
                 } else {
-                    response = `Análisis de Gestión: Para solucionar ${userMsg}, NeuroV centraliza la inteligencia operativa 24/7. ¿Sabías que puedo reducir tu carga administrativa en un 80% mediante asistentes automáticos?`;
+                    nextResponse = "NeuroV centraliza la inteligencia operativa 24/7. Puedo reducir tu carga administrativa en un 80% mediante asistentes IA de élite. ¿Te gustaría conocer el plan?";
                 }
-                options = ['Ver Demostración', 'Hablar con Consultor', 'Seguir Diagnóstico'];
-            } else {
-                // Executive Intent Engine (General Mode)
-                if (lowerMsg.includes('lanzar') || lowerMsg.includes('flash') || lowerMsg.includes('ofrecer')) {
-                    response = `Ejecutando Protocolo Flash Offer. Interviniendo base de datos para cubrir los ${executiveData.agendaGaps} espacios vacíos detectados. Prioridad: Segmento Platinum (${executiveData.ltv}). ¿Confirmas sincronización con Meta API?`;
-                    type = 'status';
-                } else if (lowerMsg.includes('sync') || lowerMsg.includes('sincronizar') || lowerMsg.includes('meta')) {
-                    response = `Sincronización con Meta API en curso. Enviando datos de conversión offline para retroalimentar el algoritmo. Estatus: ${executiveData.metaAds}.`;
-                    type = 'status';
-                } else if (lowerMsg.includes('roi') || lowerMsg.includes('dinero') || lowerMsg.includes('rentabilidad')) {
-                    response = `Hola. Soy Donna, tu Directora de Operaciones. Mi arquitectura está diseñada para la gestión administrativa de tu clínica. Estoy monitoreando tus métricas en tiempo real. ¿En qué área necesitas mi intervención?`;
-                } else {
-                    response = 'Orden reconocida bajo Protocolo General. Mi análisis de Meta Ads indica que podemos segmentar mejor los anuncios usando el perfilado psicográfico acumulado. ¿Deseas que prepare un reporte de ahorro proyectado?';
-                }
-
-                setChat(prev => [...prev, { role: 'donna', content: response, type, options }]);
-                speak(response);
-                setStep(prev => prev + 1);
+                nextOptions = ['Ver Demostración', 'Hablar con Consultor', 'Finalizar Diagnóstico'];
+                setStep(3);
             }
-        }, 1200);
+
+            if (nextResponse) {
+                setChat({ role: 'donna', content: nextResponse, options: nextOptions });
+                speak(nextResponse);
+            }
+        }, 300);
     };
 
     return (
-        <div className="fixed bottom-10 right-10 z-[200]">
+        <>
             <AnimatePresence>
                 {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.8, y: 20 }}
-                        className="absolute bottom-28 right-0 w-[380px] sm:w-[450px] bg-white rounded-[3rem] shadow-[0_64px_128px_-32px_rgba(0,0,0,0.3)] border border-gray-100 overflow-hidden"
-                    >
-                        {/* Executive Header */}
-                        <div className="bg-gray-950 p-8 flex items-center gap-5 relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl -mr-10 -mt-10" />
-                            <div className={`w-14 h-14 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center justify-center transition-all ${isSpeaking ? 'scale-110 shadow-[0_0_30px_rgba(0,242,255,0.3)]' : ''}`}>
-                                <BrainCircuit className="text-[#00f2ff] w-8 h-8 drop-shadow-[0_0_8px_rgba(0,242,255,0.6)]" />
-                            </div>
-                            <div>
-                                <h4 className="text-white font-black text-xs uppercase tracking-widest">Donna Executive <span className="text-indigo-500 ml-1">V7.5</span></h4>
-                                <div className="flex items-center gap-2 mt-1">
-                                    <div className={`w-2 h-2 rounded-full ${isSpeaking ? 'bg-emerald-400 animate-pulse' : 'bg-gray-600'}`} />
-                                    <p className="text-indigo-400 text-[9px] font-black uppercase tracking-widest">Excelencia OPS Activada</p>
-                                </div>
-                            </div>
-                            <div className="ml-auto flex items-center gap-1">
-                                <button
-                                    onClick={() => { setIsOpen(false); window.speechSynthesis.cancel(); }}
-                                    className="p-2 text-gray-500 hover:text-white hover:bg-white/10 rounded-xl transition-all"
-                                    title="Minimizar"
-                                >
-                                    <Minus size={20} />
-                                </button>
-                                <button
-                                    onClick={() => { setIsOpen(false); window.speechSynthesis.cancel(); }}
-                                    className="p-2 text-gray-500 hover:text-white hover:bg-white/10 rounded-xl transition-all"
-                                    title="Cerrar"
-                                >
-                                    <X size={20} />
-                                </button>
-                            </div>
-                        </div>
+                    <>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => { setIsOpen(false); window.speechSynthesis.cancel(); }}
+                            className="fixed inset-0 bg-black/10 z-[200]"
+                        />
 
-                        {/* Executive Dashboard Card (Real-time Intervention Data) */}
-                        <div className="px-8 pt-8 pb-4 bg-gray-50/50">
-                            <div className="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 grid grid-cols-3 gap-4">
-                                <div className="text-center border-r border-gray-100">
-                                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">ROI Mensual</p>
-                                    <p className="text-sm font-black text-emerald-600">{executiveData.roi}</p>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                            className="fixed inset-0 m-auto z-[201] h-[640px] bg-white/20 backdrop-blur-md rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-white/60 overflow-hidden flex flex-col pt-10 px-8"
+                            style={{ width: '400px', minWidth: '400px', maxWidth: '400px' }}
+                        >
+                            <div className="absolute inset-x-0 top-0 h-[500px] flex items-center justify-center pointer-events-none opacity-40">
+                                <div className="w-[300px] h-[400px] bg-gradient-to-b from-indigo-500/5 via-transparent to-transparent blur-[80px] rounded-full" />
+                            </div>
+
+                            <div className="relative z-10 flex justify-center mb-6">
+                                <span className="text-[8px] font-black text-indigo-400/60 uppercase tracking-[0.5em]">Executive AI // NeuroV V7.5</span>
+                            </div>
+
+                            <div className="flex items-center gap-3 relative shrink-0 z-10 px-1">
+                                <div className="relative">
+                                    <div className="w-12 h-12 rounded-full border-2 border-white/50 p-0.5 relative z-10 overflow-hidden shadow-sm">
+                                        <div className="w-full h-full rounded-full bg-white/60 backdrop-blur-md flex items-center justify-center overflow-hidden">
+                                            <BrainCircuit className="text-indigo-600 w-5 h-5 animate-pulse" />
+                                        </div>
+                                    </div>
+                                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white z-20" />
                                 </div>
-                                <div className="text-center border-r border-gray-100">
-                                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Agenda Gaps</p>
-                                    <p className="text-sm font-black text-amber-500">{executiveData.agendaGaps}</p>
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Meta Ads</p>
-                                    <p className="text-[10px] font-black text-indigo-600 uppercase">ÓPTIMO</p>
+                                <div className="flex-1">
+                                    <h4 className="text-gray-900 font-black text-sm tracking-tighter leading-tight">DONNA - ASISTENTE VIRTUAL</h4>
+                                    <div className="flex items-center gap-1.5 mt-0.5">
+                                        <div className="w-1 h-1 rounded-full bg-indigo-600" />
+                                        <p className="text-indigo-600 text-[8px] font-black uppercase tracking-[0.1em] opacity-80">ACTIVA</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="h-[350px] overflow-y-auto p-8 pt-4 space-y-6 bg-gray-50/50 scroll-smooth">
-                            {chat.map((msg, i) => (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    key={i}
-                                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                                >
-                                    <div className={`max-w-[85%] p-6 rounded-[2.5rem] text-[13px] font-medium leading-[1.6] ${msg.role === 'user'
-                                        ? 'bg-indigo-600 text-white rounded-tr-none shadow-lg shadow-indigo-100'
-                                        : msg.type === 'status'
-                                            ? 'bg-gray-900 text-emerald-400 border border-emerald-500/30 rounded-tl-none font-mono text-[11px]'
-                                            : msg.type === 'alert'
-                                                ? 'bg-amber-50 text-amber-900 border border-amber-200 rounded-tl-none'
-                                                : 'bg-white text-gray-800 border border-gray-100 rounded-tl-none shadow-sm'
-                                        }`}>
-                                        {msg.content}
+                            <div className="flex-1 flex flex-col justify-center px-4 relative z-10">
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={step}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                        transition={{ duration: 0.8, ease: "easeOut" }}
+                                        className="flex flex-col items-center text-center space-y-8"
+                                    >
+                                        <div className="space-y-4 max-w-sm">
+                                            <motion.h3
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ duration: 1.5, delay: 0.2 }}
+                                                className="text-slate-800 text-lg sm:text-xl font-medium leading-relaxed tracking-tight whitespace-pre-wrap"
+                                            >
+                                                {chat.content}
+                                            </motion.h3>
+                                        </div>
 
-                                        {/* Quick Reply Options */}
-                                        {msg.options && (
-                                            <div className="mt-6 flex flex-wrap gap-2">
-                                                {msg.options.map((opt, j) => (
+                                        {chat.options && chat.options.length > 0 && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 1, duration: 0.8 }}
+                                                className="w-full max-w-[280px] grid grid-cols-1 gap-2 pt-2"
+                                            >
+                                                {chat.options.map((opt, j) => (
                                                     <button
                                                         key={j}
                                                         onClick={() => handleSend(opt)}
-                                                        className="px-4 py-2 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 rounded-full text-indigo-600 text-[10px] font-black uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
+                                                        className="w-full px-6 py-4 bg-white/60 hover:bg-white/90 border border-white/80 rounded-2xl text-indigo-600 text-xs font-bold uppercase tracking-widest transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
                                                     >
                                                         {opt}
                                                     </button>
                                                 ))}
-                                            </div>
+                                            </motion.div>
                                         )}
-                                    </div>
-                                </motion.div>
-                            ))}
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
 
-                            {isSpeaking && (
-                                <div className="flex gap-1.5 items-end justify-center py-4">
-                                    {[0.1, 0.4, 0.2, 0.6, 0.3, 0.5, 0.2].map((delay, i) => (
-                                        <motion.div
-                                            key={i}
-                                            animate={{ height: [8, 30, 8] }}
-                                            transition={{ duration: 0.6, repeat: Infinity, delay }}
-                                            className="w-1 bg-indigo-500/30 rounded-full"
+                            {step > 0 && (
+                                <div className="p-6 pt-0 relative z-10">
+                                    <div className="relative group flex gap-2">
+                                        <input
+                                            type="text"
+                                            value={input}
+                                            onChange={(e) => setInput(e.target.value)}
+                                            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                                            placeholder="Responde aquí..."
+                                            className="flex-1 bg-white/40 border border-white/60 rounded-2xl px-6 py-4 text-xs font-bold text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all shadow-sm"
                                         />
-                                    ))}
+                                        <button
+                                            onClick={() => handleSend()}
+                                            className="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center hover:bg-indigo-700 transition-all shadow-lg active:scale-95"
+                                        >
+                                            <Send size={16} />
+                                        </button>
+                                    </div>
                                 </div>
                             )}
-                        </div>
 
-                        {/* Executive Action Protocols */}
-                        <div className="px-8 pb-4 flex gap-2 overflow-x-auto no-scrollbar">
                             <button
-                                onClick={() => handleSend("Lanzar Flash Offer p/ Agenda")}
-                                className="whitespace-nowrap px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-indigo-100 hover:bg-indigo-100 transition-all"
+                                onClick={() => { setIsOpen(false); window.speechSynthesis.cancel(); }}
+                                className="absolute top-8 right-8 p-3 text-gray-400 hover:text-gray-900 transition-colors z-20"
                             >
-                                <Zap size={10} className="inline mr-1" /> Protocolo Flash Offer
+                                <X size={20} />
                             </button>
-                            <button
-                                onClick={() => handleSend("Sincronizar Meta Ads")}
-                                className="whitespace-nowrap px-4 py-2 bg-emerald-50 text-emerald-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-emerald-100 hover:bg-emerald-100 transition-all"
-                            >
-                                <TrendingUp size={10} className="inline mr-1" /> Sync Meta API
-                            </button>
-                        </div>
-
-                        <div className="p-8 pt-2 bg-white border-t border-gray-50 flex gap-4">
-                            <input
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                                placeholder="Orden de intervención..."
-                                className="flex-1 bg-gray-50/80 border-none rounded-2xl px-6 py-4 text-xs font-medium focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-gray-300"
-                            />
-                            <button
-                                onClick={() => handleSend()}
-                                className="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center hover:bg-indigo-600 transition-all shadow-xl shadow-gray-200"
-                            >
-                                <Send size={22} />
-                            </button>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
 
-            <motion.button
-                whileHover={{ scale: 1.1, rotate: -2 }}
-                whileTap={{ scale: 0.9 }}
-                initial={false}
-                animate={{
-                    opacity: isOpen ? 0 : 1,
-                    scale: isOpen ? 0.8 : 1,
-                    pointerEvents: isOpen ? 'none' : 'auto',
-                    y: isOpen ? 20 : 0
-                }}
-                onClick={() => setIsOpen(!isOpen)}
-                className="relative w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-[0_45px_100px_-25px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.8),0_0_60px_rgba(0,242,255,0.35)] group overflow-hidden"
-                style={{
-                    background: 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 60%, rgba(0,242,255,0.05) 100%)'
-                }}
-            >
-                {/* Primary Pure Shimmer (Slow Sweep) */}
-                <motion.div
-                    animate={{ x: [-150, 250] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-[30deg]"
-                />
-
-                {/* Secondary Cyber-Cyan Glow Reflection (Fast Sweep) */}
-                <motion.div
-                    animate={{ x: [-200, 250] }}
-                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent -skew-x-[30deg]"
-                />
-
-                {/* Cyber-Cyan Neural Icon (Immersive Translucency) */}
-                <div className="relative z-10 flex flex-col items-center opacity-60">
-                    <BrainCircuit
-                        className="w-10 h-10 stroke-[1.1] text-[#00f2ff] drop-shadow-[0_0_12px_rgba(0,242,255,0.8)]"
+            <div className="fixed bottom-10 right-10 z-[200]">
+                <motion.button
+                    whileHover={{ scale: 1.1, rotate: -2 }}
+                    whileTap={{ scale: 0.9 }}
+                    initial={false}
+                    animate={{
+                        opacity: isOpen ? 0 : 1,
+                        scale: isOpen ? 0.8 : 1,
+                        pointerEvents: isOpen ? 'none' : 'auto',
+                        y: isOpen ? 20 : 0
+                    }}
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="relative w-16 h-16 sm:w-20 sm:h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-[0_45px_100px_-25px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.8),0_0_60px_rgba(0,242,255,0.35)] group overflow-hidden"
+                    style={{
+                        background: 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 60%, rgba(0,242,255,0.05) 100%)'
+                    }}
+                >
+                    <motion.div
+                        animate={{ x: [-200, 250] }}
+                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent -skew-x-[30deg]"
                     />
-                </div>
-            </motion.button>
-        </div>
+
+                    {/* Cyber-Cyan Neural Icon (Immersive Translucency) */}
+                    <div className="relative z-10 flex flex-col items-center opacity-60">
+                        <BrainCircuit
+                            className="w-10 h-10 stroke-[1.1] text-[#00f2ff] drop-shadow-[0_0_12px_rgba(0,242,255,0.8)]"
+                        />
+                    </div>
+                </motion.button>
+            </div>
+        </>
     );
 };
 
