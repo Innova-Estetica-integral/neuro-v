@@ -64,7 +64,7 @@ const DonnaFloatingAssistant = () => {
             if (bestVoice) utterance.voice = bestVoice;
 
             utterance.lang = 'es-CL';
-            utterance.rate = 0.98;
+            utterance.rate = 1.1;
             utterance.pitch = 1.05;
 
             utterance.onstart = () => setIsSpeaking(true);

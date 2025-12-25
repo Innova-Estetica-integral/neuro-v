@@ -74,7 +74,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
                 if (bestVoice) utterance.voice = bestVoice;
 
                 utterance.lang = 'es-CL';
-                utterance.rate = 0.98; // Slightly slower for better articulation
+                utterance.rate = 1.1; // Increased for better fluidity
                 utterance.pitch = 1.05; // Slightly warmer tone
                 utterance.volume = 1;
 
