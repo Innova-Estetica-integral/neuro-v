@@ -159,20 +159,21 @@ const DonnaFloatingAssistant = () => {
                 whileHover={{ scale: 1.1, rotate: -2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-24 h-24 bg-indigo-600/90 backdrop-blur-3xl rounded-3xl flex items-center justify-center shadow-[0_32px_64px_-16px_rgba(79,70,229,0.5),inset_0_0_0_1px_rgba(255,255,255,0.3)] group overflow-hidden border border-white/20"
+                className="relative w-24 h-24 bg-white/40 backdrop-blur-3xl rounded-3xl flex items-center justify-center shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2),inset_0_0_0_1px_rgba(255,255,255,0.4)] group overflow-hidden border border-white/50"
                 style={{
-                    background: 'radial-gradient(circle at 30% 30%, rgba(99,102,241,1) 0%, rgba(67,56,202,1) 100%)'
+                    background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 100%)'
                 }}
             >
                 {/* Visual Diamond Shimmer */}
                 <motion.div
                     animate={{ x: [-150, 300] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12"
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -skew-x-12"
                 />
 
-                <div className="relative z-10 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] flex flex-col items-center">
-                    <BrainCircuit className="w-12 h-12 stroke-[1.5]" />
+                {/* Brilliant White Icon with High-Intensity Glow */}
+                <div className="relative z-10 text-white drop-shadow-[0_0_20px_rgba(255,255,255,1)] flex flex-col items-center">
+                    <BrainCircuit className="w-12 h-12 stroke-[1.8]" />
                 </div>
 
                 {/* Pulse Status */}
