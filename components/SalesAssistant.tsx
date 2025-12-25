@@ -28,8 +28,8 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
     };
 
     const initialMessage = mode === 'technical'
-        ? 'Protocolo de Auditoría NeuroV activo. ¿Iniciamos el diagnóstico de interoperabilidad y conversión?'
-        : 'Hola, soy el Cerebro de Ventas de NeuroV. Analicemos el potencial de optimización de tu clínica. ¿Comenzamos?';
+        ? 'Soy Donna. He procesado tu flujo de trabajo y ya sé dónde están tus fugas de ingresos. ¿Empezamos a taparlas?'
+        : 'Soy Donna. Tu clínica tiene potencial, pero le falta mi orden. Analicemos tus números para darte el control total. ¿Lista?';
 
     const [messages, setMessages] = useState<Message[]>([
         { role: 'bot', content: initialMessage }
@@ -72,28 +72,28 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
     const getAdaptiveMessage = (step: string, context?: any) => {
         const messages: Record<string, Record<PsychProfile, string>> = {
             intro: {
-                analytic: 'Protocolo de auditoría BANT iniciado. Analizando viabilidad técnica e interoperabilidad de su flujo de pacientes.',
-                impulsive: 'Perfecto. Vamos a identificar oportunidades de optimización inmediatas en tu operación.',
-                price_sensitive: 'Excelente. El objetivo es maximizar tu ROI reduciendo costos operativos por inasistencias.',
-                hesitant: 'Entendido. Haremos un diagnóstico objetivo para evaluar si NeuroV se ajusta a tus necesidades.'
+                analytic: 'Iniciando mi auditoría BANT. Voy a diseccionar tu flujo de pacientes para encontrar el ROI escondido.',
+                impulsive: 'Me gusta tu velocidad. Vamos directo a las oportunidades de dinero que estás ignorando hoy.',
+                price_sensitive: 'Sabes que cada peso cuenta. Mi meta es que tu sistema se pague solo antes de que termine el mes.',
+                hesitant: 'Tranquila, estás en buenas manos. Haré un diagnóstico honesto para ver si estás lista para el siguiente nivel.'
             },
             leads_q: {
-                analytic: 'Pregunta 1/3: ¿Cuál es su volumen promedio de adquisición de prospectos (leads) mensuales?',
-                impulsive: 'Primera pregunta: ¿Cuántos leads o consultas recibes mensualmente?',
-                price_sensitive: 'Para calcular el retorno: ¿Cuántos contactos comerciales generas mensualmente?',
-                hesitant: 'Comencemos: ¿Aproximadamente cuántos interesados recibe tu clínica cada mes?'
+                analytic: 'Primero, la base: ¿Cuántos pacientes nuevos entran al mes? Sé precisa, los decimales importan.',
+                impulsive: 'Dame el número: ¿Cuántos pacientes nuevos recibes mensualmente?',
+                price_sensitive: 'Hablemos de escala: ¿Cuántos contactos comerciales generas al mes?',
+                hesitant: 'Empecemos por lo básico: ¿Cuántos interesados llegan a tu clínica cada mes?'
             },
             ticket_q: {
-                analytic: 'Pregunta 2/3: Para el cálculo de rentabilidad, ¿cuál es el ticket promedio de sus procedimientos de alta gama?',
-                impulsive: '¿Cuál es el valor promedio de tus tratamientos principales?',
-                price_sensitive: '¿Cuál es el ticket promedio de tus servicios con mayor margen?',
-                hesitant: '¿Cuál suele ser el valor promedio de tus tratamientos?'
+                analytic: 'Correcto. Ahora el ticket promedio. ¿Cuál es el valor real de tus procedimientos estrella?',
+                impulsive: '¿Cuánto te paga un paciente promedio? Dame el número de tus tratamientos principales.',
+                price_sensitive: 'Necesito ver el margen. ¿Cuál es el valor promedio de tus servicios?',
+                hesitant: 'Vamos bien. ¿Qué valor suele tener un tratamiento promedio en tu consulta?'
             },
             authority_q: {
-                analytic: 'Pregunta 3/3: ¿Posee usted la facultad de firma para implementaciones de arquitectura digital o requiere validación de socios?',
-                impulsive: 'Última pregunta: ¿Tomas las decisiones de inversión en tecnología o lo evalúas con socios?',
-                price_sensitive: '¿Eres el tomador de decisiones de inversión o lo evalúas en equipo?',
-                hesitant: 'Finalmente: ¿Tomas las decisiones tecnológicas o las evalúas con tu equipo?'
+                analytic: 'Soy Donna, así que hablo con quien decide. ¿Tienes autoridad total o debo convencer a tus socios?',
+                impulsive: 'Última pregunta: ¿Eres tú quien tiene la última palabra o hay socios en el camino?',
+                price_sensitive: '¿Decides tú la inversión o es una decisión compartida?',
+                hesitant: 'Finalmente: ¿Eres tú el pilar de decisiones o compartes esa responsabilidad estratégica?'
             }
         };
         return messages[step][profile];
@@ -177,23 +177,23 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
 
         if (isElite) {
             const closing = {
-                analytic: `AUDITORÍA POSITIVA (CATEGORÍA ELITE): Detectamos una fuga estimada de $${(potentialWaste / 1000000).toFixed(1)}M mensuales. Su estructura es prioritaria para integración técnica.`,
-                impulsive: `¡DIAGNÓSTICO CRÍTICO! Estás perdiendo casi $${(potentialWaste / 1000).toFixed(0)} mil pesos al mes. Tu clínica es categoría ELITE. Reserva tu cupo técnico ahora.`,
-                price_sensitive: `ROI PROYECTADO: 5.2x. El sistema se paga solo con el primer paciente rescatado. Su clínica califica para nuestro programa de alto impacto.`,
-                hesitant: `EXCELENTES NOTICIAS. Tras el análisis, confirmamos que su clínica posee una estructura robusta. Es el momento perfecto para blindar sus ingresos.`
+                analytic: `AUDITORÍA POSITIVA: He identificado una fuga de $${(potentialWaste / 1000000).toFixed(1)}M mensuales. Tu estructura es ELITE. No pierdas más tiempo, hablemos de implementación.`,
+                impulsive: `¡DIAGNÓSTICO CRÍTICO! Estás quemando $${(potentialWaste / 1000).toFixed(0)} mil pesos al mes. Eres categoría ELITE. Reserva tu sesión técnica ahora, yo me encargo del resto.`,
+                price_sensitive: `ROI PROYECTADO: 5.2x. El sistema se paga solo rescatando a tu primer paciente. Tu clínica merece el estándar ELITE.`,
+                hesitant: `EXCELENTES NOTICIAS. Tu clínica es una máquina robusta. Es el momento de blindarla. Hagamos esa demo técnica pronto.`
             };
             addBotMessage(closing[profile]);
         } else {
             const highGrowth = {
-                analytic: `DIAGNÓSTICO: ALTO POTENCIAL. Hemos identificado una oportunidad de optimización de ingresos de $${(potentialWaste / 1000).toFixed(0)} mil pesos. Califica para nuestro programa de Crecimiento Acelerado.`,
-                impulsive: `¡BUENAS NOTICIAS! Tienes un potencial de crecimiento masivo. Vamos a detener esa fuga de dinero hoy mismo. Agenda tu sesión técnica.`,
-                price_sensitive: `EVALUACIÓN POSITIVA: NeuroV escalará su rentabilidad de forma inmediata. Su clínica califica para el acceso de implementación rápida.`,
-                hesitant: `TODO LISTO. Hemos verificado que NeuroV puede ayudarle a dar el siguiente paso con total seguridad. Su clínica es elegible para nuestra demo técnica.`
+                analytic: `DIAGNÓSTICO: ALTO POTENCIAL. Veo una oportunidad de $${(potentialWaste / 1000).toFixed(0)} mil pesos adicionales al mes. Calificas para mi plan de Crecimiento Acelerado.`,
+                impulsive: `¡TIENES UN POTENCIAL MASIVO! Vamos a detener esa fuga de dinero hoy mismo. Agenda tu sesión y hablemos de escala.`,
+                price_sensitive: `EVALUACIÓN POSITIVA: NeuroV escalará tu rentabilidad de inmediato. Es la inversión más inteligente que harás este año.`,
+                hesitant: `TODO LISTO. NeuroV te dará la seguridad para dar el siguiente paso. Eres elegible para mi demo técnica personalizada.`
             };
             addBotMessage(highGrowth[profile]);
 
             if (!isDecider) {
-                addBotMessage("Tip: Como consulta con socios, le enviaremos un reporte de impacto para que puedan evaluarlo juntos en la sesión.");
+                addBotMessage("Tip: Como consultas con socios, ya preparé un reporte de impacto para que los dejes sin palabras en la sesión.");
             }
         }
     };
@@ -269,7 +269,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
                                         <CyberAvatar size={64} isActive={isSpeaking} />
                                     </div>
                                     <div className="relative z-10 flex-1">
-                                        <h4 className="font-black text-white uppercase tracking-tighter text-lg leading-none mb-1">Asistente NeuroV</h4>
+                                        <h4 className="font-black text-white uppercase tracking-tighter text-lg leading-none mb-1">Donna - Directora OPS</h4>
                                         <div className="flex items-center gap-1.5">
                                             <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.6)]" />
                                             <span className="text-[10px] text-cyan-400 font-black uppercase tracking-widest">

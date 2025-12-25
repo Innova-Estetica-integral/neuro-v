@@ -93,8 +93,8 @@ function CorporateHomeContent() {
                     </div>
 
                     <div className="hidden lg:flex items-center gap-8">
-                        <a href="/growth" className="text-[10px] font-black uppercase tracking-widest text-indigo-400 hover:text-white transition-colors border border-indigo-500/20 px-4 py-2 rounded-full bg-indigo-500/5">
-                            Ver Versión Comercial (Ventas)
+                        <a href="/solutions" className="text-[10px] font-black uppercase tracking-widest text-indigo-400 hover:text-white transition-colors border border-indigo-500/20 px-4 py-2 rounded-full bg-indigo-500/5">
+                            Explorar Servicios V7+
                         </a>
                     </div>
 

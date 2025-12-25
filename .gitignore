@@ -38,9 +38,10 @@ next-env.d.ts
 # Excluimos todo lo que no sea código para asegurar el despliegue
 *.md
 *.txt
-*.sql
 *.log
 *.pdf
+*.sql
+!supabase/migrations/*.sql
 !README.md
 !package.json
 !tsconfig.json

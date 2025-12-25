@@ -77,6 +77,20 @@ export async function GET(request: Request) {
             .order('start', { ascending: false })
             .limit(10);
 
+        // Donna Insights (Proactive intelligence)
+        let insightsQuery = supabase
+            .from('donna_insights')
+            .select('*')
+            .eq('status', 'pending')
+            .order('created_at', { ascending: false })
+            .limit(5);
+
+        if (clinicId) {
+            insightsQuery = insightsQuery.eq('clinic_id', clinicId);
+        }
+
+        const { data: insights } = await insightsQuery;
+
         return NextResponse.json({
             stats: {
                 totalAppointments: totalAppointments || 0,
@@ -85,7 +99,8 @@ export async function GET(request: Request) {
                 conversionRate: `${conversionRate}%`
             },
             chartData,
-            recentAppointments: recentAppointments || []
+            recentAppointments: recentAppointments || [],
+            donnaInsights: insights || []
         });
 
     } catch (error) {

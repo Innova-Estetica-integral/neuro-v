@@ -131,7 +131,8 @@ export async function updatePatientProfile(
         .from('patient')
         .update({
             psych_profile: profile,
-            last_interaction_at: new Date().toISOString()
+            last_interaction_at: new Date().toISOString(),
+            ltv_total: 0 // Placeholder: would be updated by billing events
         })
         .eq('id', patientId)
         .eq('clinic_id', clinicId);

@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { commitTransaction } from '@/lib/payment/transbank';
 import { createAuditLog } from '@/lib/audit-logger';
+import { billingService } from '@/lib/integrations/billing-service';
 
 export async function POST(req: NextRequest) {
     const supabase = await createClient();
@@ -104,6 +105,40 @@ export async function POST(req: NextRequest) {
             outcome: 'success',
             description: `Payment approved: ${result.authorizationCode}`,
         });
+
+        // --- NEW: Generate Electronic Boleta ---
+        try {
+            const { data: appointmentData } = await supabase
+                .from('appointment')
+                .select('*, patient(*), clinics(*)')
+                .eq('id', appointmentId)
+                .single();
+
+            if (appointmentData) {
+                const billingRequest = {
+                    customerName: appointmentData.patient.full_name,
+                    customerEmail: appointmentData.patient.email,
+                    items: [
+                        {
+                            name: 'Servicio Clínico NeuroV',
+                            quantity: 1,
+                            price: result.amount || 0
+                        }
+                    ],
+                    paymentType: 'cre' as const,
+                    externalId: result.authorizationCode
+                };
+
+                await billingService.processBillingAfterPayment(
+                    appointmentData.clinic_id,
+                    appointmentId,
+                    billingRequest
+                );
+            }
+        } catch (billingErr) {
+            console.error('Non-blocking billing error in Transbank Return:', billingErr);
+        }
+        // --- END: Generate Electronic Boleta ---
 
         // TODO: Send confirmation email/WhatsApp
         // TODO: Send offline conversion to Google Ads

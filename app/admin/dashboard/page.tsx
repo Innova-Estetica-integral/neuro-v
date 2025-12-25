@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { StatsCard } from '@/components/StatsCard';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { DonnaBrain, DonnaInsight } from '@/components/DonnaBrain';
 import {
     LucideCalendar,
     LucideDollarSign,
@@ -40,6 +41,7 @@ export default function AdminDashboard() {
     const [stats, setStats] = useState<DashboardStats | null>(null);
     const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
     const [recentAppointments, setRecentAppointments] = useState<Appointment[]>([]);
+    const [donnaInsights, setDonnaInsights] = useState<DonnaInsight[]>([]);
 
     useEffect(() => {
         async function fetchDashboardData() {
@@ -50,6 +52,7 @@ export default function AdminDashboard() {
                 setStats(data.stats);
                 setChartData(data.chartData);
                 setRecentAppointments(data.recentAppointments);
+                setDonnaInsights(data.donnaInsights);
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
             } finally {
@@ -68,14 +71,31 @@ export default function AdminDashboard() {
         <div className="min-h-screen bg-gray-50 p-6">
             <div className="max-w-7xl mx-auto space-y-6">
                 {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-black text-gray-900 mb-2">
-                        Dashboard
-                    </h1>
-                    <p className="text-gray-600">
-                        Resumen de métricas y actividad
-                    </p>
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <h1 className="text-3xl font-black text-gray-900 mb-2">
+                            Dashboard
+                        </h1>
+                        <p className="text-gray-600">
+                            Resumen de métricas y actividad
+                        </p>
+                    </div>
+                    <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="text-right">
+                            <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest">Modo Ejecutivo</p>
+                            <p className="text-xs text-gray-500">Donna actúa por su cuenta</p>
+                        </div>
+                        <button
+                            onClick={() => alert('Activando Modo Ejecutivo...')}
+                            className="w-12 h-6 bg-gray-200 rounded-full relative transition-colors duration-200 focus:outline-none"
+                        >
+                            <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm" />
+                        </button>
+                    </div>
                 </div>
+
+                {/* Donna Engine */}
+                <DonnaBrain insights={donnaInsights} />
 
                 {/* KPI Cards */}
                 {stats && (
