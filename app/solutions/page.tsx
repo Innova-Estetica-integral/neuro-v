@@ -159,39 +159,27 @@ const DonnaFloatingAssistant = () => {
                 whileHover={{ scale: 1.1, rotate: -2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-24 h-24 bg-white/40 backdrop-blur-3xl rounded-3xl flex items-center justify-center shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3),rgba(255,255,255,0.5)_0_0_0_1px_inset,0_0_30px_rgba(99,102,241,0.2)] group overflow-hidden border border-white/50"
+                className="relative w-20 h-20 bg-white/40 backdrop-blur-3xl rounded-2xl flex items-center justify-center shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3),rgba(255,255,255,0.5)_0_0_0_1px_inset,0_0_40px_rgba(0,242,255,0.25)] group overflow-hidden border border-white/50"
                 style={{
-                    background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 100%)'
+                    background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(0,242,255,0.05) 100%)'
                 }}
             >
-                {/* Visual Diamond Shimmer */}
+                {/* Visual Diamond Shimmer (Cyan Tinted) */}
                 <motion.div
                     animate={{ x: [-150, 300] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -skew-x-12"
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -skew-x-12"
                 />
 
-                <svg width="0" height="0" className="absolute">
-                    <defs>
-                        <linearGradient id="cyberGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#22D3EE" />
-                            <stop offset="50%" stopColor="#FFFFFF" />
-                            <stop offset="100%" stopColor="#818CF8" />
-                        </linearGradient>
-                    </defs>
-                </svg>
-
-                {/* Cyber-Cyan Neural Core with Electric Aura */}
+                {/* Cyber-Cyan Neural Icon (Finer & More Delicate) */}
                 <div className="relative z-10 flex flex-col items-center">
-                    <div className="absolute inset-0 bg-cyan-400/40 blur-[25px] rounded-full animate-pulse" />
                     <BrainCircuit
-                        className="w-12 h-12 stroke-[2.2] drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]"
-                        style={{ stroke: 'url(#cyberGradient)' }}
+                        className="w-10 h-10 stroke-[1.2] text-[#00f2ff] drop-shadow-[0_0_12px_rgba(0,242,255,0.6)]"
                     />
                 </div>
 
                 {/* Pulse Status */}
-                <div className="absolute top-4 right-4 w-4 h-4 bg-emerald-400 rounded-full border-2 border-white shadow-lg animate-pulse" />
+                <div className="absolute top-3 right-3 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white shadow-lg animate-pulse" />
             </motion.button>
         </div>
     );
@@ -211,8 +199,8 @@ const Nav = () => {
         <nav className={`fixed top-0 w-full z-[100] transition-all duration-700 ${isScrolled ? 'bg-white/95 backdrop-blur-2xl border-b border-gray-100 py-4 shadow-sm' : 'bg-transparent py-10'}`}>
             <div className="max-w-7xl mx-auto px-6 sm:px-12 flex justify-between items-center">
                 <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.location.href = '/'}>
-                    <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-2xl">
-                        <BrainCircuit className="w-6 h-6 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
+                    <div className="w-10 h-10 bg-white/40 backdrop-blur-xl border border-white/50 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-[0_10px_20px_rgba(0,242,255,0.15)]">
+                        <BrainCircuit className="w-6 h-6 text-[#00f2ff] stroke-[1.2] drop-shadow-[0_0_8px_rgba(0,242,255,0.6)]" />
                     </div>
                     <span className="text-xl font-black uppercase tracking-tighter text-gray-900">NeuroV <span className="text-indigo-600">V7.5</span></span>
                 </div>
