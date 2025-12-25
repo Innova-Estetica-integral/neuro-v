@@ -171,11 +171,22 @@ const DonnaFloatingAssistant = () => {
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -skew-x-12"
                 />
 
-                {/* Brilliant White Icon with High-Intensity Contrast Glow */}
-                <div className="relative z-10 text-white drop-shadow-[0_0_15px_rgba(255,255,255,1)] flex flex-col items-center">
+                <svg width="0" height="0" className="absolute">
+                    <defs>
+                        <linearGradient id="cyberGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#22D3EE" />
+                            <stop offset="50%" stopColor="#FFFFFF" />
+                            <stop offset="100%" stopColor="#818CF8" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                {/* Cyber-Cyan Neural Core with Electric Aura */}
+                <div className="relative z-10 flex flex-col items-center">
+                    <div className="absolute inset-0 bg-cyan-400/40 blur-[25px] rounded-full animate-pulse" />
                     <BrainCircuit
-                        className="w-12 h-12 stroke-[2.5] drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]"
-                        style={{ filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.1))' }}
+                        className="w-12 h-12 stroke-[2.2] drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]"
+                        style={{ stroke: 'url(#cyberGradient)' }}
                     />
                 </div>
 
