@@ -34,11 +34,12 @@ const DonnaFloatingAssistant = () => {
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [userContext, setUserContext] = useState<{ businessType?: string, mainChallenge?: string }>({});
     const [input, setInput] = useState('');
+    const [isThinking, setIsThinking] = useState(false);
 
     // Initial Welcome Flow
     const [chat, setChat] = useState<{ role: 'donna', content: string, options?: string[] }>({
         role: 'donna',
-        content: "Hola, soy Dona, la asistente virtual de Neuro-V.\n\nMi misión es liberar la carga operativa y potenciar el marketing, logrando que tu empresa funcione prácticamente en 'piloto automático'.\n\nEstoy lista para mejorar tu sistema, pero primero necesito entender tu entorno digital. Empecemos con un diagnóstico para identificar tus puntos clave de crecimiento.",
+        content: "Hola, soy Donna, la asistente virtual de Neuro-V.\n\nMi objetivo es simple: liberarte de la gestión operativa y de potenciar tu marketing para que tú te enfoques en crecer, mientras tu negocio avanza en piloto automático.\nDiseñemos tu estrategia de automatización, y detectemos juntos tus oportunidades de crecimiento.",
         options: []
     });
 
@@ -60,7 +61,7 @@ const DonnaFloatingAssistant = () => {
             speak(chat.content);
             const timer = setTimeout(() => {
                 handleSend('start');
-            }, 8000); // 8 seconds to read the greeting
+            }, 20000); // Set to 20 seconds
             return () => clearTimeout(timer);
         }
     }, [isOpen, step, chat.content]);
@@ -70,7 +71,11 @@ const DonnaFloatingAssistant = () => {
         if (!userMsg.trim()) return;
         setInput('');
 
+        setIsThinking(true);
+        const thinkingDelay = 1200 + (Math.random() * 800); // Dynamic realistic delay
+
         setTimeout(() => {
+            setIsThinking(false);
             let nextResponse = '';
             let nextOptions: string[] = [];
 
@@ -85,12 +90,12 @@ const DonnaFloatingAssistant = () => {
                 setStep(2);
             } else if (step === 2) {
                 setUserContext(prev => ({ ...prev, mainChallenge: userMsg }));
-                if (userMsg.includes('Agendas') || userMsg.includes('Marketing')) {
-                    nextResponse = "Activaré el motor 'Flash Offer' para cubrir huecos detectados contactando pacientes de alto valor de forma autónoma. ¿Deseas ver una demostración estratégica?";
+                if (userMsg.includes('Agendas') || userMsg.includes('Marketing') || userMsg.includes('No-Shows')) {
+                    nextResponse = "Activaré el motor 'Flash Offer' y 'Payment Gating' para cubrir huecos detectados contactando pacientes de alto valor de forma autónoma. ¿Deseas ver una demostración técnica de este protocolo?";
                 } else {
-                    nextResponse = "NeuroV centraliza la inteligencia operativa 24/7. Puedo reducir tu carga administrativa en un 80% mediante asistentes IA de élite. ¿Te gustaría conocer el plan?";
+                    nextResponse = "NeuroV centraliza la inteligencia operativa 24/7. Puedo reducir tu carga administrativa en un 80% mediante asistentes IA de élite. ¿Te gustaría conocer el plan estratégico?";
                 }
-                nextOptions = ['Ver Demostración', 'Hablar con Consultor', 'Finalizar Diagnóstico'];
+                nextOptions = [' VER PROTOCOLO', 'Hablar con Consultor', 'Finalizar Diagnóstico'];
                 setStep(3);
             }
 
@@ -98,7 +103,7 @@ const DonnaFloatingAssistant = () => {
                 setChat({ role: 'donna', content: nextResponse, options: nextOptions });
                 speak(nextResponse);
             }
-        }, 300);
+        }, thinkingDelay);
     };
 
     return (
@@ -156,37 +161,42 @@ const DonnaFloatingAssistant = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -20 }}
                                         transition={{ duration: 0.8, ease: "easeOut" }}
-                                        className="flex flex-col items-center text-center space-y-8"
                                     >
-                                        <div className="space-y-4 max-w-sm">
-                                            <motion.h3
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                transition={{ duration: 1.5, delay: 0.2 }}
-                                                className="text-slate-800 text-lg sm:text-xl font-medium leading-relaxed tracking-tight whitespace-pre-wrap"
-                                            >
-                                                {chat.content}
-                                            </motion.h3>
-                                        </div>
+                                        <div className="flex flex-col items-center text-center space-y-8">
+                                            <div className="space-y-4 max-w-sm">
+                                                <motion.h3
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    transition={{ duration: 1.5, delay: 0.2 }}
+                                                    className="text-slate-800 text-lg sm:text-xl font-medium leading-relaxed tracking-tight whitespace-pre-wrap"
+                                                >
+                                                    {chat.content}
+                                                </motion.h3>
+                                            </div>
 
-                                        {chat.options && chat.options.length > 0 && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                transition={{ delay: 1, duration: 0.8 }}
-                                                className="w-full max-w-[280px] grid grid-cols-1 gap-2 pt-2"
-                                            >
-                                                {chat.options.map((opt, j) => (
-                                                    <button
-                                                        key={j}
-                                                        onClick={() => handleSend(opt)}
-                                                        className="w-full px-6 py-4 bg-white/60 hover:bg-white/90 border border-white/80 rounded-2xl text-indigo-600 text-xs font-bold uppercase tracking-widest transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
-                                                    >
-                                                        {opt}
-                                                    </button>
-                                                ))}
-                                            </motion.div>
-                                        )}
+                                            {chat.options && chat.options.length > 0 && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: 10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{ delay: 1, duration: 0.8 }}
+                                                    className="w-full max-w-[280px] grid grid-cols-1 gap-2 pt-2"
+                                                >
+                                                    {chat.options.map((opt, j) => (
+                                                        <button
+                                                            key={j}
+                                                            onClick={() => {
+                                                                if (opt === ' VER PROTOCOLO') window.location.href = '/demo?qualified=true';
+                                                                else handleSend(opt);
+                                                            }}
+                                                            className="w-full px-6 py-4 bg-white/60 hover:bg-white/90 border border-white/80 rounded-2xl text-indigo-600 text-xs font-bold uppercase tracking-widest transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 text-left flex justify-between"
+                                                        >
+                                                            {opt}
+                                                            <ChevronRight className="w-4 h-4" />
+                                                        </button>
+                                                    ))}
+                                                </motion.div>
+                                            )}
+                                        </div>
                                     </motion.div>
                                 </AnimatePresence>
                             </div>

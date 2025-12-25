@@ -27,9 +27,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
         analytics.salesAssistant.opened(mode);
     };
 
-    const initialMessage = mode === 'technical'
-        ? 'Soy Donna. He procesado tu flujo de trabajo y ya sé dónde están tus fugas de ingresos. ¿Empezamos a taparlas?'
-        : 'Soy Donna. Tu clínica tiene potencial, pero le falta mi orden. Analicemos tus números para darte el control total. ¿Lista?';
+    const initialMessage = "Hola, soy Donna, la asistente virtual de Neuro-V.\n\nMi objetivo es simple: liberarte de la gestión operativa y de potenciar tu marketing para que tú te enfoques en crecer, mientras tu negocio avanza en piloto automático.\nDiseñemos tu estrategia de automatización, y detectemos juntos tus oportunidades de crecimiento.";
 
     const [messages, setMessages] = useState<Message[]>([
         { role: 'bot', content: initialMessage }
@@ -37,6 +35,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
     const [bantStep, setBantStep] = useState<BantStep>('initial');
     const [qualified, setQualified] = useState(false);
     const [stats, setStats] = useState({ leads: 0, ticket: 0 });
+    const [isThinking, setIsThinking] = useState(false);
     const { profile, forceClassify } = usePsychographic();
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +44,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
-    }, [messages]);
+    }, [messages, isThinking]);
 
     // Debug: verificar que el componente se renderiza
     useEffect(() => {
@@ -65,8 +64,14 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
     };
 
     const addBotMessage = (content: string, shouldSpeak = true) => {
-        setMessages(prev => [...prev, { role: 'bot', content }]);
-        if (shouldSpeak) speak(content);
+        setIsThinking(true);
+        const delay = Math.min(2000, Math.max(800, content.length * 15)); // Dynamic realistic delay
+
+        setTimeout(() => {
+            setIsThinking(false);
+            setMessages(prev => [...prev, { role: 'bot', content }]);
+            if (shouldSpeak) speak(content);
+        }, delay);
     };
 
     const getAdaptiveMessage = (step: string, context?: any) => {
@@ -109,7 +114,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
             setTimeout(() => {
                 addBotMessage(getAdaptiveMessage('leads_q'));
                 setBantStep('leads');
-            }, 1000);
+            }, 12000); // Adjusted to 12 seconds
         } else {
             addBotMessage('Entiendo. La ineficiencia es costosa. Estaré aquí cuando decidas detener la fuga de ingresos.');
         }
@@ -128,7 +133,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
         setTimeout(() => {
             addBotMessage(getAdaptiveMessage('ticket_q'));
             setBantStep('ticket');
-        }, 800);
+        }, 3000); // 3 seconds gap
     };
 
     const handleTicket = (price: number, label: string) => {
@@ -145,7 +150,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
         setTimeout(() => {
             addBotMessage(getAdaptiveMessage('authority_q'));
             setBantStep('authority');
-        }, 800);
+        }, 3000); // 3 seconds gap
     };
 
     const handleAuthority = (isDecider: boolean) => {
@@ -300,6 +305,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
                                             </div>
                                         </div>
                                     ))}
+
                                 </div>
 
                                 {/* Integrated Actions Area */}
