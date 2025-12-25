@@ -171,9 +171,12 @@ const DonnaFloatingAssistant = () => {
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -skew-x-12"
                 />
 
-                {/* Brilliant White Icon with High-Intensity Glow */}
-                <div className="relative z-10 text-white drop-shadow-[0_0_20px_rgba(255,255,255,1)] flex flex-col items-center">
-                    <BrainCircuit className="w-12 h-12 stroke-[1.8]" />
+                {/* Brilliant White Icon with High-Intensity Contrast Glow */}
+                <div className="relative z-10 text-white drop-shadow-[0_0_15px_rgba(255,255,255,1)] flex flex-col items-center">
+                    <BrainCircuit
+                        className="w-12 h-12 stroke-[2.5] drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]"
+                        style={{ filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.1))' }}
+                    />
                 </div>
 
                 {/* Pulse Status */}
