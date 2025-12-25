@@ -27,7 +27,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
         analytics.salesAssistant.opened(mode);
     };
 
-    const initialMessage = "Hola, soy Donna, la asistente virtual de Neuro-V.\n\nMi objetivo es simple: liberarte de la gestión operativa y el marketing, para que tú te enfoques en crecer, mientras tu negocio avanza en piloto automático. Diagnosticaré y crearé una estrategia para escalar tu negocio.";
+    const initialMessage = "Hola, soy Donna, la asistente virtual de Neuro-Ve.\n\nMi objetivo es simple: liberarte de la gestión operativa y el marketing, para que tú te enfoques en crecer, mientras tu negocio avanza en piloto automático. Diagnosticaré y crearé una estrategia para escalar tu negocio.";
 
     const [messages, setMessages] = useState<Message[]>([
         { role: 'bot', content: initialMessage }

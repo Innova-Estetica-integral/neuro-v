@@ -39,7 +39,7 @@ const DonnaFloatingAssistant = () => {
     // Initial Welcome Flow
     const [chat, setChat] = useState<{ role: 'donna', content: string, options?: string[] }>({
         role: 'donna',
-        content: "Hola, soy Donna, la asistente virtual de Neuro-V.\n\nMi objetivo es simple: liberarte de la gestión operativa y el marketing, para que tú te enfoques en crecer, mientras tu negocio avanza en piloto automático. Diagnosticaré y crearé una estrategia para escalar tu negocio.",
+        content: "Hola, soy Donna, la asistente virtual de Neuro-Ve.\n\nMi objetivo es simple: liberarte de la gestión operativa y el marketing, para que tú te enfoques en crecer, mientras tu negocio avanza en piloto automático. Diagnosticaré y crearé una estrategia para escalar tu negocio.",
         options: []
     });
 
