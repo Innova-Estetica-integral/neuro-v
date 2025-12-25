@@ -39,7 +39,7 @@ const DonnaFloatingAssistant = () => {
     // Initial Welcome Flow
     const [chat, setChat] = useState<{ role: 'donna', content: string, options?: string[] }>({
         role: 'donna',
-        content: "Hola, soy Donna, la asistente virtual de Neuro-V.\n\nMi objetivo es simple: liberarte de la gestión operativa y de potenciar tu marketing para que tú te enfoques en crecer, mientras tu negocio avanza en piloto automático.\nDiseñemos tu estrategia de automatización, y detectemos juntos tus oportunidades de crecimiento.",
+        content: "Hola, soy Donna, la asistente virtual de Neuro-V.\n\nMi objetivo es simple: liberarte de la gestión operativa y el marketing, para que tú te enfoques en crecer, mientras tu negocio avanza en piloto automático. Diagnosticaré y crearé una estrategia para escalar tu negocio.",
         options: []
     });
 
@@ -61,7 +61,7 @@ const DonnaFloatingAssistant = () => {
             speak(chat.content);
             const timer = setTimeout(() => {
                 handleSend('start');
-            }, 20000); // Set to 20 seconds
+            }, 16000); // Adjusted for the new message length
             return () => clearTimeout(timer);
         }
     }, [isOpen, step, chat.content]);
