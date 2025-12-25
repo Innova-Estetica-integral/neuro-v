@@ -30,9 +30,15 @@ const DonnaFloatingAssistant = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [step, setStep] = useState(0);
     const [isSpeaking, setIsSpeaking] = useState(false);
-    const [chat, setChat] = useState<{ role: 'donna' | 'user' | 'system', content: string, type?: 'status' | 'alert' }[]>([
-        { role: 'donna', content: 'Protocolo de Inicio: Ejecutando diagnóstico de infraestructura... Hola, soy Donna, tu Directora de Operaciones. He detectado 3 puntos críticos de intervención para maximizar tu rentabilidad hoy.', type: 'status' }
+    const [chat, setChat] = useState<{ role: 'donna' | 'user' | 'system', content: string, type?: 'status' | 'alert', options?: string[] }[]>([
+        {
+            role: 'donna',
+            content: 'Protocolo de Inicio: Ejecutando diagnóstico de infraestructura... Hola, soy Donna, tu Directora de Operaciones. He detectado 3 puntos críticos de intervención para maximizar tu rentabilidad hoy. Antes de proceder: ¿Qué tipo de organización o clínica técnica diriges?',
+            type: 'status',
+            options: ['Estética/Medicina', 'Dental/Ortodoncia', 'Salud Mental/Psicología', 'Kinesiología/Fisio', 'Otro Sector']
+        }
     ]);
+    const [userContext, setUserContext] = useState<{ businessType?: string, mainChallenge?: string }>({});
     const [input, setInput] = useState('');
 
     // Executive Data Simulation
@@ -72,28 +78,52 @@ const DonnaFloatingAssistant = () => {
             const lowerMsg = userMsg.toLowerCase();
             let response = '';
             let type: 'status' | 'alert' | undefined = undefined;
+            let options: string[] | undefined = undefined;
 
-            // Executive Intent Engine
-            if (lowerMsg.includes('lanzar') || lowerMsg.includes('flash') || lowerMsg.includes('ofrecer')) {
-                response = `Ejecutando Protocolo Flash Offer. Interviniendo base de datos para cubrir los ${executiveData.agendaGaps} espacios vacíos detectados. Prioridad: Segmento Platinum (${executiveData.ltv}). ¿Confirmas sincronización con Meta API para optimizar el CPA?`;
-                type = 'status';
-            } else if (lowerMsg.includes('sync') || lowerMsg.includes('sincronizar') || lowerMsg.includes('meta')) {
-                response = `Sincronización con Meta API en curso. Enviando datos de conversión offline para retroalimentar el algoritmo. Estatus: ${executiveData.metaAds}. Esperamos una reducción del 15% en CPA en las próximas 48 horas.`;
-                type = 'status';
-            } else if (lowerMsg.includes('agenda') || lowerMsg.includes('lunes') || lowerMsg.includes('hueco') || lowerMsg.includes('turno')) {
-                response = `Análisis de Agenda: He detectado ${executiveData.agendaGaps} brechas críticas esta semana. Mi recomendación es activar el re-agendamiento automatizado para pacientes con alta tasa de cancelación. ¿Deseas activar este módulo?`;
-            } else if (lowerMsg.includes('roi') || lowerMsg.includes('dinero') || lowerMsg.includes('rentabilidad') || lowerMsg.includes('costo')) {
-                response = `Reporte Financiero: Tu ROI actual es de ${executiveData.roi}. Estamos operando con una eficiencia superior al promedio del sector. He detectado una fuga de $200 USD/mes en leads no contactados en menos de 5 min. ¿Intervengo?`;
-                type = 'alert';
-            } else if (lowerMsg.includes('paciente') || lowerMsg.includes('vip') || lowerMsg.includes('platinum') || lowerMsg.includes('ltv')) {
-                response = `Seguridad de Cartera: Tu segmento Platinum tiene un LTV promedio de ${executiveData.ltv}. He blindado estas cuentas con un protocolo de atención prioritaria 24/7. El sistema de lealtad está operando al 100% de efectividad.`;
-            } else if (lowerMsg.includes('quien') || lowerMsg.includes('donna') || lowerMsg.includes('nombre') || lowerMsg.includes('hola')) {
-                response = `Hola. Soy Donna, tu Directora de Operaciones. Mi arquitectura está diseñada para la soberanía administrativa de tu clínica. Estoy monitoreando tus métricas en tiempo real. ¿En qué área necesitas mi intervención?`;
+            // Consultative Flow Logic
+            if (!userContext.businessType) {
+                // Determine Business Type
+                const types = {
+                    'estética': 'Estética/Médica',
+                    'dental': 'Dental/Odontológica',
+                    'psicología': 'Salud Mental',
+                    'kine': 'Kinesiología',
+                    'fisioterapia': 'Kinesiología'
+                };
+                const detectedType = Object.entries(types).find(([k]) => lowerMsg.includes(k))?.[1] || userMsg;
+                setUserContext(prev => ({ ...prev, businessType: detectedType }));
+
+                response = `Entendido. Perfilando arquitectura para sector ${detectedType}. Director, para optimizar tu soberanía operativa necesito saber: ¿Dónde detectas hoy la mayor fuga de ingresos o tiempo?`;
+                options = ['Agendas Vacías / No-Shows', 'Costo de Marketing Alto (CPA)', 'Carga Administrativa Manual', 'Seguimiento de Pacientes'];
+            } else if (!userContext.mainChallenge) {
+                // Determine Main Challenge
+                setUserContext(prev => ({ ...prev, mainChallenge: userMsg }));
+
+                if (lowerMsg.includes('agenda') || lowerMsg.includes('hueco') || lowerMsg.includes('vac')) {
+                    response = `Protocolo de Optimización de Agenda: Para ${userContext.businessType}, NeuroV activa el motor "Flash Offer". Si detecto un hueco, el sistema contacta autónomamente a pacientes de alto valor para llenarlo. ¿Deseas ver cómo Donna recupera esos ingresos?`;
+                } else if (lowerMsg.includes('marketing') || lowerMsg.includes('costo') || lowerMsg.includes('anuncio') || lowerMsg.includes('cpa')) {
+                    response = `Protocolo de Soberanía Financiera: En el sector ${userContext.businessType}, la clave es la "Data Real". NeuroV sincroniza conversiones offline con Meta API para bajar tu CPA un 15% - 30%. ¿Activamos el blindaje de pauta?`;
+                } else {
+                    response = `Análisis de Soberanía: Para solucionar ${userMsg}, NeuroV centraliza la inteligencia operativa 24/7. ¿Sabías que puedo reducir tu carga administrativa en un 80% mediante asistentes automáticos?`;
+                }
+                options = ['Ver Demostración', 'Hablar con Consultor', 'Seguir Diagnóstico'];
             } else {
-                response = 'Orden reconocida bajo Protocolo General. Mi análisis de Meta Ads indica que podemos segmentar mejor los anuncios usando el perfilado psicográfico acumulado. ¿Deseas que prepare un reporte de ahorro proyectado?';
+                // Executive Intent Engine (General Mode)
+                if (lowerMsg.includes('lanzar') || lowerMsg.includes('flash') || lowerMsg.includes('ofrecer')) {
+                    response = `Ejecutando Protocolo Flash Offer. Interviniendo base de datos para cubrir los ${executiveData.agendaGaps} espacios vacíos detectados. Prioridad: Segmento Platinum (${executiveData.ltv}). ¿Confirmas sincronización con Meta API?`;
+                    type = 'status';
+                } else if (lowerMsg.includes('sync') || lowerMsg.includes('sincronizar') || lowerMsg.includes('meta')) {
+                    response = `Sincronización con Meta API en curso. Enviando datos de conversión offline para retroalimentar el algoritmo. Estatus: ${executiveData.metaAds}.`;
+                    type = 'status';
+                } else if (lowerMsg.includes('roi') || lowerMsg.includes('dinero') || lowerMsg.includes('rentabilidad')) {
+                    response = `Reporte Financiero: Tu ROI actual es de ${executiveData.roi}. He detectado una fuga de ingresos por falta de seguimiento inmediato. ¿Intervengo?`;
+                    type = 'alert';
+                } else {
+                    response = `Reporte de Soberanía para ${userContext.businessType}: El sistema está operando en modo de alta eficiencia para resolver ${userContext.mainChallenge}. ¿En qué otro pilar necesitas mi diagnóstico?`;
+                }
             }
 
-            setChat(prev => [...prev, { role: 'donna', content: response, type }]);
+            setChat(prev => [...prev, { role: 'donna', content: response, type, options }]);
             speak(response);
             setStep(prev => prev + 1);
         }, 1200);
@@ -157,13 +187,29 @@ const DonnaFloatingAssistant = () => {
                                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
                                     <div className={`max-w-[85%] p-6 rounded-[2.5rem] text-[13px] font-medium leading-[1.6] ${msg.role === 'user'
-                                        ? 'bg-indigo-600 text-white rounded-tr-none'
+                                        ? 'bg-indigo-600 text-white rounded-tr-none shadow-lg shadow-indigo-100'
                                         : msg.type === 'status'
-                                            ? 'bg-gray-900 text-white rounded-tl-none border-l-4 border-indigo-500'
-                                            : 'bg-white text-gray-700 shadow-sm border border-gray-100 rounded-tl-none'
+                                            ? 'bg-gray-900 text-emerald-400 border border-emerald-500/30 rounded-tl-none font-mono text-[11px]'
+                                            : msg.type === 'alert'
+                                                ? 'bg-amber-50 text-amber-900 border border-amber-200 rounded-tl-none'
+                                                : 'bg-white text-gray-800 border border-gray-100 rounded-tl-none shadow-sm'
                                         }`}>
-                                        {msg.role === 'donna' && <span className="block text-[8px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-2">Protocolo Director</span>}
                                         {msg.content}
+
+                                        {/* Quick Reply Options */}
+                                        {msg.options && (
+                                            <div className="mt-6 flex flex-wrap gap-2">
+                                                {msg.options.map((opt, j) => (
+                                                    <button
+                                                        key={j}
+                                                        onClick={() => handleSend(opt)}
+                                                        className="px-4 py-2 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 rounded-full text-indigo-600 text-[10px] font-black uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
+                                                    >
+                                                        {opt}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                 </motion.div>
                             ))}
