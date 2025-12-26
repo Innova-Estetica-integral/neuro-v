@@ -560,16 +560,49 @@ export default function SolutionsV5() {
                             <p className="text-gray-500 font-medium leading-relaxed">Solo guardan turnos. TÚ tienes que hacer el marketing, las confirmaciones y el cobro manual.</p>
                         </div>
 
-                        <div className="p-12 rounded-[3.5rem] bg-gray-900 text-white md:scale-110 shadow-2xl relative overflow-hidden">
-                            <div className="absolute top-0 right-0 p-8 opacity-20">
-                                <Zap size={100} />
+                        <motion.div
+                            whileHover={{ y: -10 }}
+                            className="p-12 rounded-[3.5rem] bg-[#0A0B14] text-white md:scale-110 shadow-[0_40px_100px_-20px_rgba(79,70,229,0.5)] relative overflow-hidden border border-indigo-500/30 group/card"
+                        >
+                            {/* Neural Background Flux */}
+                            <div className="absolute inset-0 opacity-20 group-hover/card:opacity-40 transition-opacity duration-1000">
+                                <div className="absolute top-[-20%] right-[-10%] w-72 h-72 bg-indigo-600 rounded-full blur-[100px] animate-pulse" />
+                                <div className="absolute bottom-[-10%] left-[-10%] w-60 h-60 bg-cyan-600 rounded-full blur-[90px]" />
                             </div>
-                            <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200 mb-8">
-                                <Zap className="text-white" />
+
+                            {/* Tech Status Header */}
+                            <div className="relative z-10 flex justify-between items-center mb-10">
+                                <div className="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/20 flex items-center gap-2">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-[#00f2ff] animate-ping" />
+                                    <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[#00f2ff]">Donna Core Active</span>
+                                </div>
+                                <Zap className="text-indigo-400 opacity-30 group-hover/card:opacity-100 group-hover/card:scale-110 transition-all duration-700" size={24} />
                             </div>
-                            <h4 className="text-2xl font-black mb-4">NeuroV Ejecutivo</h4>
-                            <p className="text-white/70 font-medium leading-relaxed">Un motor de ventas que gestiona la clínica por ti. Donna es proactiva: ella llena la agenda, no espera a que se llene.</p>
-                        </div>
+
+                            {/* Main Icon Container */}
+                            <div className="relative z-10 w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-[2rem] flex items-center justify-center shadow-[0_0_30px_rgba(79,70,229,0.5)] mb-10 group-hover/card:rotate-[360deg] transition-transform duration-[1.5s]">
+                                <BrainCircuit className="text-white w-10 h-10" />
+                                <motion.div
+                                    className="absolute inset-x-[-10px] h-[1px] bg-cyan-400/50"
+                                    animate={{ top: ['10%', '90%'] }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                />
+                            </div>
+
+                            {/* Content */}
+                            <h4 className="text-3xl font-black mb-6 tracking-tighter relative z-10">
+                                NeuroV <span className="text-indigo-400">Ejecutivo</span>
+                            </h4>
+                            <p className="text-indigo-50/70 font-medium leading-relaxed text-lg relative z-10">
+                                El estándar de oro en gestión. Donna es <span className="text-white font-bold">proactiva</span>: ella no espera a que tu agenda se llene, ella la domina y la completa por ti.
+                            </p>
+
+                            {/* Footer Metric */}
+                            <div className="mt-10 pt-6 border-t border-white/5 flex items-center gap-3 relative z-10 transition-all group-hover/card:translate-x-2">
+                                <TrendingUp className="text-[#00f2ff]" size={18} />
+                                <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">+94% Eficiencia Operativa</span>
+                            </div>
+                        </motion.div>
 
                         <div className="p-12 rounded-[3.5rem] bg-gray-50 border border-gray-100 opacity-80">
                             <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-8">
