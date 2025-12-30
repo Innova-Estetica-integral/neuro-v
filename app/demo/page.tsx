@@ -90,7 +90,7 @@ function DemoContent() {
                                             <p className="pl-4 text-white">"gclid": "Abc123XyZ_789_Protocol_NeuroV",</p>
                                             <p className="pl-4 text-white">"source": "google_search_estetica",</p>
                                             <p className="pl-4 text-white">"campaign": "conversion_high_intent",</p>
-                                            <p className="pl-4 text-white">"timestamp": "${new Date().toISOString()}",</p>
+                                            <p className="pl-4 text-white">"timestamp": "2025-12-27T18:00:00Z",</p>
                                             <p className="pl-4 text-indigo-400">"status": "INGESTED_SUCCESS"</p>
                                             <p className="text-indigo-400">{`}`}</p>
                                         </div>

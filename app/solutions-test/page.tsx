@@ -361,6 +361,26 @@ export default function SolutionsTest() {
                                 </button>
                             </div>
                         </motion.div>
+
+                        <div className="lg:col-span-2 relative hidden lg:block">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.2, duration: 1 }}
+                                className="relative rounded-[3rem] overflow-hidden shadow-[0_64px_128px_-32px_rgba(0,0,0,0.1)] border-[8px] border-white"
+                            >
+                                <img
+                                    src="/solutions/executive_donna.png"
+                                    alt="Executive Donna"
+                                    className="w-full aspect-[4/5] object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent" />
+                                <div className="absolute bottom-10 left-10 text-white">
+                                    <div className="text-[10px] font-black uppercase tracking-widest text-indigo-300 mb-2">Estado Actual</div>
+                                    <div className="text-3xl font-black">94% ROI</div>
+                                </div>
+                            </motion.div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -515,6 +535,123 @@ export default function SolutionsTest() {
                                 Inteligencia para el Doctor
                             </div>
                         </motion.div>
+
+                        {/* 6. Inventario & Stock */}
+                        <motion.div
+                            whileHover={{ y: -5 }}
+                            className="group relative rounded-[3rem] bg-indigo-50 p-10 border border-indigo-100 overflow-hidden flex flex-col justify-between"
+                        >
+                            <div className="absolute top-0 right-0 p-6 opacity-5">
+                                <Zap size={120} />
+                            </div>
+                            <div>
+                                <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg shadow-indigo-100">
+                                    <BarChart size={28} />
+                                </div>
+                                <h4 className="text-2xl font-black mb-4 tracking-tighter">Stock Crítico</h4>
+                                <p className="text-gray-500 font-medium leading-relaxed">
+                                    Gestión automatizada de insumos. Donna avisa cuando tus viales o jeringas llegan al stock mínimo.
+                                </p>
+                            </div>
+                            <div className="mt-8 pt-6 border-t border-gray-200/60 text-[10px] font-black text-indigo-600 uppercase tracking-widest">
+                                Control Operativo Real
+                            </div>
+                        </motion.div>
+
+                        {/* 7. Referral Engine */}
+                        <motion.div
+                            whileHover={{ y: -5 }}
+                            className="group relative rounded-[3rem] bg-white p-10 border border-indigo-100 overflow-hidden flex flex-col justify-between"
+                        >
+                            <div className="absolute top-0 right-0 p-6 opacity-5 text-indigo-600">
+                                <Users size={120} />
+                            </div>
+                            <div>
+                                <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg shadow-indigo-100">
+                                    <Sparkles size={28} />
+                                </div>
+                                <h4 className="text-2xl font-black mb-4 tracking-tighter">Referral Engine</h4>
+                                <p className="text-gray-500 font-medium leading-relaxed">
+                                    Tus pacientes Platinum ahora atraen más pacientes VIP. Sistema de referidos inteligente y recompensas premium.
+                                </p>
+                            </div>
+                            <div className="mt-8 pt-6 border-t border-gray-200/60 text-[10px] font-black text-indigo-600 uppercase tracking-widest">
+                                Multiplicador de Ganancias
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* SECCIÓN INNOVACIÓN: El Futuro de la Clínica */}
+            <section id="innovacion" className="py-20 sm:py-32 px-4 sm:px-12 bg-white relative">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            className="space-y-8"
+                        >
+                            <span className="text-indigo-600 font-black text-[9px] sm:text-xs uppercase tracking-[0.3em]">ESTÁNDAR DE INNOVACIÓN</span>
+                            <h2 className="text-4xl sm:text-6xl font-black tracking-tightest leading-tight">
+                                Evolución Visual <br />& Salud Digital.
+                            </h2>
+                            <p className="text-lg text-gray-500 font-medium leading-relaxed">
+                                NeuroV expande sus fronteras para cubrir cada ángulo de la práctica médica moderna, desde la evidencia clínica hasta la integración previsional.
+                            </p>
+
+                            <div className="space-y-6">
+                                <div className="flex gap-6 p-6 rounded-3xl bg-[#F9FAFB] border border-gray-100 group hover:border-indigo-200 transition-all">
+                                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                        <Volume2 className="text-indigo-600" size={24} />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-black text-sm uppercase tracking-widest mb-2">Evolución (Antes/Después)</h4>
+                                        <p className="text-xs text-gray-400 font-bold leading-relaxed">Registro fotográfico seguro y comparativas de resultados enviadas por Donna.</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-6 p-6 rounded-3xl bg-[#F9FAFB] border border-gray-100 group hover:border-indigo-200 transition-all">
+                                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                        <Globe className="text-indigo-600" size={24} />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-black text-sm uppercase tracking-widest mb-2">Interoperabilidad (Fonasa/Isapres)</h4>
+                                        <p className="text-xs text-gray-400 font-bold leading-relaxed">Roadmap de conexión directa con sistemas previsionales chilenos bajo estándar FHIR.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        <div className="relative">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                className="rounded-[3rem] overflow-hidden shadow-2xl border-8 border-gray-50"
+                            >
+                                <div className="aspect-[4/3] bg-gradient-to-br from-indigo-100 to-white flex items-center justify-center p-12">
+                                    <div className="text-center">
+                                        <BrainCircuit size={80} className="text-indigo-600/20 mx-auto mb-6" />
+                                        <div className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400">Hub de Innovación</div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                            {/* Floating Stats Card */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                className="absolute -bottom-10 -left-10 bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100 hidden sm:block"
+                            >
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 bg-emerald-50 rounded-full flex items-center justify-center">
+                                        <TrendingUp className="text-emerald-500" size={20} />
+                                    </div>
+                                    <div>
+                                        <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Compromiso Clínico</div>
+                                        <div className="text-xl font-black text-gray-900">+100% Evidencia</div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
                     </div>
                 </div>
             </section>

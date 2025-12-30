@@ -12,10 +12,20 @@ export function usePsychographic() {
         viewedPricing: false,
         viewedTestimonials: false,
         viewedServices: false,
-        deviceType: typeof window !== 'undefined' ? (window.innerWidth < 768 ? 'mobile' : 'desktop') : 'desktop',
+        deviceType: 'desktop',
         exitIntentTriggered: false
     });
     const [classified, setClassified] = useState(false);
+
+    // Initial client-side device detection
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setBehavior(prev => ({
+                ...prev,
+                deviceType: window.innerWidth < 768 ? 'mobile' : 'desktop'
+            }));
+        }
+    }, []);
 
     const uiConfig = getUIConfig(profile);
 

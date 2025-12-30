@@ -29,7 +29,7 @@ export default function RootLayout({
             <head>
                 <ColorSchemeScript defaultColorScheme="dark" />
             </head>
-            <body className="antialiased">
+            <body className="antialiased ">
                 <MantineProvider theme={theme} defaultColorScheme="dark">
                     <ToastProvider>
                         <ProfileWrapper>

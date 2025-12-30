@@ -1,43 +1,138 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { Suspense, useEffect } from 'react';
+import Link from 'next/link';
 import {
     LucideZap,
-    LucideBrainCircuit,
-    LucideShieldCheck,
-    LucideActivity,
-    LucideTrendingUp,
-    LucideChevronRight,
-    LucideDatabase,
-    LucideArrowRight,
-    LucideLock,
-    LucideServer,
-    LucideCheckCircle2
+    LucideBrainCircuit
 } from 'lucide-react';
-import { PremiumButton } from '@/components/ui/PremiumButton';
 import { GlassCard } from '@/components/ui/GlassCard';
-import { PsychographicAdapter, ProfileSection } from '@/components/PsychographicAdapter';
-import { usePsychographic } from '@/lib/hooks/use-psychographic';
+import { PremiumButton } from '@/components/ui/PremiumButton';
 import { SalesAssistant } from '@/components/SalesAssistant';
-import { SalesBookingWizard } from '@/components/booking/SalesBookingWizard';
-import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
-
 import { TechnicalLanding } from '@/components/TechnicalLanding';
 import { GrowthLanding } from '@/components/GrowthLanding';
-import { useState, useEffect } from 'react';
+import { PsychographicAdapter } from '@/components/PsychographicAdapter';
+import { useSearchParams } from 'next/navigation';
 import { analytics } from '@/lib/analytics/tracker';
-import { parseUTM, shouldRedirectToGrowth } from '@/lib/utils/utm';
-import { useRouter } from 'next/navigation';
+import { parseUTM } from '@/lib/utils/utm';
 
-function BookingSection() {
+function CorporateHomeContent() {
     const searchParams = useSearchParams();
-    const isQualified = searchParams.get('qualified') === 'true';
+
+    // UTM-based tracking
+    useEffect(() => {
+        const utm = parseUTM(searchParams);
+        analytics.trackUTM(utm);
+
+        analytics.page('home', {
+            utm
+        });
+    }, [searchParams]);
 
     return (
-        <section id="agenda" className="relative z-10 bg-black/40 border-y border-white/5 py-20">
-            <SalesBookingWizard isQualified={isQualified} />
-        </section>
+        <main className="min-h-screen bg-[#020617] text-white selection:bg-indigo-500/30">
+            {/* Navigation SPA Optimized */}
+            <nav className="fixed top-0 w-full z-50 bg-[#020617]/80 backdrop-blur-xl border-b border-white/5">
+                <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+                    <Link href="/" className="flex items-center gap-2 group">
+                        <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center font-black group-hover:scale-110 transition-transform text-white">NV</div>
+                        <span className="font-black tracking-tighter text-2xl uppercase">NeuroV</span>
+                    </Link>
+
+                    <div className="hidden md:flex items-center gap-10">
+                        <Link href="/#tecnologia" className="text-xs font-black text-gray-400 hover:text-white uppercase tracking-widest transition-colors">Tecnología</Link>
+                        <Link href="/#roi" className="text-xs font-black text-gray-400 hover:text-white uppercase tracking-widest transition-colors">ROI</Link>
+                        <Link href="/#seguridad" className="text-xs font-black text-gray-400 hover:text-white uppercase tracking-widest transition-colors">Seguridad</Link>
+                        <Link href="/solutions-test" className="text-xs font-black text-gray-400 hover:text-white uppercase tracking-widest transition-colors">Soluciones</Link>
+                    </div>
+
+                    <Link href="/booking">
+                        <PremiumButton size="sm" className="hidden sm:flex rounded-2xl px-6">
+                            AGENDAR DEMO
+                        </PremiumButton>
+                    </Link>
+                </div>
+            </nav>
+
+            {/* Dynamic Content Adapter */}
+            <div className="pt-20">
+                <PsychographicAdapter>
+                    {({ profile }) => (
+                        <>
+                            {profile === 'hesitant' || profile === 'analytic' ? (
+                                <TechnicalLanding profile={profile} />
+                            ) : (
+                                <GrowthLanding />
+                            )}
+                        </>
+                    )}
+                </PsychographicAdapter>
+            </div>
+
+            {/* Common Booking Section */}
+            <section id="agenda" className="container mx-auto px-6 py-32">
+                <GlassCard className="max-w-4xl mx-auto p-12 text-center relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <LucideZap className="w-16 h-16 text-indigo-400 mx-auto mb-8 animate-pulse" />
+                    <h2 className="text-4xl md:text-7xl font-black mb-8 leading-none tracking-tighter">
+                        ¿LISTO PARA EL <span className="text-gradient">SIGUIENTE NIVEL</span>?
+                    </h2>
+                    <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto font-medium">
+                        Tu clínica estética merece una infraestructura que convierta pacientes mientras duermes.
+                    </p>
+                    <Link href="/booking">
+                        <PremiumButton size="lg" className="px-12 rounded-3xl text-lg shine-effect">
+                            COMENZAR EVALUACIÓN BANT
+                        </PremiumButton>
+                    </Link>
+                </GlassCard>
+            </section>
+
+            {/* Footer SPA Optimized */}
+            <footer className="border-t border-white/5 py-20 bg-black/20">
+                <div className="container mx-auto px-6">
+                    <div className="grid md:grid-cols-4 gap-12 mb-20">
+                        <div className="col-span-2">
+                            <div className="flex items-center gap-2 mb-6">
+                                <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-xs text-white">NV</div>
+                                <span className="font-black tracking-widest uppercase">NeuroV Engine</span>
+                            </div>
+                            <p className="text-gray-500 max-w-sm text-sm leading-relaxed">
+                                La primera plataforma de inteligencia de ingresos diseñada específicamente para el sector médico-estético de alto rendimiento.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 className="font-black text-xs uppercase tracking-[0.2em] mb-6 text-indigo-400">Plataforma</h4>
+                            <ul className="space-y-4 text-sm text-gray-400">
+                                <li><Link href="/#tecnologia" className="hover:text-white transition-colors">Infraestructura</Link></li>
+                                <li><Link href="/#seguridad" className="hover:text-white transition-colors">Seguridad RLS</Link></li>
+                                <li><Link href="/demo" className="hover:text-white transition-colors">Demo Técnica</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="font-black text-xs uppercase tracking-[0.2em] mb-6 text-indigo-400">Legal</h4>
+                            <ul className="space-y-4 text-sm text-gray-400">
+                                <li><Link href="/terms" className="hover:text-white transition-colors">Términos</Link></li>
+                                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacidad</Link></li>
+                                <li><Link href="/compliance" className="hover:text-white transition-colors">Cumplimiento Ley 21.668</Link></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="flex flex-col md:row justify-between items-center pt-8 border-t border-white/5 gap-4">
+                        <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest">
+                            © 2025 NeuroV. Todos los derechos reservados.
+                        </p>
+                        <div className="flex gap-6">
+                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                            <span className="text-[10px] font-black text-green-500/60 uppercase tracking-widest">System Status: Optimal</span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            {/* Sales Assistant overlay */}
+            <SalesAssistant mode="technical" />
+        </main>
     );
 }
 
@@ -48,247 +143,3 @@ export default function CorporateHomePage() {
         </Suspense>
     );
 }
-
-function CorporateHomeContent() {
-    const { profile } = usePsychographic();
-    const searchParams = useSearchParams();
-    const router = useRouter();
-
-    // UTM-based routing and tracking
-    useEffect(() => {
-        const utm = parseUTM(searchParams);
-
-        // Track UTM parameters
-        analytics.trackUTM(utm);
-
-        // Auto-redirect social media traffic to Growth page
-        if (shouldRedirectToGrowth(utm)) {
-            router.push(`/growth?${searchParams.toString()}`);
-            return;
-        }
-
-        // Track page view
-        analytics.page('technical_landing', {
-            profile,
-            utm,
-            timestamp: new Date().toISOString()
-        });
-    }, [searchParams, profile, router]);
-
-    return (
-        <div className="min-h-screen bg-[#020617] text-white selection:bg-indigo-500/30 bg-mesh relative overflow-x-hidden">
-            {/* Background Grain/Noise */}
-            <div className="fixed inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] z-50" />
-
-            {/* Navbar */}
-            <nav className="fixed top-0 w-full z-[100] backdrop-blur-md border-b border-white/5 bg-black/20">
-                <div className="container mx-auto px-6 h-20 flex justify-between items-center">
-                    <div className="flex items-center gap-3 group cursor-pointer shrink-0" onClick={() => window.location.href = '/'}>
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform">
-                            <LucideBrainCircuit className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                        </div>
-                        <span className="text-xl sm:text-2xl font-black tracking-tighter">
-                            NEURO<span className="text-indigo-500">V</span> <span className="text-[10px] text-gray-500 ml-2">TECH</span>
-                        </span>
-                    </div>
-
-                    <div className="hidden lg:flex items-center gap-8">
-                        <a href="/solutions" className="text-[10px] font-black uppercase tracking-widest text-indigo-400 hover:text-white transition-colors border border-indigo-500/20 px-4 py-2 rounded-full bg-indigo-500/5">
-                            Explorar Servicios V7+
-                        </a>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                        <PremiumButton variant="primary" size="sm" onClick={() => document.getElementById('agenda')?.scrollIntoView({ behavior: 'smooth' })}>
-                            RESERVAR DEMO
-                        </PremiumButton>
-                    </div>
-                </div>
-            </nav>
-
-            <main className="relative pt-32">
-                {/* Hero Section */}
-                <section className="container mx-auto px-6 py-20 text-center relative">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-indigo-600/20 blur-[150px] rounded-full pointer-events-none" />
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="relative z-10"
-                    >
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-8 backdrop-blur-md">
-                            <LucideBrainCircuit className="w-4 h-4 text-indigo-400" />
-                            <span className="text-xs font-black text-indigo-300 tracking-[0.2em] uppercase">
-                                Arquitectura Basada en Evidencia Clínica
-                            </span>
-                        </div>
-
-                        <h1 className="text-3xl sm:text-5xl md:text-8xl font-black mb-6 sm:mb-8 leading-[1.1] sm:leading-[1] tracking-tight">
-                            Interoperabilidad <span className="text-gradient">FHIR R4</span> & Conversión Psico-Digital
-                        </h1>
-
-                        <p className="max-w-2xl mx-auto text-base md:text-xl text-gray-400 mb-10 sm:mb-12 leading-relaxed font-medium">
-                            Aseguramos la integridad de los datos bajo Ley 21.668 mientras nuestro asistente virtual incrementa tus tasas de agendamiento en un 275%.
-                        </p>
-
-                        <div className="flex flex-col items-center justify-center gap-6">
-                            <PremiumButton
-                                variant="secondary"
-                                size="lg"
-                                className="shine-effect w-full sm:w-auto px-8 sm:px-12 rounded-[1.5rem] text-sm sm:text-lg"
-                                onClick={() => document.getElementById('agenda')?.scrollIntoView({ behavior: 'smooth' })}
-                                icon={<LucideArrowRight />}
-                            >
-                                AGENDAR DEMO TÉCNICA
-                            </PremiumButton>
-
-                            <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">
-                                Validado para Clínicas Estéticas en Chile
-                            </p>
-                        </div>
-                    </motion.div>
-                </section>
-
-                {/* Authority Stats Section */}
-                <section id="roi" className="container mx-auto px-6 py-10">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <StatsCard icon={<LucideTrendingUp />} label="ROI Promedio" value="+143%" sub="Primer año" />
-                        <StatsCard icon={<LucideZap />} label="No-Shows" value="0%" sub="Garantizado por contrato" />
-                        <StatsCard icon={<LucideBrainCircuit />} label="Precisión IA" value="98.2%" sub="Perfilado psicográfico" />
-                        <StatsCard icon={<LucideShieldCheck />} label="Normativa" value="100%" sub="Cumplimiento Ley 21.668" />
-                    </div>
-                </section>
-
-                {/* Value Pillars Section */}
-                <section id="tecnologia" className="container mx-auto px-6 py-32">
-                    <div className="text-center mb-20">
-                        <h2 className="text-4xl md:text-6xl font-black mb-6 italic">Ingeniería de Conversión</h2>
-                        <div className="h-1.5 w-24 bg-indigo-500 mx-auto rounded-full" />
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-12">
-                        <GlassCard className="border-indigo-500/10">
-                            <div className="w-16 h-16 bg-indigo-500/20 rounded-3xl flex items-center justify-center text-indigo-400 mb-8">
-                                <LucideBrainCircuit className="w-10 h-10" />
-                            </div>
-                            <h3 className="text-2xl font-bold mb-4">Perfilado en Tiempo Real</h3>
-                            <p className="text-gray-400 leading-relaxed font-medium">
-                                No todos tus pacientes compran igual. Detectamos si son Impulsivos o Analíticos en los primeros 30 segundos y cambiamos la web para ellos.
-                            </p>
-                        </GlassCard>
-
-                        <GlassCard className="border-purple-500/10">
-                            <div className="w-16 h-16 bg-purple-500/20 rounded-3xl flex items-center justify-center text-purple-400 mb-8">
-                                <LucideActivity className="w-10 h-10" />
-                            </div>
-                            <h3 className="text-2xl font-bold mb-4">Scoring BANT Automático</h3>
-                            <p className="text-gray-400 leading-relaxed font-medium">
-                                Tu equipo comercial no debe perder tiempo. El sistema califica el interés y capacidad de pago antes de dejarlos agendar en tu calendario.
-                            </p>
-                        </GlassCard>
-
-                        <GlassCard className="border-cyan-500/10">
-                            <div className="w-16 h-16 bg-cyan-500/20 rounded-3xl flex items-center justify-center text-cyan-400 mb-8">
-                                <LucideDatabase className="w-10 h-10" />
-                            </div>
-                            <h3 className="text-2xl font-bold mb-4">Sincronización Total</h3>
-                            <p className="text-gray-400 leading-relaxed font-medium">
-                                Integración nativa con WhatsApp Business, Google Calendar y pasarelas de pago chilenas para un flujo de caja sin fricción.
-                            </p>
-                        </GlassCard>
-                    </div>
-                </section>
-
-                {/* Medical Grade Security Section (Sales Point 3) */}
-                <section id="seguridad" className="w-full relative py-16 sm:py-32 overflow-hidden bg-indigo-900/5">
-                    <div className="max-w-[1400px] mx-auto px-6 sm:px-12">
-                        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 sm:gap-24 items-center">
-                            <div className="w-full order-1">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full mb-6">
-                                    <LucideLock className="w-3 h-3 text-green-400" />
-                                    <span className="text-[10px] font-black text-green-300 tracking-widest uppercase">Fortaleza Inexpugnable</span>
-                                </div>
-                                <h2 className="text-2xl sm:text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tighter">
-                                    Tus datos son un activo, <br className="hidden sm:block" />
-                                    <span className="text-gradient">no un riesgo</span>.
-                                </h2>
-                                <p className="text-sm sm:text-xl text-gray-400 mb-8 leading-relaxed font-medium">
-                                    Diseñamos la arquitectura más segura de la industria estética, superando los estándares exigidos por el Ministerio de Salud.
-                                </p>
-
-                                <ul className="space-y-6">
-                                    <SecurityFeature icon={<LucideDatabase />} title="Bóveda pgsodium" desc="Cifrado militar para tus credenciales." />
-                                    <SecurityFeature icon={<LucideShieldCheck />} title="Aislamiento RLS" desc="Tus registros están blindados e inaccesibles." />
-                                    <SecurityFeature icon={<LucideServer />} title="Ficha Inmutable" desc="Trazabilidad total exigida por Ley." />
-                                </ul>
-                            </div>
-
-                            <div className="w-full order-2 relative group">
-                                <div className="absolute inset-0 bg-indigo-500/20 blur-[100px] rounded-full group-hover:bg-indigo-500/30 transition-all duration-700" />
-                                <GlassCard className="relative z-10 p-4 sm:p-8 border-white/10 bg-[#0f172a]/90 backdrop-blur-3xl w-full overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.6)]">
-                                    <div className="flex gap-2 mb-6 opacity-60">
-                                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.4)]" />
-                                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 shadow-[0_0_8px_rgba(234,179,8,0.4)]" />
-                                        <div className="w-2.5 h-2.5 rounded-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
-                                    </div>
-                                    <div className="font-mono text-[10px] sm:text-[13px] leading-relaxed overflow-x-auto custom-scrollbar-horizontal pb-2 pr-4">
-                                        <div className="space-y-1 sm:space-y-2 whitespace-nowrap min-w-fit">
-                                            <p className="text-indigo-400">CREATE POLICY clinic_isolation</p>
-                                            <p className="text-purple-400 pl-4 sm:pl-6">FOR SELECT TO verified_clinic</p>
-                                            <p className="text-cyan-400 pl-4 sm:pl-6">USING (clinic_id = current_setting('app.id'));</p>
-                                            <div className="h-4 sm:h-6" />
-                                            <p className="text-gray-500 font-medium italic">// Security Active: RLS Protocol</p>
-                                            <div className="mt-6 flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-lg w-fit">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                                                <p className="text-green-400 font-black tracking-widest uppercase text-[8px] sm:text-[10px]">PG_SODIUM: SECURE_ENCRYPTION</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </GlassCard>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <BookingSection />
-                <SalesAssistant mode="technical" />
-
-                {/* Footer */}
-                <footer className="container mx-auto px-6 py-20 border-t border-white/5 text-center text-gray-500 text-sm">
-                    <p>© 2025 NEURO-VENTAS V6. Todos los derechos reservados.</p>
-                    <p className="mt-2 text-gray-600 font-mono tracking-widest uppercase">Arquitectura Médica de Alto Rendimiento</p>
-                    <a href="/growth" className="mt-4 block text-[10px] text-indigo-400 hover:underline">Acceder al Portal de Crecimiento Comercial</a>
-                </footer>
-            </main>
-        </div>
-    );
-}
-
-function StatsCard({ icon, label, value, sub }: { icon: any, label: string, value: string, sub: string }) {
-    return (
-        <GlassCard className="text-center p-6 border-white/5" hoverIntensity="high">
-            <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-indigo-400 mx-auto mb-4">
-                {icon}
-            </div>
-            <p className="text-xs font-black text-gray-500 uppercase tracking-widest mb-1">{label}</p>
-            <p className="text-4xl font-black text-white mb-1">{value}</p>
-            <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest">{sub}</p>
-        </GlassCard>
-    );
-}
-
-function SecurityFeature({ icon, title, desc }: { icon: any, title: string, desc: string }) {
-    return (
-        <li className="flex gap-4">
-            <div className="shrink-0 w-10 h-10 bg-indigo-500/10 rounded-lg flex items-center justify-center text-indigo-400">
-                {icon}
-            </div>
-            <div>
-                <h4 className="font-bold text-white mb-1 uppercase tracking-tight">{title}</h4>
-                <p className="text-sm text-gray-500 font-medium">{desc}</p>
-            </div>
-        </li>
-    );
-}
-

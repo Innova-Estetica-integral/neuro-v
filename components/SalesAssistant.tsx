@@ -133,12 +133,16 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
 
         if (response) {
             const currentProfile = forceClassify();
-            addBotMessage(getAdaptiveMessage('intro'));
-
+            // Latencia reducida para mayor fluidez
+            setTimeout(() => {
+                const message = `¡Hola! Soy Donna de NeuroV. He analizado tu perfil y...`;
+                speak(message);
+                addBotMessage(getAdaptiveMessage('intro'), false);
+            }, 500);
             setTimeout(() => {
                 addBotMessage(getAdaptiveMessage('leads_q'));
                 setBantStep('leads');
-            }, 12000); // Restored to 12 seconds
+            }, 3000);
         } else {
             addBotMessage('Entiendo. La ineficiencia es costosa. Estaré aquí cuando decidas detener la fuga de ingresos.');
         }
@@ -157,7 +161,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
         setTimeout(() => {
             addBotMessage(getAdaptiveMessage('ticket_q'));
             setBantStep('ticket');
-        }, 3000); // 3 seconds gap
+        }, 1500);
     };
 
     const handleTicket = (price: number, label: string) => {
@@ -174,7 +178,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
         setTimeout(() => {
             addBotMessage(getAdaptiveMessage('authority_q'));
             setBantStep('authority');
-        }, 3000); // 3 seconds gap
+        }, 1500);
     };
 
     const handleAuthority = (isDecider: boolean) => {
