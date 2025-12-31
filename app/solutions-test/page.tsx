@@ -456,7 +456,7 @@ export default function SolutionsTest() {
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] mb-6 sm:mb-10">
                                 <ShieldCheck size={12} /> ECOSISTEMA 360° NEUROV
                             </div>
-                            <h1 className="text-4xl sm:text-7xl lg:text-8xl font-black leading-[1.1] mb-8 sm:mb-10 tracking-tightest text-black break-words">
+                            <h1 className="text-[32px] sm:text-[68px] lg:text-[92px] font-black leading-[1.1] mb-8 sm:mb-10 tracking-tightest text-black break-words">
                                 Tu Clínica Digital.<br />
                                 <span className="text-indigo-600">Lista para operar en 48 horas.</span>
                             </h1>
