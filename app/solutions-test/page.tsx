@@ -508,11 +508,12 @@ export default function SolutionsTest() {
                         initial={{ x: 0 }}
                         animate={{ x: "-33.33%" }}
                         transition={{
-                            duration: 17,
+                            duration: 25, // Slightly slower for better perception and less frame stress
                             repeat: Infinity,
                             ease: "linear"
                         }}
-                        className="flex items-center gap-16 sm:gap-24 pr-16 sm:pr-24 whitespace-nowrap min-w-max"
+                        style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+                        className="flex items-center gap-12 sm:gap-24 pr-12 sm:pr-24 whitespace-nowrap min-w-max"
                     >
                         {[
                             { name: 'SII', src: '/assets/logotipos/sii.png' },
