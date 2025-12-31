@@ -2,7 +2,7 @@
 
 import { AppShell, Burger, Group, NavLink, Text, ThemeIcon } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { LucideLayoutDashboard, LucideUsers, LucideCalendar, LucideTrendingUp, LucideSettings, LucideZap, LucideActivity } from 'lucide-react';
+import { LucideLayoutDashboard, LucideUsers, LucideCalendar, LucideTrendingUp, LucideSettings, LucideZap, LucideActivity, LucidePackage, LucideGift, LucideCamera } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -86,6 +86,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     label="ROI & Google Ads"
                     leftSection={<LucideTrendingUp size={18} />}
                     active={pathname === '/admin/roi'}
+                    className="rounded-lg mb-1"
+                />
+
+                <NavLink
+                    component={Link}
+                    href="/admin/inventory"
+                    label="Inventario & Stock"
+                    leftSection={<LucidePackage size={18} />}
+                    active={pathname === '/admin/inventory'}
+                    className="rounded-lg mb-1"
+                />
+                <NavLink
+                    component={Link}
+                    href="/admin/referrals"
+                    label="Referidos & Recompensas"
+                    leftSection={<LucideGift size={18} />}
+                    active={pathname === '/admin/referrals'}
+                    className="rounded-lg mb-1"
+                />
+                <NavLink
+                    component={Link}
+                    href="/admin/evolution"
+                    label="Evolución Visual"
+                    leftSection={<LucideCamera size={18} />}
+                    active={pathname === '/admin/evolution'}
                     className="rounded-lg mb-1"
                 />
 

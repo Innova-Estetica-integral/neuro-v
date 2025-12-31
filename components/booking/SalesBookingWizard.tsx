@@ -190,7 +190,15 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                                         </div>
                                         <div className="flex gap-4">
                                             <button onClick={() => setStep(1)} className="px-8 py-4 rounded-2xl border border-white/10 font-bold hover:bg-white/5 transition-all">Atras</button>
-                                            <PremiumButton variant="primary" className="flex-1 font-black shadow-lg shadow-[hsl(var(--profile-accent))]/30" onClick={() => setBookingDone(true)}>CONFIRMAR DIAGNÓSTICO LIVE</PremiumButton>
+                                            <button
+                                                className="flex-1 py-4 bg-indigo-600 rounded-2xl font-black shadow-lg shadow-indigo-500/30 hover:scale-[1.02] transition-all text-white"
+                                                onClick={() => {
+                                                    const dateParam = selectedDate.replace('Dic ', '2025-12-');
+                                                    window.location.href = `/strategic-session?date=${dateParam}&time=${selectedTime}`;
+                                                }}
+                                            >
+                                                CALIFICAR & AGENDAR SESIÓN
+                                            </button>
                                         </div>
                                     </GlassCard>
                                 )}
