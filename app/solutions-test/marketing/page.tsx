@@ -34,7 +34,7 @@ const MarketingPage = () => {
     return (
         <div className="min-h-screen bg-white selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
             {/* Header / Nav */}
-            <nav className={`fixed top-0 w-full z-[100] transition-all duration-700 ${isScrolled ? 'bg-white/10 backdrop-blur-md border-b border-white/20 py-[8.5px] shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'bg-transparent py-[32.5px]'}`}>
+            <nav className={`fixed top-0 w-full z-[100] transition-all duration-700 ${isScrolled ? 'bg-white/10 backdrop-blur-md border-b border-white/20 py-[11px] shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'bg-transparent py-[35px]'}`}>
                 <div className="max-w-7xl mx-auto px-6 sm:px-12 flex justify-between items-center">
                     <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.location.href = '/solutions-test'}>
                         <div className="relative w-10 h-10 backdrop-blur-[0.5px] rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-[0_30px_60px_rgba(0,0,0,0.4),0_0_40px_rgba(0,242,255,0.3),inset_0_-8px_15px_rgba(0,0,0,0.3),inset_0_2px_4px_rgba(255,255,255,0.6)] overflow-hidden"

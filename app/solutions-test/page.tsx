@@ -381,7 +381,7 @@ const Nav = () => {
     }, []);
 
     return (
-        <nav className={`fixed top-0 w-full z-[100] transition-all duration-700 ${isScrolled ? 'bg-white/10 backdrop-blur-md border-b border-white/20 py-[8.5px] shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'bg-transparent py-[32.5px]'}`}>
+        <nav className={`fixed top-0 w-full z-[100] transition-all duration-700 ${isScrolled ? 'bg-white/10 backdrop-blur-md border-b border-white/20 py-[11px] shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'bg-transparent py-[35px]'}`}>
             <div className="max-w-7xl mx-auto px-6 sm:px-12 flex justify-between items-center">
                 <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.location.href = '/'}>
                     <div className="relative w-10 h-10 backdrop-blur-[0.5px] rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-[0_30px_60px_rgba(0,0,0,0.4),0_0_40px_rgba(0,242,255,0.3),inset_0_-8px_15px_rgba(0,0,0,0.3),inset_0_2px_4px_rgba(255,255,255,0.6)] overflow-hidden"
@@ -447,7 +447,7 @@ export default function SolutionsTest() {
             <Nav />
 
             {/* Cinematic Hero */}
-            <section className="relative pt-[130px] pb-0 sm:pt-64 sm:pb-32 px-12 sm:px-12 bg-white overflow-hidden flex items-center">
+            <section className="relative pt-[130px] pb-0 sm:pt-64 sm:pb-32 px-6 sm:px-12 bg-white overflow-hidden flex items-center">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-50/50 to-transparent hidden lg:block" />
 
                 <div className="max-w-7xl mx-auto relative z-10">
@@ -555,7 +555,7 @@ export default function SolutionsTest() {
                     style={{ backgroundImage: 'radial-gradient(#4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
                 <div className="max-w-7xl mx-auto relative z-10">
-                    <div className="text-center mb-16 sm:mb-24">
+                    <div className="text-center mb-[29px] sm:mb-[61px]">
                         <motion.span
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
@@ -566,11 +566,11 @@ export default function SolutionsTest() {
                         <h2 className="text-4xl sm:text-7xl font-black tracking-tightest leading-tight px-4 break-words">La Suit 360° desglosada.</h2>
                     </div>
 
-                    <div className="grid lg:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {/* 1. Activo Web: El Centro de Atracción */}
                         <motion.div
                             whileHover={{ y: -5 }}
-                            className="lg:col-span-2 group relative rounded-[3rem] bg-[#0A0B14] p-10 text-white overflow-hidden border border-white/5 shadow-2xl flex flex-col justify-between min-h-[500px]"
+                            className="group relative rounded-[3rem] bg-[#0A0B14] p-10 text-white overflow-hidden border border-white/5 shadow-2xl flex flex-col justify-between min-h-[500px]"
                         >
                             {/* Carbon Fiber Texture */}
                             <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
@@ -582,24 +582,29 @@ export default function SolutionsTest() {
                             </div>
 
                             <div className="relative z-10">
-                                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-white/5 border border-white/10 mb-8 backdrop-blur-md">
-                                    <Globe className="text-indigo-400" size={20} />
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-indigo-300">Activo Digital #1</span>
+                                <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mb-8 shadow-xl border border-indigo-500/50">
+                                    <Globe className="text-white" size={32} />
                                 </div>
                                 <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter leading-none">
                                     Tu Web de <br /><span className="text-indigo-400 text-glow-indigo">Alto Impacto</span>
                                 </h3>
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 mb-6">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+                                    <span className="text-[8px] font-black uppercase text-indigo-300 tracking-widest">Infraestructura Pro</span>
+                                </div>
                                 <p className="text-indigo-100/70 font-medium leading-[1.6]">
                                     Convertimos tu presencia en un imán de pacientes. Una infraestructura diseñada para capturar datos y alimentar tus Ads de Meta/Google, logrando una publicidad mucho más **económica** y precisa.
                                 </p>
                             </div>
 
-                            <div className="relative z-10 mt-10 flex flex-wrap gap-4 justify-center">
-                                <div className="px-6 py-3 bg-white/5 rounded-2xl border border-white/10 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                                    <TrendingUp size={14} className="text-[#B9FF66]" /> Nutrición de Ads
+                            <div className="relative z-10 mt-10 space-y-3">
+                                <div className="p-4 bg-white/10 rounded-2xl border border-white/10 backdrop-blur-sm flex items-center justify-between">
+                                    <span className="text-[9px] font-black uppercase tracking-widest">Nutrición de Ads</span>
+                                    <TrendingUp size={16} className="text-[#B9FF66]" />
                                 </div>
-                                <div className="px-6 py-3 bg-white/5 rounded-2xl border border-white/10 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                                    <Target size={14} className="text-[#00f2ff]" /> Conversión 360
+                                <div className="p-4 bg-white/10 rounded-2xl border border-white/10 backdrop-blur-sm flex items-center justify-between">
+                                    <span className="text-[9px] font-black uppercase tracking-widest">Conversión 360</span>
+                                    <Target size={16} className="text-[#00f2ff]" />
                                 </div>
                             </div>
 
@@ -610,7 +615,7 @@ export default function SolutionsTest() {
                         {/* 2. Donna: La Secretaria Inteligente */}
                         <motion.div
                             whileHover={{ y: -5 }}
-                            className="group relative rounded-[3rem] bg-gradient-to-br from-indigo-700 to-indigo-900 p-10 text-white overflow-hidden shadow-2xl flex flex-col justify-between"
+                            className="group relative rounded-[3rem] bg-gradient-to-br from-indigo-700 to-indigo-900 p-10 text-white overflow-hidden shadow-2xl flex flex-col justify-between min-h-[500px]"
                         >
                             <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
 
@@ -777,7 +782,7 @@ export default function SolutionsTest() {
                         {/* 9. Interoperabilidad (Fonasa/Isapres) */}
                         <motion.div
                             whileHover={{ y: -5 }}
-                            className="lg:col-span-2 group relative rounded-[3rem] bg-gradient-to-r from-gray-900 to-indigo-950 p-10 text-white overflow-hidden border border-white/5 shadow-2xl flex flex-col sm:flex-row items-center gap-8"
+                            className="md:col-span-2 lg:col-span-2 group relative rounded-[3rem] bg-gradient-to-r from-gray-900 to-indigo-950 p-10 text-white overflow-hidden border border-white/5 shadow-2xl flex flex-col sm:flex-row items-center gap-8"
                         >
                             <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
                             <div className="absolute inset-0 opacity-20">
@@ -806,9 +811,22 @@ export default function SolutionsTest() {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             href="/solutions-test/legal"
-                            className="group relative flex items-center justify-between p-8 bg-white border border-gray-100 rounded-[2.5rem] w-full sm:max-w-md transition-all hover:border-indigo-500/30 overflow-hidden shadow-sm hover:shadow-xl"
+                            className="group relative flex items-center justify-between p-8 rounded-[2.5rem] w-full sm:max-w-md transition-all hover:border-indigo-500/30 overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(0,0,0,0.05)] border border-white/60"
+                            style={{
+                                background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #ffffff 50%, #e2e8f0 75%, #f8fafc 100%)'
+                            }}
                         >
-                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/10 to-indigo-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+                            {/* Realistic Metallic Sheen & Highlighting */}
+                            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-white/10 opacity-60 pointer-events-none" />
+                            <motion.div
+                                animate={{ x: ['-150%', '150%'] }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                                className="absolute top-0 right-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 pointer-events-none"
+                            />
+
+                            <div className="absolute top-[-2px] left-[-2px] right-[-2px] h-[4px] bg-gradient-to-r from-transparent via-white/80 to-transparent blur-[1px] opacity-40" />
+
+                            <div className="absolute inset-0 opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />
                             <div className="flex items-center gap-6 relative z-10">
                                 <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-inner">
                                     <ShieldCheck size={28} />
@@ -826,9 +844,22 @@ export default function SolutionsTest() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
                             href="/solutions-test/marketing"
-                            className="group relative flex items-center justify-between p-8 bg-white border border-gray-100 rounded-[2.5rem] w-full sm:max-w-md transition-all hover:border-indigo-500/30 overflow-hidden shadow-sm hover:shadow-xl"
+                            className="group relative flex items-center justify-between p-8 rounded-[2.5rem] w-full sm:max-w-md transition-all hover:border-indigo-500/30 overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(0,0,0,0.05)] border border-white/60"
+                            style={{
+                                background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #ffffff 50%, #e2e8f0 75%, #f8fafc 100%)'
+                            }}
                         >
-                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/10 to-indigo-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+                            {/* Realistic Metallic Sheen & Highlighting */}
+                            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-white/10 opacity-60 pointer-events-none" />
+                            <motion.div
+                                animate={{ x: ['-150%', '150%'] }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                                className="absolute top-0 right-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 pointer-events-none"
+                            />
+
+                            <div className="absolute top-[-2px] left-[-2px] right-[-2px] h-[4px] bg-gradient-to-r from-transparent via-white/80 to-transparent blur-[1px] opacity-40" />
+
+                            <div className="absolute inset-0 opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />
                             <div className="flex items-center gap-6 relative z-10">
                                 <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-inner">
                                     <TrendingUp size={28} />
