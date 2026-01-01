@@ -76,7 +76,7 @@ export function DonnaGlassAssistant() {
             }
             setMessages(prev => [...prev, { role: 'donna', content: response }]);
             speak(response);
-        }, 1500);
+        }, 1000);
     };
 
     return (

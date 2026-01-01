@@ -59,7 +59,7 @@ export function ClinicSimulator() {
 
             setLogs(prev => [newLog, ...prev.slice(0, 5)]);
             setRoi(prev => +(prev + 0.1).toFixed(1));
-        }, 3000);
+        }, 2000);
 
         return () => clearInterval(interval);
     }, []);

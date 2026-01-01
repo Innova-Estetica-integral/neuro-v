@@ -39,7 +39,7 @@ export function UnifiedHome() {
             <section className="relative pt-32 pb-16 sm:pt-60 sm:pb-40 px-6 sm:px-12 bg-white overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="/_next/image?url=%2Fapi%2Fartifacts%2Fneurov_hero_cinematic_1767065778813.png&w=3840&q=75"
+                        src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=3840"
                         alt="NeuroV Clinic"
                         className="w-full h-full object-cover opacity-20"
                     />

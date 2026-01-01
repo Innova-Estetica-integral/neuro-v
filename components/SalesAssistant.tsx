@@ -142,7 +142,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
             setTimeout(() => {
                 addBotMessage(getAdaptiveMessage('leads_q'));
                 setBantStep('leads');
-            }, 3000);
+            }, 2000);
         } else {
             addBotMessage('Entiendo. La ineficiencia es costosa. Estaré aquí cuando decidas detener la fuga de ingresos.');
         }

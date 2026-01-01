@@ -79,7 +79,7 @@ const DonnaFloatingAssistant = () => {
             speak(chat.content);
             const timer = setTimeout(() => {
                 handleSend('start');
-            }, 16000); // Restored to 16 seconds
+            }, 10000); // Updated to 10 seconds for better engagement
             return () => clearTimeout(timer);
         }
     }, [isOpen, step, chat.content]);
@@ -90,7 +90,7 @@ const DonnaFloatingAssistant = () => {
         setInput('');
 
         setIsThinking(true);
-        const thinkingDelay = 1200 + (Math.random() * 800); // Dynamic realistic delay
+        const thinkingDelay = 800 + (Math.random() * 700); // Optimized for proactiveness
 
         setTimeout(() => {
             setIsThinking(false);

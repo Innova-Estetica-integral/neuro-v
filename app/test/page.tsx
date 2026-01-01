@@ -11,7 +11,7 @@ export default async function TestPage() {
 
     try {
         const { data, error: dbError } = await supabase
-            .from('leads')
+            .from('patient')
             .select('*')
             .limit(5);
 

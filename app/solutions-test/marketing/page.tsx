@@ -69,25 +69,54 @@ const MarketingPage = () => {
                     style={{ backgroundImage: 'radial-gradient(#4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
                 <div className="max-w-7xl mx-auto relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="text-center mb-12"
-                    >
-                        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-8">
-                            <Sparkles className="text-indigo-600" size={16} />
-                            <span className="text-[10px] font-black uppercase tracking-widest text-indigo-600">Marketing & Autogestión de Audiencias</span>
-                        </div>
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="text-center lg:text-left"
+                        >
+                            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-8">
+                                <Sparkles className="text-indigo-600" size={16} />
+                                <span className="text-[10px] font-black uppercase tracking-widest text-indigo-600">Marketing & Autogestión</span>
+                            </div>
 
-                        <h1 className="text-6xl sm:text-9xl font-black text-gray-900 leading-[1] mb-8 tracking-tightest">
-                            El Cuarto de <br />
-                            <span className="text-indigo-600">Guerra de Donna.</span>
-                        </h1>
+                            <h1 className="text-4xl sm:text-8xl lg:text-7xl font-black text-gray-900 leading-[1] mb-8 tracking-tightest">
+                                El Cuarto de <br />
+                                <span className="text-indigo-600">Guerra.</span>
+                            </h1>
 
-                        <p className="text-gray-500 text-xl max-w-2xl mx-auto leading-relaxed font-medium">
-                            No solo gestionamos tu agenda; nutrimos tus campañas de Ads 24/7. Convertimos cada dólar invertido en pacientes calificados con precisión quirúrgica.
-                        </p>
-                    </motion.div>
+                            <p className="text-gray-500 text-xl leading-relaxed font-medium mb-10 max-w-xl">
+                                No solo gestionamos tu agenda; nutrimos tus campañas de Ads 24/7. Convertimos cada dólar invertido en pacientes calificados.
+                            </p>
+
+                            <button className="bg-indigo-600 text-white px-10 py-5 rounded-full font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95">
+                                COMENZAR ESCALADO
+                            </button>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="relative hidden lg:block"
+                        >
+                            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group">
+                                <img
+                                    src="/solutions/marketing_hero.png"
+                                    alt="Medical Growth Marketing"
+                                    className="w-full aspect-square object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
+                                <div className="absolute bottom-8 left-8 text-white">
+                                    <div className="text-[10px] font-black uppercase tracking-widest text-indigo-300">Impulso Donna AI</div>
+                                    <div className="text-3xl font-black">+340% ROAS</div>
+                                </div>
+                            </div>
+
+                            {/* Accent decor */}
+                            <div className="absolute -top-6 -right-6 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl" />
+                            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl" />
+                        </motion.div>
+                    </div>
                 </div>
             </header>
 
@@ -97,8 +126,8 @@ const MarketingPage = () => {
                 <div className="max-w-7xl mx-auto relative z-10">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="space-y-8">
-                            <span className="text-[#B9FF66] font-black text-xs uppercase tracking-[0.4em] block">PROTOCOLOS DE ESCALADO</span>
-                            <h2 className="text-4xl sm:text-6xl font-black tracking-tightest leading-tight">Nutrición de Ads <br />Psicográfica.</h2>
+                            <span className="text-[#B9FF66] font-black text-xs uppercase tracking-[0.4em] mb-6 block">PROTOCOLOS DE ESCALADO</span>
+                            <h2 className="text-3xl sm:text-6xl font-black tracking-tightest leading-tight">Nutrición de Ads <br />Psicográfica.</h2>
                             <p className="text-indigo-100/60 text-lg leading-relaxed font-medium">
                                 Donna intercepta a los prospectos en el momento exacto. Analiza el comportamiento de tus campañas en Meta y Google, inyectando datos de conversión real para que los algoritmos encuentren a tus pacientes ideales más rápido y barato.
                             </p>

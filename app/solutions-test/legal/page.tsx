@@ -65,25 +65,60 @@ const LegalPage = () => {
                 <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
                 <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.08),transparent_70%)]" />
 
-                <div className="max-w-7xl mx-auto relative z-10 text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-8 backdrop-blur-md"
-                    >
-                        <ShieldCheck className="text-indigo-600" size={16} />
-                        <span className="text-[10px] font-black uppercase tracking-widest text-indigo-600">Blindaje Clínico & Seguridad Zero-Trust</span>
-                    </motion.div>
+                <div className="max-w-7xl mx-auto relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-16 items-center text-center lg:text-left">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                        >
+                            <motion.div
+                                className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-8 backdrop-blur-md"
+                            >
+                                <ShieldCheck className="text-indigo-600 animate-pulse" size={16} />
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600">Blindaje Clínico & Seguridad</span>
+                            </motion.div>
 
-                    <h1 className="text-5xl sm:text-8xl font-black text-gray-900 leading-[1.1] mb-8 tracking-tightest">
-                        Confianza Legal <br />
-                        <span className="text-indigo-600">Sin Fisuras.</span>
-                    </h1>
+                            <h1 className="text-4xl sm:text-8xl lg:text-7xl font-black text-gray-900 leading-[1] mb-8 tracking-tightest">
+                                Confianza <br />
+                                <span className="text-indigo-600 relative inline-block">
+                                    Legal.
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        animate={{ width: '100%' }}
+                                        transition={{ delay: 0.5, duration: 1 }}
+                                        className="absolute -bottom-2 left-0 h-2 bg-[#B9FF66] opacity-30 blur-[2px]"
+                                    />
+                                </span>
+                            </h1>
 
-                    <p className="text-gray-500 text-xl max-w-3xl mx-auto leading-relaxed font-medium">
-                        Cumplimiento total con la Ley 20.584 y estándares internacionales de ciberseguridad.
-                        Protegemos tu consulta como si fuera un activo de defensa nacional.
-                    </p>
+                            <p className="text-gray-500 text-xl leading-relaxed font-medium mb-10 max-w-xl">
+                                Cumplimiento total con la Ley 20.584 y estándares de ciberseguridad. Protegemos tu consulta como un activo nacional.
+                            </p>
+
+                            <button className="bg-gray-900 text-white px-10 py-5 rounded-full font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-black transition-all">
+                                CONSULTAR PROTOCOLO
+                            </button>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="relative hidden lg:block"
+                        >
+                            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group">
+                                <img
+                                    src="/solutions/legal_hero.png"
+                                    alt="Legal Trust Physician"
+                                    className="w-full aspect-square object-cover transition-all duration-700 grayscale-[0.2] group-hover:grayscale-0"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
+                                <div className="absolute bottom-8 left-8 text-white">
+                                    <div className="text-[10px] font-black uppercase tracking-widest text-[#B9FF66]">100% COMPLIANT</div>
+                                    <div className="text-3xl font-black">LEY 20.584</div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
                 </div>
             </header>
 
@@ -93,7 +128,7 @@ const LegalPage = () => {
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <div>
                             <span className="text-indigo-600 font-black text-xs uppercase tracking-[0.4em] block mb-4">INFRAESTRUCTURA ZERO-TRUST</span>
-                            <h2 className="text-4xl sm:text-6xl font-black tracking-tightest leading-tight mb-8">Nadie entra sin ser <br />invitado.</h2>
+                            <h2 className="text-2xl sm:text-6xl font-black tracking-tightest leading-tight mb-8">Nadie entra sin ser <br />invitado.</h2>
                             <p className="text-gray-500 text-lg leading-relaxed mb-10 font-medium">
                                 Aplicamos arquitectura <strong>Zero-Trust</strong>: un modelo de seguridad que no asume confianza, ni siquiera dentro de la red. Cada acceso es verificado, autenticado y cifrado de extremo a extremo (E2EE) bajo estándar HL7 FHIR.
                             </p>
