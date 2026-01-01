@@ -574,20 +574,20 @@ export default function SolutionsTest() {
                             className="space-y-6 sm:space-y-8 text-center lg:text-left"
                         >
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[10px] font-black uppercase tracking-[0.2em]">
-                                <Globe size={14} className="animate-pulse" /> EL CENTRO DE ATRACCIÓN DIGITAL
+                                <Target size={14} className="animate-pulse" /> MÁQUINA DE CONVERSIÓN ELITE
                             </div>
                             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-[1000] tracking-tightest leading-[0.9] text-gray-900">
-                                Tu Web no es un gasto, <br />
-                                <span className="text-indigo-600">es un Activo Biolink.</span>
+                                Tu Web no es un sitio, <br />
+                                <span className="text-indigo-600">es tu Fuerza de Ventas 24/7.</span>
                             </h2>
                             <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-                                No diseñamos &quot;páginas bonitas&quot;. Construimos infraestructuras de conversión que alimentan tus Ads con datos precisos. Donna rastrea cada intención de compra para que tu publicidad sea 3x más eficiente.
+                                Transformamos tu presencia digital en un Funnel de Ventas de alto impacto, optimizado por un ecosistema de marketing especializado que rastrea cada intención de compra. Donna analiza el comportamiento psicológico del paciente para convertir tráfico en citas de alto valor de forma automática.
                             </p>
                             <div className="flex flex-col gap-4">
                                 {[
-                                    { t: "Diseño Psico-Persuasivo", d: "Adaptado a tus 4 avatares de compra." },
-                                    { t: "Tracking de Precisión", d: "Pixeles y API de conversiones al 100%." },
-                                    { t: "Velocidad Quirúrgica", d: "Carga instantánea en menos de 0.8s." }
+                                    { t: "Funnel Psicográfico", d: "Capturamos el perfil comercial del paciente desde el primer contacto." },
+                                    { t: "Marketing de Élite", d: "Ads sincronizados quirúrgicamente con tu agenda y rentabilidad." },
+                                    { t: "Donna Sales Engine", d: "Un sistema de cierre automático que no deja escapar ni un solo lead." }
                                 ].map((item, i) => (
                                     <div key={i} className="flex gap-4 p-4 rounded-2xl hover:bg-indigo-50/50 transition-colors group">
                                         <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 mt-2 group-hover:scale-150 transition-transform" />
@@ -624,8 +624,8 @@ export default function SolutionsTest() {
                                             <TrendingUp size={20} />
                                         </div>
                                         <div>
-                                            <div className="text-[10px] font-black uppercase text-gray-400">Conversión Web</div>
-                                            <div className="text-xl font-black text-emerald-600">+240%</div>
+                                            <div className="text-[10px] font-black uppercase text-gray-400">Efectividad Funnel</div>
+                                            <div className="text-xl font-black text-emerald-600">+315%</div>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -679,14 +679,14 @@ export default function SolutionsTest() {
                             className="space-y-8 sm:space-y-10 lg:order-2 text-center lg:text-left"
                         >
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#B9FF66] text-[10px] font-black uppercase tracking-[0.2em]">
-                                <BrainCircuit size={14} className="animate-spin-slow" /> SECRETARÍA DE ÉLITE IA 24/7
+                                <BrainCircuit size={14} className="animate-spin-slow" /> OPERATIVIDAD ESPECIALIZADA 24/7
                             </div>
                             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-[1000] tracking-tightest leading-[0.9]">
-                                Ella contesta. <br />
-                                Tú <span className="text-[#B9FF66]">descansas.</span>
+                                Donna al WhatsApp. <br />
+                                Tú <span className="text-[#B9FF66]">operas.</span>
                             </h2>
                             <p className="text-lg sm:text-xl text-indigo-100/60 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-                                Donna toma el mando de tu WhatsApp incluso después del horario de consulta. Gestiona **notificaciones, recordatorios y rellenado de espacios libres** de forma autónoma. Califica leads, agenda citas y vende bonos I-Med sin que muevas un dedo.
+                                Donna toma el control de tu WhatsApp y mensajería de alta demanda con eficiencia quirúrgica. Mientras ella cualifica, agenda y cierra citas de forma autónoma, tú te enfocas en entregar la máxima excelencia médica en tu consulta sin interrupciones.
                             </p>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -810,9 +810,9 @@ export default function SolutionsTest() {
                     <motion.a
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        href="/solutions-test/marketing"
-                        className="group relative flex items-center justify-between p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] w-full sm:max-w-md transition-all border border-white bg-white hover:shadow-2xl hover:border-indigo-100"
+                        whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                        href="/solutions-test/legal"
+                        className="group relative flex items-center justify-between p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] w-full sm:max-w-md transition-all border border-white bg-white shadow-lg hover:shadow-2xl hover:border-indigo-100"
                     >
                         <div className="flex items-center gap-4 sm:gap-6 relative z-10 w-full overflow-hidden">
                             <div className="w-12 h-12 sm:w-14 sm:h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all shrink-0">
@@ -854,7 +854,11 @@ export default function SolutionsTest() {
                                     { title: "Ley 19.628 (Protección de Datos)", desc: "Encriptación de grado bancario para toda la información personal de tus pacientes.", law: "Data Privacy" },
                                     { title: "Estándar HL7 FHIR & CENS", desc: "Interoperabilidad certificada para el intercambio seguro de datos clínicos.", law: "Health Tech Standard" }
                                 ].map((item, i) => (
-                                    <div key={i} className="flex gap-4 p-6 rounded-3xl bg-gray-50 border border-transparent hover:border-emerald-100 hover:bg-white transition-all group">
+                                    <motion.div
+                                        key={i}
+                                        whileHover={{ y: -5, scale: 1.01 }}
+                                        className="flex gap-4 p-6 rounded-3xl bg-gray-50 border border-transparent hover:border-emerald-100 hover:bg-white hover:shadow-xl transition-all group cursor-default"
+                                    >
                                         <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform shrink-0">
                                             <ShieldCheck size={24} />
                                         </div>
@@ -865,7 +869,7 @@ export default function SolutionsTest() {
                                             </div>
                                             <p className="text-xs text-gray-400 font-bold leading-relaxed">{item.desc}</p>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 ))}
                             </div>
                         </motion.div>
@@ -902,16 +906,19 @@ export default function SolutionsTest() {
             </section>
 
             {/* ECOSYSTEM SECTION - Integrations (Explicit I-Med and Buk) */}
-            <section className="py-20 sm:py-32 px-4 sm:px-12 bg-white relative">
+            <section className="pt-12 pb-0 sm:py-32 px-4 sm:px-12 bg-white relative">
                 <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
-                        <div>
-                            <span className="text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em] mb-6 block">INTEROPERABILIDAD TOTAL</span>
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight mb-8">Un ecosistema conectado con <span className="text-indigo-600">I-Med & Buk.</span></h2>
-                            <p className="text-gray-500 text-lg leading-relaxed font-medium mb-4">
+                    <div className="grid lg:grid-cols-2 gap-2 lg:gap-20 items-center">
+                        <div className="text-center lg:text-left">
+                            <span className="text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em] mb-3 sm:mb-6 block">INTEROPERABILIDAD AVANZADA</span>
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-[1000] tracking-tightest leading-tight mb-6 sm:mb-8 text-gray-900 [text-wrap:balance]">
+                                Toda tu clínica sincronizada con <br className="hidden sm:block" />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-500">I-Med & Buk</span>
+                            </h2>
+                            <p className="text-gray-500 text-sm sm:text-lg leading-relaxed font-medium mb-6 sm:mb-10 max-w-xl mx-auto lg:mx-0">
                                 NeuroV centraliza la inteligencia de tu clínica integrándose con los pilares del mercado chileno. Gestiona bonos **Fonasa e Isapre vía I-Med** de forma automática y delega la administración de personas y finanzas a **Buk**.
                             </p>
-                            <div className="flex flex-nowrap items-center gap-1">
+                            <div className="flex flex-wrap justify-center lg:justify-start items-center gap-2">
                                 {[
                                     'I-Med (Fonasa/Isapre)',
                                     'Buk (HR & Finanzas)',
@@ -919,28 +926,33 @@ export default function SolutionsTest() {
                                     'SII Boletas',
                                     'Meta & Google Ads'
                                 ].map((brand, bidx) => (
-                                    <div key={bidx} className="px-3 py-1 rounded-full bg-gray-50 text-gray-400 font-bold text-[9px] uppercase tracking-wider border border-gray-100 whitespace-nowrap">
+                                    <div key={bidx} className="px-3 py-1.5 rounded-full bg-indigo-50/50 text-indigo-600 font-black text-[8px] uppercase tracking-wider border border-indigo-100 whitespace-nowrap shrink-0">
                                         {brand}
                                     </div>
                                 ))}
                             </div>
                         </div>
-                        <div className="relative">
-                            <div className="aspect-square bg-white flex items-center justify-center overflow-hidden relative">
+                        <div className="relative overflow-visible">
+                            <div className="aspect-square bg-white flex items-center justify-center relative">
+                                <style>{`
+                                    .orbit-container { --orbit-radius: 110px; }
+                                    @media (min-width: 640px) {
+                                        .orbit-container { --orbit-radius: 200px; }
+                                    }
+                                `}</style>
                                 <motion.div
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                                    className="relative w-full h-full max-w-[600px] max-h-[600px]"
+                                    className="relative w-full h-full max-w-[340px] max-h-[340px] sm:max-w-[600px] sm:max-h-[600px] orbit-container flex items-center justify-center"
                                 >
 
                                     {/* Single Subtle Orbit Path - Rotating with the unit */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] border border-gray-100 rounded-full" />
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] sm:w-[400px] sm:h-[400px] border border-gray-100 rounded-full" />
 
                                     {/* Central Node: NeuroV Brain - Gray base with Cyan activity on hover */}
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                                         <BrainCircuit
-                                            size={42}
-                                            className="text-gray-400 opacity-30 hover:text-cyan-500 hover:opacity-100 transition-all duration-500 cursor-pointer stroke-[1.5px]"
+                                            className="w-8 h-8 sm:w-10 sm:h-10 text-gray-400 opacity-30 hover:text-cyan-500 hover:opacity-100 transition-all duration-500 cursor-pointer stroke-[1.5px]"
                                         />
                                     </div>
 
@@ -958,20 +970,20 @@ export default function SolutionsTest() {
                                             key={idx}
                                             className="absolute top-1/2 left-1/2"
                                             style={{
-                                                transform: `rotate(${orb.angle}deg) translateY(-160px)`
+                                                transform: `rotate(${orb.angle}deg) translateY(calc(-1 * var(--orbit-radius)))`
                                             }}
                                         >
-                                            <div className="absolute -translate-x-1/2 -translate-y-1/2 w-24 h-24 flex items-center justify-center grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                                            <div className="absolute -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
                                                 <img
                                                     src={orb.logo}
                                                     alt="Integración"
-                                                    className={`${orb.logo.includes('Google_Ads') ? 'w-14 h-14' :
-                                                        orb.logo.includes('meta') ? 'w-48 h-48' :
-                                                            orb.logo.includes('BUK') ? 'w-32 h-32' :
-                                                                orb.logo.includes('Google_Gemini') ? 'w-32 h-32' :
-                                                                    orb.logo.includes('whatsapp') ? 'w-56 h-56' :
-                                                                        orb.logo.includes('sii') ? 'w-12 h-12' :
-                                                                            'w-24 h-24'
+                                                    className={`${orb.logo.includes('Google_Ads') ? 'w-8 h-8 sm:w-14 sm:h-14' :
+                                                        orb.logo.includes('meta') ? 'w-20 h-20 sm:w-48 sm:h-48' :
+                                                            orb.logo.includes('BUK') ? 'w-16 h-16 sm:w-32 sm:h-32' :
+                                                                orb.logo.includes('Google_Gemini') ? 'w-16 h-16 sm:w-32 sm:h-32' :
+                                                                    orb.logo.includes('whatsapp') ? 'w-24 h-24 sm:w-56 sm:h-56' :
+                                                                        orb.logo.includes('sii') ? 'w-8 h-8 sm:w-12 sm:h-12' :
+                                                                            'w-12 h-12 sm:w-24 sm:h-24'
                                                         } object-contain`}
                                                 />
                                             </div>
@@ -985,10 +997,10 @@ export default function SolutionsTest() {
             </section>
 
             {/* SECCIÓN ECOSSISTEMA: Solution Switcher (Inspired by Buk/Encuadrado) */}
-            <section className="py-20 sm:py-32 px-4 sm:px-12 bg-gray-50 relative overflow-hidden">
+            <section className="pt-12 pb-20 sm:py-32 px-4 sm:px-12 bg-gray-50 relative overflow-hidden">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16 sm:mb-24">
-                        <span className="text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em] block mb-4">ADAPTABILIDAD TOTAL</span>
+                        <span className="text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em] block mb-2 sm:mb-4">ADAPTABILIDAD TOTAL</span>
                         <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight">Diseñado para cada <br />nivel de tu <span className="text-indigo-600 italic">operación.</span></h2>
                     </div>
 
@@ -999,7 +1011,11 @@ export default function SolutionsTest() {
                                 { id: 'centro', title: 'Centros Médicos', icon: Users, desc: 'Gestión de múltiples salas y especialistas.' },
                                 { id: 'franquicia', title: 'Franquicias', icon: ShieldCheck, desc: 'Control centralizado de múltiples sucursales.' }
                             ].map((tab, idx) => (
-                                <div key={idx} className={`p-6 rounded-3xl border transition-all cursor-pointer group ${idx === 1 ? 'bg-white shadow-xl border-indigo-100' : 'bg-transparent border-transparent hover:bg-white/50'}`}>
+                                <motion.div
+                                    key={idx}
+                                    whileHover={{ x: 10, y: -2 }}
+                                    className={`p-6 rounded-3xl border transition-all cursor-pointer group ${idx === 1 ? 'bg-white shadow-2xl border-indigo-100' : 'bg-transparent border-transparent hover:bg-white hover:shadow-xl'}`}
+                                >
                                     <div className="flex items-center gap-4">
                                         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${idx === 1 ? 'bg-indigo-600 text-white' : 'bg-white text-gray-400 group-hover:text-indigo-600 shadow-sm'}`}>
                                             <tab.icon size={24} />
@@ -1009,7 +1025,7 @@ export default function SolutionsTest() {
                                             <p className="text-xs text-gray-400 font-medium">{tab.desc}</p>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
 
@@ -1116,7 +1132,7 @@ export default function SolutionsTest() {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 className="group relative"
                             >
-                                <div className="absolute inset-0 bg-white/[0.03] border border-white/10 rounded-[2.5rem] transition-all group-hover:bg-white/[0.07] group-hover:border-indigo-500/50 group-hover:shadow-[0_20px_50px_rgba(79,70,229,0.2)]" />
+                                <div className="absolute inset-0 bg-white/[0.03] border border-white/10 rounded-[2.5rem] transition-all group-hover:bg-white/[0.05] group-hover:border-indigo-500/30 group-hover:shadow-[0_30px_60px_-15px_rgba(79,70,229,0.3)] group-hover:-translate-y-2" />
                                 <div className="relative p-6 sm:p-10 flex flex-col md:flex-row items-center gap-6 sm:gap-10">
                                     <div className="flex-1 flex items-center gap-6 w-full">
                                         <div className="w-14 h-14 bg-indigo-600/20 rounded-2xl flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
@@ -1258,8 +1274,8 @@ export default function SolutionsTest() {
                         ].map((plan, i) => (
                             <motion.div
                                 key={i}
-                                whileHover={{ y: -10 }}
-                                className={`relative p-10 rounded-[3rem] ${plan.color} ${plan.textColor} border border-gray-100 overflow-hidden flex flex-col justify-between shadow-2xl`}
+                                whileHover={{ y: -15, shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
+                                className={`relative p-10 rounded-[3rem] ${plan.color} ${plan.textColor} border border-gray-100 overflow-hidden flex flex-col justify-between shadow-2xl transition-all`}
                             >
                                 {plan.popular && (
                                     <div className="absolute top-8 right-8 bg-[#B9FF66] text-black text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
