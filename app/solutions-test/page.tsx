@@ -50,7 +50,42 @@ const DonnaFloatingAssistant = () => {
     const [userContext, setUserContext] = useState<{ businessType?: string, mainChallenge?: string }>({});
     const [input, setInput] = useState('');
     const [isThinking, setIsThinking] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
     const audioRef = React.useRef<HTMLAudioElement | null>(null);
+    const activityTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        const handleActivity = () => {
+            setIsVisible(true);
+
+            // Clear existing timeout
+            if (activityTimeoutRef.current) {
+                clearTimeout(activityTimeoutRef.current);
+            }
+
+            // Set a new timeout to hide the button after 3 seconds
+            // But only hide it if the assistant window is NOT open
+            activityTimeoutRef.current = setTimeout(() => {
+                if (!isOpen) {
+                    setIsVisible(false);
+                }
+            }, 3000);
+        };
+
+        window.addEventListener('scroll', handleActivity);
+        window.addEventListener('mousemove', handleActivity);
+        window.addEventListener('touchstart', handleActivity);
+
+        // Intial timer
+        handleActivity();
+
+        return () => {
+            window.removeEventListener('scroll', handleActivity);
+            window.removeEventListener('mousemove', handleActivity);
+            window.removeEventListener('touchstart', handleActivity);
+            if (activityTimeoutRef.current) clearTimeout(activityTimeoutRef.current);
+        };
+    }, [isOpen]);
 
     useEffect(() => {
         // Preload local sound for maximum reliability
@@ -281,10 +316,10 @@ const DonnaFloatingAssistant = () => {
                     whileTap={{ scale: 0.85 }}
                     initial={false}
                     animate={{
-                        opacity: isOpen ? 0 : 1,
-                        scale: isOpen ? 0.8 : 1,
-                        pointerEvents: isOpen ? 'none' : 'auto',
-                        y: isOpen ? 20 : 0
+                        opacity: (isOpen) ? 0 : (isVisible ? 1 : 0),
+                        scale: (isOpen) ? 0.8 : (isVisible ? 1 : 0.8),
+                        pointerEvents: (isOpen || !isVisible) ? 'none' : 'auto',
+                        y: (isOpen || !isVisible) ? 20 : 0
                     }}
                     onClick={() => {
                         setIsOpen(!isOpen);
