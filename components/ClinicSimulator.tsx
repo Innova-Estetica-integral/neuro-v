@@ -90,7 +90,7 @@ export function ClinicSimulator() {
                                             log.type === 'revenue' ? 'bg-[#B9FF66]' :
                                                 'bg-green-500'}`}
                                         />
-                                        <span className="text-[8px] font-black uppercase text-gray-500">{log.type} // NV-CORE</span>
+                                        <span className="text-[8px] font-black uppercase text-gray-500">{log.type} {'//'} NV-CORE</span>
                                     </div>
                                     <p className="text-xs text-gray-300 font-medium leading-relaxed">{log.text}</p>
                                 </motion.div>

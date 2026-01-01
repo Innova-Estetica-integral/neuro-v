@@ -99,11 +99,11 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                                 <div className="space-y-4">
                                     <div className="flex gap-3 items-center">
                                         <div className="w-8 h-8 rounded-full bg-gray-600 shrink-0" />
-                                        <p className="text-[10px] text-gray-300 italic">"La implementación de NeuroV redujo mi no-show del 30% al 4% en solo 60 días."</p>
+                                        <p className="text-[10px] text-gray-300 italic">&quot;La implementación de NeuroV redujo mi no-show del 30% al 4% en solo 60 días.&quot;</p>
                                     </div>
                                     <div className="flex gap-3 items-center">
                                         <div className="w-8 h-8 rounded-full bg-gray-600 shrink-0" />
-                                        <p className="text-[10px] text-gray-300 italic">"Lo mejor es la seguridad pgsodium; mis datos de pacientes nunca han estado tan seguros."</p>
+                                        <p className="text-[10px] text-gray-300 italic">&quot;Lo mejor es la seguridad pgsodium; mis datos de pacientes nunca han estado tan seguros.&quot;</p>
                                     </div>
                                 </div>
                             </motion.div>

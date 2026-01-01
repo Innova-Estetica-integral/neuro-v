@@ -123,7 +123,7 @@ export default function LandingPage() {
                                                     ))}
                                                 </div>
                                                 <p className="text-[10px] sm:text-xs text-gray-700 font-medium leading-tight">
-                                                    "El mejor tratamiento que he recibido, resultados increíbles"
+                                                    &quot;El mejor tratamiento que he recibido, resultados increíbles&quot;
                                                 </p>
                                                 <p className="text-[8px] sm:text-[10px] text-gray-500 mt-1">María G. - Botox</p>
                                             </div>

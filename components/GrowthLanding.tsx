@@ -208,15 +208,15 @@ export function GrowthLanding() {
                                 </div>
                                 <div className="space-y-4">
                                     <div className="bg-white/5 p-4 rounded-2xl rounded-tl-none border border-white/10 max-w-[85%]">
-                                        <p className="text-sm text-gray-300">"Hola, veo que te interesa el tratamiento de Hidrolipoclasia. ¿Prefieres agendar para esta tarde o mañana por la mañana?"</p>
+                                        <p className="text-sm text-gray-300">&quot;Hola, veo que te interesa el tratamiento de Hidrolipoclasia. ¿Prefieres agendar para esta tarde o mañana por la mañana?&quot;</p>
                                         <p className="text-[10px] text-gray-600 mt-2">14:23</p>
                                     </div>
                                     <div className="bg-indigo-500/20 p-4 rounded-2xl rounded-tr-none border border-indigo-500/20 ml-auto max-w-[85%]">
-                                        <p className="text-sm text-indigo-100">"Mañana en la mañana por favor."</p>
+                                        <p className="text-sm text-indigo-100">&quot;Mañana en la mañana por favor.&quot;</p>
                                         <p className="text-[10px] text-indigo-300/60 mt-2 text-right">14:24</p>
                                     </div>
                                     <div className="bg-white/5 p-4 rounded-2xl rounded-tl-none border border-white/10 max-w-[85%]">
-                                        <p className="text-sm text-gray-300">"¡Perfecto! Reserva confirmada para mañana 10:00 AM. Te envío el link de pago por WhatsApp para asegurar tu cupo."</p>
+                                        <p className="text-sm text-gray-300">&quot;¡Perfecto! Reserva confirmada para mañana 10:00 AM. Te envío el link de pago por WhatsApp para asegurar tu cupo.&quot;</p>
                                         <p className="text-[10px] text-gray-600 mt-2">14:24</p>
                                     </div>
                                     {/* Typing Indicator */}

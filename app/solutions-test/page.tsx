@@ -581,7 +581,7 @@ export default function SolutionsTest() {
                                 <span className="text-indigo-600">es un Activo Biolink.</span>
                             </h2>
                             <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-                                No diseñamos "páginas bonitas". Construimos infraestructuras de conversión que alimentan tus Ads con datos precisos. Donna rastrea cada intención de compra para que tu publicidad sea 3x más eficiente.
+                                No diseñamos &quot;páginas bonitas&quot;. Construimos infraestructuras de conversión que alimentan tus Ads con datos precisos. Donna rastrea cada intención de compra para que tu publicidad sea 3x más eficiente.
                             </p>
                             <div className="flex flex-col gap-4">
                                 {[

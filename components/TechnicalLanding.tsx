@@ -132,9 +132,9 @@ export function TechnicalLanding({ profile }: { profile: string }) {
                                     <div className="space-y-1 sm:space-y-2 whitespace-nowrap min-w-fit">
                                         <p className="text-indigo-400">CREATE POLICY clinic_isolation</p>
                                         <p className="text-purple-400 pl-4 sm:pl-6">FOR SELECT TO verified_clinic</p>
-                                        <p className="text-cyan-400 pl-4 sm:pl-6">USING (clinic_id = current_setting('app.id'));</p>
+                                        <p className="text-cyan-400 pl-4 sm:pl-6">USING (clinic_id = current_setting(&apos;app.id&apos;));</p>
                                         <div className="h-4 sm:h-6" />
-                                        <p className="text-gray-500 font-medium italic">// Security Active: RLS Protocol</p>
+                                        <p className="text-gray-500 font-medium italic">{'//'} Security Active: RLS Protocol</p>
                                         <div className="mt-6 flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-lg w-fit">
                                             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                                             <p className="text-green-400 font-black tracking-widest uppercase text-[8px] sm:text-[10px]">PG_SODIUM: SECURE_ENCRYPTION</p>

@@ -352,7 +352,7 @@ const Nav = () => {
                         <div className="mt-auto space-y-4">
                             <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100">
                                 <p className="text-[9px] font-black text-indigo-400 mb-2 tracking-widest uppercase">Estatus Donna</p>
-                                <p className="text-gray-600 normal-case font-medium leading-relaxed italic">"Directora, la agenda de mañana está al 94%."</p>
+                                <p className="text-gray-600 normal-case font-medium leading-relaxed italic">&quot;Directora, la agenda de mañana está al 94%.&quot;</p>
                             </div>
                             <button className="w-full bg-indigo-600/10 backdrop-blur-xl border border-indigo-200 text-indigo-700 py-5 rounded-2xl font-black shadow-xl active:scale-95 transition-all text-[10px] tracking-[0.2em] relative overflow-hidden group flex items-center justify-center gap-2">
                                 <span className="relative z-10">AGENDA AUDITORÍA</span>
