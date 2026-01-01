@@ -1274,7 +1274,7 @@ export default function SolutionsTest() {
                         ].map((plan, i) => (
                             <motion.div
                                 key={i}
-                                whileHover={{ y: -15, shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
+                                whileHover={{ y: -15, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
                                 className={`relative p-10 rounded-[3rem] ${plan.color} ${plan.textColor} border border-gray-100 overflow-hidden flex flex-col justify-between shadow-2xl transition-all`}
                             >
                                 {plan.popular && (
