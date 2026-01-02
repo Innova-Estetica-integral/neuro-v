@@ -499,10 +499,28 @@ export default function SolutionsTest() {
     useEffect(() => {
         const video = videoRef.current;
         if (video) {
+            // Force muted via JS for mobile autoplay compliance
+            video.muted = true;
+            video.defaultMuted = true;
             video.playbackRate = 0.35;
-            video.play().catch(error => {
-                console.log("Autoplay blocked or failed:", error);
-            });
+
+            const startVideo = async () => {
+                try {
+                    await video.play();
+                } catch (error) {
+                    console.log("Autoplay blocked or failed, retrying...", error);
+                    // Fallback to trying to play on any touch/click if blocked
+                    const playOnInteraction = () => {
+                        if (video) video.play().catch(() => { });
+                        document.removeEventListener('touchstart', playOnInteraction);
+                        document.removeEventListener('click', playOnInteraction);
+                    };
+                    document.addEventListener('touchstart', playOnInteraction, { passive: true });
+                    document.addEventListener('click', playOnInteraction, { passive: true });
+                }
+            };
+
+            startVideo();
 
             // Asegurar que el video se reanude si el navegador lo pausa al cambiar de pestaña
             const handleVisibilityChange = () => {
@@ -512,10 +530,11 @@ export default function SolutionsTest() {
             };
 
             document.addEventListener('visibilitychange', handleVisibilityChange);
-            return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+            return () => {
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+            };
         }
     }, []);
-
     return (
         <div className="min-h-screen bg-white text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
             <Nav />
@@ -531,6 +550,7 @@ export default function SolutionsTest() {
                         loop
                         muted
                         playsInline
+                        preload="auto"
                         className="absolute w-full h-full object-cover"
                     >
                         <source src="/assets/fondo/Video_Creado.mp4" type="video/mp4" />

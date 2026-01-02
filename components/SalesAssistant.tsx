@@ -283,6 +283,7 @@ export function SalesAssistant({ mode = 'technical' }: { mode?: 'technical' | 'g
                                     loop
                                     muted
                                     playsInline
+                                    preload="auto"
                                     className="w-full h-full object-cover opacity-30"
                                 >
                                     <source src="/grok-video-d03d2654.mp4" type="video/mp4" />
