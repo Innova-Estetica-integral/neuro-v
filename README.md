@@ -1,4 +1,7 @@
-# NeuroV - SaaS Neuro-Ventas V6
+# NeuroV - Infraestructura Operacional para Clínicas
+
+> [!IMPORTANT]
+> **NeuroV no compite con los gigantes (SII, I-Med, Buk, etc.); se posiciona como el Orquestador que conecta todas estas piezas en una sola interfaz fluida para el médico.**
 
 ## Aplicación Desplegada 🚀
 

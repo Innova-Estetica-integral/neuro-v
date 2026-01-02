@@ -37,15 +37,12 @@ const MarketingPage = () => {
             <nav className={`fixed top-0 w-full z-[100] transition-all duration-700 ${isScrolled ? 'bg-white/10 backdrop-blur-md border-b border-white/20 py-[11px] shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'bg-transparent py-[35px]'}`}>
                 <div className="max-w-7xl mx-auto px-6 sm:px-12 flex justify-between items-center">
                     <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.location.href = '/solutions-test'}>
-                        <div className="relative w-10 h-10 backdrop-blur-[0.5px] rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-[0_30px_60px_rgba(0,0,0,0.4),0_0_40px_rgba(0,242,255,0.3),inset_0_-8px_15px_rgba(0,0,0,0.3),inset_0_2px_4px_rgba(255,255,255,0.6)] overflow-hidden"
-                            style={{ background: 'radial-gradient(circle at 35% 35%, rgba(255,255,255,0.15) 0%, rgba(15, 23, 42, 0.002) 100%)' }}
+                        <div className="relative w-10 h-10 backdrop-blur-[0.5px] rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm overflow-hidden"
+                            style={{ background: 'white' }}
                         >
-                            <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.08] via-white/[0.12] to-transparent pointer-events-none z-10" />
-                            <div className="absolute top-1 left-1 w-1/3 h-1/4 bg-white/60 blur-[1px] rounded-full rotate-[-45deg] pointer-events-none z-20" />
-                            <div className="absolute bottom-1 right-1 w-1/4 h-1/6 bg-cyan-400/30 blur-[2px] rounded-full pointer-events-none z-20" />
-                            <BrainCircuit className="relative z-30 w-6 h-6 text-[#00f2ff] stroke-[1.1] opacity-95 mix-blend-screen" />
+                            <BrainCircuit className="relative z-30 w-6 h-6 text-indigo-600 stroke-[1.2]" />
                         </div>
-                        <span className="text-xl font-black uppercase tracking-tighter text-gray-900">NeuroV <span className="text-indigo-600">GROWTH</span></span>
+                        <span className="text-xl font-black uppercase tracking-tighter text-gray-900">NeuroV</span>
                     </div>
 
                     <div className="hidden lg:flex items-center gap-12 font-bold text-[10px] uppercase tracking-[0.25em] text-gray-400">
@@ -53,7 +50,7 @@ const MarketingPage = () => {
                             <ChevronLeft size={14} /> VOLVER
                         </a>
                         <button className="bg-indigo-600 text-white px-10 py-4 rounded-full hover:bg-indigo-700 transition-all font-black shadow-2xl shadow-indigo-100 flex items-center gap-2 hover:scale-105 active:scale-95">
-                            ESCALAR MI CLÍNICA <ArrowRight size={14} />
+                            QUIERO MÁS PACIENTES <ArrowRight size={14} />
                         </button>
                     </div>
 
@@ -81,8 +78,8 @@ const MarketingPage = () => {
                             </div>
 
                             <h1 className="text-4xl sm:text-8xl lg:text-7xl font-black text-gray-900 leading-[1] mb-8 tracking-tightest">
-                                El Cuarto de <br />
-                                <span className="text-indigo-600">Guerra.</span>
+                                Haz que te <br />
+                                <span className="text-indigo-600">encuentren.</span>
                             </h1>
 
                             <p className="text-gray-500 text-xl leading-relaxed font-medium mb-10 max-w-xl">
@@ -90,7 +87,7 @@ const MarketingPage = () => {
                             </p>
 
                             <button className="bg-indigo-600 text-white px-10 py-5 rounded-full font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95">
-                                COMENZAR ESCALADO
+                                COMENZAR AHORA
                             </button>
                         </motion.div>
 
@@ -126,8 +123,8 @@ const MarketingPage = () => {
                 <div className="max-w-7xl mx-auto relative z-10">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="space-y-8">
-                            <span className="text-[#B9FF66] font-black text-xs uppercase tracking-[0.4em] mb-6 block">PROTOCOLOS DE ESCALADO</span>
-                            <h2 className="text-3xl sm:text-6xl font-black tracking-tightest leading-tight">Nutrición de Ads <br />Psicográfica.</h2>
+                            <span className="text-[#B9FF66] font-black text-xs uppercase tracking-[0.4em] mb-6 block">TU CONSULTA SIEMPRE VISIBLE</span>
+                            <h2 className="text-3xl sm:text-6xl font-black tracking-tightest leading-tight">Más alcance para <br />tu centro.</h2>
                             <p className="text-indigo-100/60 text-lg leading-relaxed font-medium">
                                 Donna intercepta a los prospectos en el momento exacto. Analiza el comportamiento de tus campañas en Meta y Google, inyectando datos de conversión real para que los algoritmos encuentren a tus pacientes ideales más rápido y barato.
                             </p>
@@ -206,8 +203,8 @@ const MarketingPage = () => {
             <section className="py-24 px-6 sm:px-12 bg-white">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-20">
-                        <span className="text-indigo-600 font-black text-xs uppercase tracking-[0.4em] block mb-4">MÁXIMA EXPOSICIÓN</span>
-                        <h2 className="text-4xl sm:text-7xl font-black tracking-tightest leading-tight">Domina el mercado.</h2>
+                        <span className="text-indigo-600 font-black text-xs uppercase tracking-[0.4em] block mb-4">MÁXIMA VISIBILIDAD</span>
+                        <h2 className="text-4xl sm:text-7xl font-black tracking-tightest leading-tight">Sé la mejor opción.</h2>
                     </div>
 
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -257,7 +254,7 @@ const MarketingPage = () => {
                     <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
 
                     <div className="relative z-10 space-y-8">
-                        <h2 className="text-4xl sm:text-7xl font-black tracking-tightest leading-tight">¿Listo para escalar sin <br />límites operativos?</h2>
+                        <h2 className="text-4xl sm:text-7xl font-black tracking-tightest leading-tight">¿Listo para recibir a <br />más pacientes?</h2>
                         <button className="bg-[#B9FF66] text-gray-900 px-12 py-6 rounded-full hover:scale-105 active:scale-95 transition-all font-black text-xl shadow-2xl flex items-center gap-3 mx-auto uppercase tracking-tighter">
                             AGENDAR PLAN DE CRECIMIENTO <ArrowRight size={24} />
                         </button>

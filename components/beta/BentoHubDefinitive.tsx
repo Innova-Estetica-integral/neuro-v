@@ -33,7 +33,7 @@ const pillars: Pillar[] = [
         description: "Convertimos tu presencia en un imán de pacientes. Una infraestructura diseñada para capturar datos y alimentar tus Ads de Meta/Google.",
         icon: Globe,
         className: "lg:col-span-2 bg-gray-900 text-white",
-        tags: ["Captura de Leads", "SEO Optimized"]
+        tags: ["Captura de Leads", "Optimizado para SEO"]
     },
     {
         id: 2,
@@ -78,7 +78,7 @@ const pillars: Pillar[] = [
     {
         id: 7,
         title: "Referral Engine V2",
-        subtitle: "Growth",
+        subtitle: "Crecimiento",
         description: "Sistema de referidos inteligente que premia a tus pacientes más leales, multiplicando tu agenda de forma orgánica.",
         icon: Plus,
         className: "bg-indigo-900 text-white"
@@ -86,7 +86,7 @@ const pillars: Pillar[] = [
     {
         id: 8,
         title: "Reputation Suite",
-        subtitle: "Social Proof",
+        subtitle: "Prueba Social",
         description: "Gestión de reseñas y posicionamiento local automático para dominar tu zona geográfica.",
         icon: Star,
         className: "bg-white border-indigo-50"

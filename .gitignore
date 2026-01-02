@@ -43,6 +43,7 @@ next-env.d.ts
 *.sql
 !supabase/migrations/*.sql
 !README.md
+!GUIA_VOZ_Y_TONO.md
 !package.json
 !tsconfig.json
 !next.config.js

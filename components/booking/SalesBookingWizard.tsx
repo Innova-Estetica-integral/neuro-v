@@ -181,7 +181,7 @@ export function SalesBookingWizard({ isQualified }: SalesBookingWizardProps) {
                                             </div>
                                             <div className="p-4 sm:p-6 bg-black/40 rounded-2xl sm:rounded-3xl border border-white/10">
                                                 <span className="text-gray-500 text-[8px] sm:text-[10px] uppercase font-black tracking-widest block mb-1 sm:mb-4">Escala de Conversión</span>
-                                                <span className="text-[hsl(var(--profile-accent))] font-black text-3xl sm:text-4xl">UP TO 275%</span>
+                                                <span className="text-[hsl(var(--profile-accent))] font-black text-3xl sm:text-4xl">HASTA EL 275%</span>
                                             </div>
                                             <div className="md:col-span-2 p-6 sm:p-8 bg-gradient-to-r from-[hsl(var(--profile-accent))]/10 to-transparent rounded-[1.5rem] sm:rounded-[2rem] border border-[hsl(var(--profile-accent))]/20 text-center">
                                                 <span className="text-white font-black uppercase tracking-widest text-[10px] mb-2 block">Impacto Neto Est. Proyectado</span>
