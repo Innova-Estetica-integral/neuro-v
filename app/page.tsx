@@ -494,22 +494,44 @@ const Nav = () => {
 };
 
 export default function SolutionsTest() {
+    const videoRef = React.useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (video) {
+            video.playbackRate = 0.35;
+            video.play().catch(error => {
+                console.log("Autoplay blocked or failed:", error);
+            });
+
+            // Asegurar que el video se reanude si el navegador lo pausa al cambiar de pestaña
+            const handleVisibilityChange = () => {
+                if (document.visibilityState === 'visible') {
+                    video.play().catch(() => { });
+                }
+            };
+
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+            return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+        }
+    }, []);
+
     return (
         <div className="min-h-screen bg-white text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
             <Nav />
 
             {/* Cinematic Hero */}
             {/* Cinematic Hero - Dark Cyber Nebula Theme */}
-            <section className="relative pt-[110px] pb-10 sm:pt-64 sm:pb-32 px-6 sm:px-12 bg-[#050511] overflow-hidden flex items-center min-h-screen sm:min-h-0">
+            <section className="relative pt-[160px] pb-32 sm:pt-96 sm:pb-48 px-6 sm:px-12 bg-[#050511] overflow-hidden flex items-center min-h-screen sm:min-h-0">
                 {/* VIDEO BACKGROUND */}
                 <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
                     <video
+                        ref={videoRef}
                         autoPlay
                         loop
                         muted
                         playsInline
                         className="absolute w-full h-full object-cover"
-                        onLoadedMetadata={(e) => e.currentTarget.playbackRate = 0.15}
                     >
                         <source src="/assets/fondo/Video_Creado.mp4" type="video/mp4" />
                     </video>
@@ -521,21 +543,21 @@ export default function SolutionsTest() {
 
                 <div className="max-w-7xl mx-auto relative z-10">
                     <div className="grid lg:grid-cols-5 gap-10 sm:gap-16 items-center">
-                        <div className="lg:col-span-3 text-left space-y-8">
-                            <div className="w-full flex justify-center mb-8 lg:justify-start">
+                        <div className="lg:col-span-3 text-left">
+                            <div className="w-full flex justify-center mb-12 lg:justify-start">
                                 <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/5 border border-white/10 text-indigo-300 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
                                     <ShieldCheck size={10} className="w-[14px] h-[14px]" /> TU CONSULTA EN UN SOLO LUGAR
                                 </div>
                             </div>
-                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-white mb-6">
+                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-white mb-10">
                                 Haz que tu consulta <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">funcione para ti.</span>
                             </h1>
-                            <p className="text-lg sm:text-xl text-gray-400 font-medium leading-relaxed max-w-xl mx-0 mb-8">
+                            <p className="text-lg sm:text-xl text-gray-400 font-medium leading-relaxed max-w-xl mx-0 mb-16">
                                 <strong className="text-white">NeuroV es el apoyo administrativo que necesitas:</strong> Boletas, Fonasa/Isapre, Pagos y Agenda. <br className="hidden lg:block" />
                                 Mientras <strong className="text-white">Donna</strong> te ayuda con WhatsApp y recordatorios automáticos, tú te dedicas 100% a tus pacientes.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-start mb-4">
+                            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-start mt-10 mb-4">
                                 <button className="px-10 py-5 sm:px-12 sm:py-7 bg-indigo-600 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-indigo-500 hover:scale-105 transition-all shadow-[0_0_30px_rgba(79,70,229,0.3)]">
                                     COMENZAR AHORA
                                 </button>
@@ -602,93 +624,119 @@ export default function SolutionsTest() {
                                 { name: 'Meta ADS', src: '/assets/logotipos/meta ADS.png' },
                                 { name: 'Google ADS', src: '/assets/logotipos/Google_Ads_logo.svg.png' }
                             ];
-                            return [...partners, ...partners, ...partners].map((logo, index) => (
-                                <img
-                                    key={index}
-                                    src={logo.src}
-                                    alt={logo.name}
-                                    className={`${['HL7 FHIR', 'BUK', 'Fonasa', 'CENS'].includes(logo.name) ? 'h-20 sm:h-28' : 'h-12 sm:h-16'} w-auto grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 object-contain`}
-                                />
-                            ));
+                            return [...partners, ...partners, ...partners].map((logo, index) => {
+                                let sizingClass = 'h-12 sm:h-16';
+                                if (['BUK', 'Fonasa', 'CENS'].includes(logo.name)) {
+                                    sizingClass = 'h-20 sm:h-28';
+                                } else if (logo.name === 'HL7 FHIR') {
+                                    sizingClass = 'h-14 sm:h-20'; // Reducido ~30% respecto al grupo anterior (h-20 -> h-14 / h-28 -> h-20)
+                                } else if (logo.name === 'Previred') {
+                                    sizingClass = 'h-24 sm:h-32';
+                                }
+
+                                return (
+                                    <div key={index} className="flex items-center justify-center">
+                                        <img
+                                            src={logo.src}
+                                            alt={logo.name}
+                                            className={`${sizingClass} w-auto grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 object-contain`}
+                                        />
+                                    </div>
+                                );
+                            });
                         })()}
                     </motion.div>
                 </div>
             </div>
 
-            {/* SECCIÓN 1: Presencia Digital de Alto Impacto */}
-            <section id="inteligencia" className="py-20 sm:py-32 px-6 sm:px-12 bg-white overflow-hidden relative">
-                <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none"
-                    style={{ backgroundImage: 'radial-gradient(#4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+            {/* SECCIÓN 3: Operación 360 - El Cerebro de tu Clínica (REORDERED TO TOP) */}
+            <section id="operacion" className="pt-20 sm:pt-32 pb-10 sm:pb-16 px-6 sm:px-12 bg-white overflow-hidden relative border-b border-gray-50">
+                <div className="max-w-7xl mx-auto flex flex-col items-start">
+                    {/* Imagen sobre el badge */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1 }}
+                        className="relative w-full max-w-5xl mb-16 sm:mb-24"
+                    >
+                        <div className="absolute inset-0 bg-indigo-600/5 blur-[150px] rounded-full" />
+                        <div className="relative z-10 bg-gray-900 rounded-[2.5rem] sm:rounded-[4rem] p-2 shadow-3xl overflow-hidden border-[6px] sm:border-[12px] border-white ring-1 ring-gray-100 mr-auto">
+                            <img
+                                src="/solutions/financial_radar.png"
+                                alt="Panel de Gestión Operativa"
+                                className="w-full h-auto object-cover rounded-[2rem] sm:rounded-[3.2rem] opacity-90 group-hover:opacity-100 transition-opacity"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60" />
 
-                <div className="max-w-7xl mx-auto relative">
-                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                            className="space-y-8 text-left"
-                        >
-                            <div className="w-full flex justify-center mb-8 lg:justify-start">
-                                <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
-                                    <Target size={10} className="w-[14px] h-[14px]" /> TU CONSULTA ONLINE
+                            {/* Overlay Metadata */}
+                            <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 p-4 sm:p-6 bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/20">
+                                <div className="text-[9px] sm:text-[10px] font-black text-indigo-300 uppercase tracking-widest mb-1">Status Sistema</div>
+                                <div className="text-lg sm:text-2xl font-black text-white">ÓPTIMO 360°</div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <div className="text-left mb-16 sm:mb-24 space-y-8 max-w-4xl">
+                        <div className="w-full flex justify-start mb-8">
+                            <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
+                                <Brain size={10} className="w-[14px] h-[14px]" /> TODO EN UN SOLO LUGAR
+                            </div>
+                        </div>
+                        <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tightest leading-tight text-gray-900 mb-6 text-left">Todo ordenado. <br /><span className="text-indigo-600">Sin preocupaciones.</span></h2>
+                        <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-2xl mb-8 text-left">
+                            El centro de control de tu consulta. Desde las citas hasta el pago de bonos y boletas, NeuroV te ayuda a que todo fluya de forma profesional y sin errores administrativos.
+                        </p>
+                    </div>
+
+                    <div className="grid lg:grid-cols-3 gap-8 w-full">
+                        {[
+                            {
+                                icon: CreditCard,
+                                title: "Cobros y Boletas",
+                                desc: "Cobra, emite boletas SII y gestiona a tu equipo sin estrés.",
+                                tag: "SII / BUK",
+                                color: "bg-indigo-50",
+                                textColor: "text-indigo-600"
+                            },
+                            {
+                                icon: ShieldCheck,
+                                title: "Venta de Bonos I-Med",
+                                desc: "Conexión directa para que compren sus bonos Fonasa e Isapre.",
+                                tag: "I-Med",
+                                color: "bg-indigo-50",
+                                textColor: "text-indigo-600"
+                            },
+                            {
+                                icon: LineChart,
+                                title: "Bienestar del Paciente",
+                                desc: "Acompañamiento constante y recordatorios que aseguran retención.",
+                                tag: "Atención",
+                                color: "bg-indigo-100",
+                                textColor: "text-indigo-600"
+                            }
+                        ].map((item, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                                whileHover={{ y: -5, scale: 1.01 }}
+                                className="flex items-start gap-5 p-8 rounded-[2.5rem] bg-gray-50/50 border border-transparent hover:border-indigo-100/50 hover:bg-white hover:shadow-2xl hover:shadow-indigo-500/5 transition-all group cursor-default"
+                            >
+                                <div className={`w-14 h-14 ${item.color} rounded-2xl flex items-center justify-center ${item.textColor} group-hover:scale-110 transition-transform shrink-0`}>
+                                    <item.icon size={24} />
                                 </div>
-                            </div>
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-6">
-                                Tu sitio web <br />
-                                <span className="text-indigo-600">que de verdad funciona.</span>
-                            </h2>
-                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-8">
-                                Tu sitio deja de ser una tarjeta de visita y se convierte en una herramienta que agenda citas por ti las 24 horas. Donna te ayuda a que tus pacientes agenden su cita de forma automática y sencilla.
-                            </p>
-                            <div className="flex flex-col gap-4">
-                                {[
-                                    { t: "Perfil del Paciente", d: "Entendemos lo que busca tu paciente desde el primer clic." },
-                                    { t: "Más Pacientes", d: "Atrae pacientes de forma ordenada según tu disponibilidad real." },
-                                    { t: "Acompañamiento Digital", d: "Un asistente que está siempre ahí para que no pierdas ningún contacto." }
-                                ].map((item, i) => (
-                                    <div key={i} className="flex gap-4 p-4 rounded-3xl hover:bg-indigo-50/50 transition-colors group">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 mt-2 group-hover:scale-150 transition-transform" />
-                                        <div>
-                                            <div className="text-sm font-black text-gray-900 uppercase tracking-wider">{item.t}</div>
-                                            <div className="text-sm text-gray-400 font-medium">{item.d}</div>
-                                        </div>
+                                <div className="flex-1">
+                                    <div className="flex items-start justify-between gap-3 mb-2">
+                                        <h4 className="text-[13px] font-black uppercase tracking-tight text-gray-900 leading-tight">{item.title}</h4>
+                                        <span className={`text-[8px] font-black bg-indigo-50 text-indigo-600 px-2 py-1 rounded-full uppercase shrink-0 whitespace-nowrap`}>{item.tag}</span>
                                     </div>
-                                ))}
-                            </div>
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-                            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1 }}
-                            className="relative group"
-                        >
-                            <div className="absolute inset-0 bg-indigo-500/10 blur-[100px] rounded-full group-hover:bg-indigo-500/20 transition-all duration-700" />
-                            <div className="relative z-10 p-4 bg-white rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border-t border-indigo-50">
-                                <img
-                                    src="/solutions/web_showcase_mockup.png"
-                                    alt="Mockup Web de Alto Impacto"
-                                    className="rounded-[3rem] w-full"
-                                />
-                                {/* Floating Element */}
-                                <motion.div
-                                    animate={{ y: [0, -10, 0] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                    className="absolute -bottom-10 -left-10 bg-white p-6 rounded-3xl shadow-2xl border border-indigo-50 z-20 hidden lg:block"
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
-                                            <TrendingUp size={20} />
-                                        </div>
-                                        <div>
-                                            <div className="text-[10px] font-black uppercase text-gray-400">Efectividad Funnel</div>
-                                            <div className="text-xl font-black text-emerald-600">+315%</div>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            </div>
-                        </motion.div>
+                                    <p className="text-[11px] text-gray-400 font-bold leading-relaxed">{item.desc}</p>
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -769,92 +817,210 @@ export default function SolutionsTest() {
                 </div>
             </section>
 
-            {/* SECCIÓN 3: Operación 360 - El Cerebro de tu Clínica */}
-            <section id="operacion" className="py-20 sm:py-32 px-6 sm:px-12 bg-white overflow-hidden relative">
+            {/* ECOSYSTEM SECTION - Integrations (Explicit I-Med and Buk) */}
+            <section className="pt-20 pb-8 sm:py-32 px-6 sm:px-12 bg-white relative">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-left mb-16 sm:mb-24 space-y-8">
-                        <div className="w-full flex justify-center mb-8">
-                            <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto mr-auto ml-auto">
-                                <Brain size={10} className="w-[14px] h-[14px]" /> TODO EN UN SOLO LUGAR
+                    <div className="grid lg:grid-cols-2 gap-2 lg:gap-20 items-center">
+                        <div className="text-left space-y-8">
+                            <div className="w-full flex justify-center mb-8">
+                                <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
+                                    <Globe size={10} className="w-[14px] h-[14px]" /> CONECTADO CON LO QUE YA USAS
+                                </div>
+                            </div>
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-6">
+                                Todo conectado con <br className="hidden sm:block" />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-500">I-Med y Buk</span>
+                            </h2>
+                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-8">
+                                NeuroV se conecta con las herramientas que ya conoces en Chile. Gestiona bonos **Fonasa e Isapre** automáticamente y deja la administración de tu equipo en manos de **Buk**. Todo fluye sin que tengas que ser un experto en sistemas.
+                            </p>
+                            <div className="flex flex-wrap justify-center lg:justify-start items-center gap-2">
+                                {[
+                                    'I-Med (Fonasa/Isapre)',
+                                    'Buk (HR & Finanzas)',
+                                    'WhatsApp API',
+                                    'SII Boletas',
+                                    'Meta & Google Ads'
+                                ].map((brand, bidx) => (
+                                    <div key={bidx} className="px-3 py-1.5 rounded-full bg-indigo-50/50 text-indigo-600 font-black text-[9px] uppercase tracking-wider border border-indigo-100 whitespace-nowrap shrink-0">
+                                        {brand}
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-6">Todo ordenado. <br /><span className="text-indigo-600">Sin preocupaciones.</span></h2>
-                        <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-8">
-                            El centro de control de tu consulta. Desde las citas hasta el pago de bonos y boletas, NeuroV te ayuda a que todo fluya de forma profesional y sin errores administrativos.
-                        </p>
-                    </div>
+                        <div className="relative overflow-visible">
+                            <div className="aspect-square bg-white flex items-center justify-center relative">
+                                <style>{`
+                                    .orbit-container { --orbit-radius: 110px; }
+                                    @media (min-width: 640px) {
+                                        .orbit-container { --orbit-radius: 200px; }
+                                    }
+                                `}</style>
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+                                    className="relative w-full h-full max-w-[340px] max-h-[340px] sm:max-w-[600px] sm:max-h-[600px] orbit-container flex items-center justify-center"
+                                >
 
+                                    {/* Single Subtle Orbit Path - Rotating with the unit */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] sm:w-[400px] sm:h-[400px] border border-gray-100 rounded-full" />
+
+                                    {/* Central Node: NeuroV Brain - Gray base with Cyan activity on hover */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                                        <BrainCircuit
+                                            className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400 opacity-90 hover:opacity-100 transition-all duration-500 cursor-pointer stroke-[1.5px]"
+                                        />
+                                    </div>
+
+                                    {/* Orbiting Logotypes (Static Group Rotation) */}
+                                    {[
+                                        { angle: 0, logo: '/assets/logotipos/imed.png' },
+                                        { angle: 51.4, logo: '/assets/logotipos/LOGO-BUK.png' },
+                                        { angle: 102.8, logo: '/assets/logotipos/sii.png' },
+                                        { angle: 154.2, logo: '/assets/logotipos/Google_Ads_logo.svg.png' },
+                                        { angle: 205.6, logo: '/assets/logotipos/meta ADS.png' },
+                                        { angle: 257, logo: '/assets/logotipos/whatsapp API.png' },
+                                        { angle: 308.4, logo: '/assets/logotipos/previred.png' }
+                                    ].map((orb, idx) => (
+                                        <div
+                                            key={idx}
+                                            className="absolute top-1/2 left-1/2"
+                                            style={{
+                                                transform: `rotate(${orb.angle}deg) translateY(calc(-1 * var(--orbit-radius)))`
+                                            }}
+                                        >
+                                            <div className="absolute -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-500">
+                                                <img
+                                                    src={orb.logo}
+                                                    alt="Integración"
+                                                    className={`${orb.logo.includes('Google_Ads') ? 'w-8 h-8 sm:w-14 sm:h-14' :
+                                                        orb.logo.includes('meta') ? 'w-20 h-20 sm:w-48 sm:h-48' :
+                                                            orb.logo.includes('BUK') ? 'w-16 h-16 sm:w-32 sm:h-32' :
+                                                                orb.logo.includes('previred') ? 'w-24 h-24 sm:w-48 sm:h-48' :
+                                                                    orb.logo.includes('whatsapp') ? 'w-24 h-24 sm:w-56 sm:h-56' :
+                                                                        orb.logo.includes('sii') ? 'w-8 h-8 sm:w-12 sm:h-12' :
+                                                                            'w-12 h-12 sm:w-24 sm:h-24'
+                                                        } object-contain`}
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </motion.div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* SECCIÓN SEGURIDAD Y CUMPLIMIENTO LEGAL */}
+            <section id="seguridad" className="pt-4 pb-20 sm:py-32 px-6 sm:px-12 bg-white relative overflow-hidden">
+                <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="grid gap-6"
+                            className="space-y-8"
                         >
-                            {[
-                                {
-                                    icon: CreditCard,
-                                    title: "Cobros y Boletas",
-                                    desc: "Cobra, emite boletas SII y gestiona a tu equipo (con Buk) sin estrés administrativo.",
-                                    tag: "SII / BUK",
-                                    color: "bg-indigo-100",
-                                    textColor: "text-indigo-600"
-                                },
-                                {
-                                    icon: ShieldCheck,
-                                    title: "Venta de Bonos I-Med",
-                                    desc: "Conexión directa para que tus pacientes compren sus bonos Fonasa e Isapre al agendar su cita.",
-                                    tag: "I-Med",
-                                    color: "bg-indigo-100",
-                                    textColor: "text-indigo-600"
-                                },
-                                {
-                                    icon: LineChart,
-                                    title: "Bienestar del Paciente",
-                                    desc: "Acompañamiento constante y recordatorios que aseguran que tus pacientes siempre vuelvan.",
-                                    tag: "Atención",
-                                    color: "bg-indigo-100",
-                                    textColor: "text-indigo-600"
-                                }
-                            ].map((item, i) => (
-                                <motion.div
-                                    key={i}
-                                    whileHover={{ y: -5, scale: 1.01 }}
-                                    className="flex gap-4 p-6 rounded-3xl bg-gray-50 border border-transparent hover:border-indigo-100 hover:bg-white hover:shadow-xl transition-all group cursor-default"
-                                >
-                                    <div className={`w-12 h-12 ${item.color} rounded-2xl flex items-center justify-center ${item.textColor} group-hover:scale-110 transition-transform shrink-0`}>
-                                        <item.icon size={24} />
-                                    </div>
-                                    <div>
-                                        <div className="flex items-center gap-3 mb-1">
-                                            <h4 className="text-sm font-black uppercase tracking-tight text-gray-900">{item.title}</h4>
-                                            <span className={`text-[9px] font-black bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full uppercase`}>{item.tag}</span>
+                            <div className="w-full flex justify-center mb-8 lg:justify-start">
+                                <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
+                                    <Lock size={10} className="w-[14px] h-[14px]" /> TU INFORMACIÓN SIEMPRE SEGURA
+                                </div>
+                            </div>
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-6">
+                                Tu información, <br /><span className="text-emerald-600">siempre protegida.</span>
+                            </h2>
+                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-8">
+                                En NeuroV, cuidar los datos de tus pacientes es nuestra prioridad. Cumplimos con todas las leyes chilenas de salud y protección de datos para que tú trabajes tranquilo.
+                            </p>
+
+                            <div className="grid gap-6">
+                                {[
+                                    { title: "Ley 20.584 (Derechos y Deberes)", desc: "Privacidad absoluta en Fichas Clínicas y consentimiento informado digital.", law: "Minsal Chile" },
+                                    { title: "Ley 19.628 (Protección de Datos)", desc: "Encriptación de grado bancario para toda la información personal de tus pacientes.", law: "Data Privacy" },
+                                    { title: "Estándar HL7 FHIR & CENS", desc: "Interoperabilidad certificada para el intercambio seguro de datos clínicos.", law: "Health Tech Standard" }
+                                ].map((item, i) => (
+                                    <motion.div
+                                        key={i}
+                                        whileHover={{ y: -5, scale: 1.01 }}
+                                        className="flex gap-4 p-6 rounded-3xl bg-gray-50 border border-transparent hover:border-emerald-100 hover:bg-white hover:shadow-xl transition-all group cursor-default"
+                                    >
+                                        <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform shrink-0">
+                                            <ShieldCheck size={24} />
                                         </div>
-                                        <p className="text-xs text-gray-400 font-bold leading-relaxed">{item.desc}</p>
+                                        <div>
+                                            <div className="flex items-center gap-3 mb-1">
+                                                <h4 className="text-sm font-black uppercase tracking-tight text-gray-900">{item.title}</h4>
+                                                <span className="text-[9px] font-black bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full uppercase">{item.law}</span>
+                                            </div>
+                                            <p className="text-xs text-gray-400 font-bold leading-relaxed">{item.desc}</p>
+                                        </div>
+                                    </motion.div>
+                                ))}
+
+                                {/* COMPACT PREMIUM CTA BUTTON: PILL SHAPE & VIBRANT EMERALD */}
+                                <motion.a
+                                    href="/solutions-test/legal"
+                                    whileHover={{ y: -3, scale: 1.01 }}
+                                    whileTap={{ scale: 0.99 }}
+                                    className="flex items-center justify-between px-6 py-3 rounded-full bg-emerald-600 border border-emerald-500 shadow-[0_15px_30px_-5px_rgba(5,150,105,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(5,150,105,0.6)] transition-all group mt-6 overflow-hidden relative w-full"
+                                >
+                                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <div className="flex items-center gap-3 relative z-10 w-full justify-between">
+                                        <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white shrink-0 shadow-inner">
+                                            <ShieldCheck size={16} />
+                                        </div>
+                                        <div className="flex-1 overflow-hidden text-center">
+                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white leading-tight">Más información</h4>
+                                        </div>
+                                        <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all">
+                                            <ArrowRight size={14} className="text-white group-hover:translate-x-1 transition-transform" />
+                                        </div>
                                     </div>
-                                </motion.div>
-                            ))}
+                                </motion.a>
+                            </div>
                         </motion.div>
+
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
+                            initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 1 }}
-                            className="relative lg:h-[700px] flex items-center mt-10 lg:mt-0"
+                            className="relative"
                         >
-                            <div className="absolute inset-0 bg-indigo-600/5 blur-[150px] rounded-full" />
-                            <div className="relative z-10 bg-gray-900 rounded-[2.5rem] sm:rounded-[4rem] p-2 shadow-3xl overflow-hidden border-[6px] sm:border-[12px] border-white ring-1 ring-gray-100 mx-auto">
-                                <img
-                                    src="/solutions/financial_radar.png"
-                                    alt="Panel de Gestión Operativa"
-                                    className="w-full h-full object-cover rounded-[2rem] sm:rounded-[3.2rem] opacity-90 group-hover:opacity-100 transition-opacity"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60" />
+                            <div className="absolute inset-0 bg-emerald-500/10 blur-[120px] rounded-full" />
+                            <div className="relative z-10 p-1 bg-white rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-emerald-50 text-center">
+                                <div className="bg-gray-900 rounded-[3.2rem] p-10 md:p-16 overflow-hidden relative group flex flex-col items-center justify-center min-h-[400px]">
+                                    {/* Animated Background Pulse */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.15),transparent_70%)] animate-pulse" />
 
-                                {/* Overlay Metadata */}
-                                <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 p-4 sm:p-6 bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/20">
-                                    <div className="text-[9px] sm:text-[10px] font-black text-indigo-300 uppercase tracking-widest mb-1">Status Sistema</div>
-                                    <div className="text-lg sm:text-2xl font-black text-white">ÓPTIMO 360°</div>
+                                    {/* Central Lock Visualization */}
+                                    <div className="relative z-10 mb-10">
+                                        <div className="w-40 h-40 bg-emerald-500/10 rounded-[2.5rem] flex items-center justify-center border border-emerald-500/20 shadow-[0_0_40px_-10px_rgba(16,185,129,0.3)] group-hover:shadow-[0_0_60px_-10px_rgba(16,185,129,0.5)] transition-all duration-500">
+                                            <Lock size={80} className="text-[#B9FF66] drop-shadow-[0_0_15px_rgba(185,255,102,0.5)]" />
+                                        </div>
+                                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-[#B9FF66] text-gray-900 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border-4 border-gray-900 flex items-center gap-2 whitespace-nowrap">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" /> Sistema Seguro
+                                        </div>
+                                    </div>
+
+                                    {/* Scanning Lines Decoration */}
+                                    <div className="relative z-10 space-y-6 max-w-xs mx-auto">
+                                        <div className="space-y-2">
+                                            <div className="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                                                <div className="h-full w-1/2 bg-emerald-500/50 rounded-full animate-[shimmer_2s_infinite]" />
+                                            </div>
+                                            <div className="flex justify-between text-[9px] font-black uppercase tracking-widest text-emerald-500/60">
+                                                <span>Encriptando Datos</span>
+                                                <span>100%</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-wrap justify-center gap-2">
+                                            {['AES-256', 'SSL/TLS', 'ISO 27001'].map((tag, t) => (
+                                                <span key={t} className="text-[9px] font-black text-white/40 border border-white/10 px-3 py-1 rounded-full uppercase tracking-widest hover:bg-white/5 hover:text-white transition-colors cursor-default">{tag}</span>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
@@ -862,11 +1028,91 @@ export default function SolutionsTest() {
                 </div>
             </section>
 
+            {/* SECCIÓN 1: Presencia Digital de Alto Impacto */}
+            <section id="inteligencia" className="pt-10 sm:pt-16 pb-20 sm:pb-32 px-6 sm:px-12 bg-white overflow-hidden relative">
+                <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none"
+                    style={{ backgroundImage: 'radial-gradient(#4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+                <div className="max-w-7xl mx-auto relative">
+                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="space-y-8 text-left"
+                        >
+                            <div className="w-full flex justify-center mb-8 lg:justify-start">
+                                <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
+                                    <Target size={10} className="w-[14px] h-[14px]" /> TU CONSULTA ONLINE
+                                </div>
+                            </div>
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-6">
+                                Tu sitio web <br />
+                                <span className="text-indigo-600">que de verdad funciona.</span>
+                            </h2>
+                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-8">
+                                Tu sitio deja de ser una tarjeta de visita y se convierte en una herramienta que agenda citas por ti las 24 horas. Donna te ayuda a que tus pacientes agenden su cita de forma automática y sencilla.
+                            </p>
+                            <div className="flex flex-col gap-4">
+                                {[
+                                    { t: "Perfil del Paciente", d: "Entendemos lo que busca tu paciente desde el primer clic." },
+                                    { t: "Más Pacientes", d: "Atrae pacientes de forma ordenada según tu disponibilidad real." },
+                                    { t: "Acompañamiento Digital", d: "Un asistente que está siempre ahí para que no pierdas ningún contacto." }
+                                ].map((item, i) => (
+                                    <div key={i} className="flex gap-4 p-4 rounded-3xl hover:bg-indigo-50/50 transition-colors group">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 mt-2 group-hover:scale-150 transition-transform" />
+                                        <div>
+                                            <div className="text-sm font-black text-gray-900 uppercase tracking-wider">{item.t}</div>
+                                            <div className="text-sm text-gray-400 font-medium">{item.d}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
+                            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1 }}
+                            className="relative group"
+                        >
+                            <div className="absolute inset-0 bg-indigo-500/10 blur-[100px] rounded-full group-hover:bg-indigo-500/20 transition-all duration-700" />
+                            <div className="relative z-10 p-4 bg-white rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border-t border-indigo-50">
+                                <img
+                                    src="/solutions/web_showcase_mockup.png"
+                                    alt="Mockup Web de Alto Impacto"
+                                    className="rounded-[3rem] w-full"
+                                />
+                                {/* Floating Element */}
+                                <motion.div
+                                    animate={{ y: [0, -10, 0] }}
+                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                    className="absolute -bottom-10 -left-10 bg-white p-6 rounded-3xl shadow-2xl border border-indigo-50 z-20 hidden lg:block"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
+                                            <TrendingUp size={20} />
+                                        </div>
+                                        <div>
+                                            <div className="text-[10px] font-black uppercase text-gray-400">Efectividad Funnel</div>
+                                            <div className="text-xl font-black text-emerald-600">+315%</div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+
+
             {/* SECCIÓN GROWTH: Más Pacientes (REORDERED) */}
-            <section id="marketing" className="py-20 sm:py-32 px-6 sm:px-12 bg-white overflow-hidden relative">
+            < section id="marketing" className="py-20 sm:py-32 px-6 sm:px-12 bg-white overflow-hidden relative" >
                 <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-12 sm:gap-20 items-center">
-                        <div className="relative lg:order-1">
+                        <div className="relative lg:order-1 hidden lg:block">
                             <div className="bg-white p-6 sm:p-10 rounded-[2.5rem] sm:rounded-[3rem] shadow-2xl border border-gray-100">
                                 <div className="p-4 sm:p-6 bg-indigo-50 rounded-2xl mb-4 sm:mb-6">
                                     <div className="text-[9px] sm:text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">Protocolo Médico</div>
@@ -949,220 +1195,13 @@ export default function SolutionsTest() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
 
 
-            {/* ECOSYSTEM SECTION - Integrations (Explicit I-Med and Buk) */}
-            <section className="py-20 sm:py-32 px-6 sm:px-12 bg-white relative">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-2 lg:gap-20 items-center">
-                        <div className="text-left space-y-8">
-                            <div className="w-full flex justify-center mb-8">
-                                <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
-                                    <Globe size={10} className="w-[14px] h-[14px]" /> CONECTADO CON LO QUE YA USAS
-                                </div>
-                            </div>
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-6">
-                                Todo conectado con <br className="hidden sm:block" />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-500">I-Med y Buk</span>
-                            </h2>
-                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-8">
-                                NeuroV se conecta con las herramientas que ya conoces en Chile. Gestiona bonos **Fonasa e Isapre** automáticamente y deja la administración de tu equipo en manos de **Buk**. Todo fluye sin que tengas que ser un experto en sistemas.
-                            </p>
-                            <div className="flex flex-wrap justify-center lg:justify-start items-center gap-2">
-                                {[
-                                    'I-Med (Fonasa/Isapre)',
-                                    'Buk (HR & Finanzas)',
-                                    'WhatsApp API',
-                                    'SII Boletas',
-                                    'Meta & Google Ads'
-                                ].map((brand, bidx) => (
-                                    <div key={bidx} className="px-3 py-1.5 rounded-full bg-indigo-50/50 text-indigo-600 font-black text-[9px] uppercase tracking-wider border border-indigo-100 whitespace-nowrap shrink-0">
-                                        {brand}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="relative overflow-visible">
-                            <div className="aspect-square bg-white flex items-center justify-center relative">
-                                <style>{`
-                                    .orbit-container { --orbit-radius: 110px; }
-                                    @media (min-width: 640px) {
-                                        .orbit-container { --orbit-radius: 200px; }
-                                    }
-                                `}</style>
-                                <motion.div
-                                    animate={{ rotate: 360 }}
-                                    transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                                    className="relative w-full h-full max-w-[340px] max-h-[340px] sm:max-w-[600px] sm:max-h-[600px] orbit-container flex items-center justify-center"
-                                >
 
-                                    {/* Single Subtle Orbit Path - Rotating with the unit */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] sm:w-[400px] sm:h-[400px] border border-gray-100 rounded-full" />
 
-                                    {/* Central Node: NeuroV Brain - Gray base with Cyan activity on hover */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                                        <BrainCircuit
-                                            className="w-8 h-8 sm:w-10 sm:h-10 text-gray-400 opacity-30 hover:text-cyan-500 hover:opacity-100 transition-all duration-500 cursor-pointer stroke-[1.5px]"
-                                        />
-                                    </div>
 
-                                    {/* Orbiting Logotypes (Static Group Rotation) */}
-                                    {[
-                                        { angle: 0, logo: '/assets/logotipos/imed.png' },
-                                        { angle: 51.4, logo: '/assets/logotipos/LOGO-BUK.png' },
-                                        { angle: 102.8, logo: '/assets/logotipos/sii.png' },
-                                        { angle: 154.2, logo: '/assets/logotipos/Google_Ads_logo.svg.png' },
-                                        { angle: 205.6, logo: '/assets/logotipos/meta ADS.png' },
-                                        { angle: 257, logo: '/assets/logotipos/whatsapp API.png' },
-                                        { angle: 308.4, logo: '/assets/logotipos/Google_Gemini.png' }
-                                    ].map((orb, idx) => (
-                                        <div
-                                            key={idx}
-                                            className="absolute top-1/2 left-1/2"
-                                            style={{
-                                                transform: `rotate(${orb.angle}deg) translateY(calc(-1 * var(--orbit-radius)))`
-                                            }}
-                                        >
-                                            <div className="absolute -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-                                                <img
-                                                    src={orb.logo}
-                                                    alt="Integración"
-                                                    className={`${orb.logo.includes('Google_Ads') ? 'w-8 h-8 sm:w-14 sm:h-14' :
-                                                        orb.logo.includes('meta') ? 'w-20 h-20 sm:w-48 sm:h-48' :
-                                                            orb.logo.includes('BUK') ? 'w-16 h-16 sm:w-32 sm:h-32' :
-                                                                orb.logo.includes('Google_Gemini') ? 'w-16 h-16 sm:w-32 sm:h-32' :
-                                                                    orb.logo.includes('whatsapp') ? 'w-24 h-24 sm:w-56 sm:h-56' :
-                                                                        orb.logo.includes('sii') ? 'w-8 h-8 sm:w-12 sm:h-12' :
-                                                                            'w-12 h-12 sm:w-24 sm:h-24'
-                                                        } object-contain`}
-                                                />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </motion.div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* SECCIÓN SEGURIDAD Y CUMPLIMIENTO LEGAL */}
-            <section id="seguridad" className="py-20 sm:py-32 px-6 sm:px-12 bg-white relative overflow-hidden">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            className="relative lg:order-1"
-                        >
-                            <div className="absolute inset-0 bg-emerald-500/10 blur-[120px] rounded-full" />
-                            <div className="relative z-10 p-1 bg-white rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-emerald-50 text-center">
-                                <div className="bg-gray-900 rounded-[3.2rem] p-10 md:p-16 overflow-hidden relative group flex flex-col items-center justify-center min-h-[400px]">
-                                    {/* Animated Background Pulse */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.15),transparent_70%)] animate-pulse" />
-
-                                    {/* Central Lock Visualization */}
-                                    <div className="relative z-10 mb-10">
-                                        <div className="w-40 h-40 bg-emerald-500/10 rounded-[2.5rem] flex items-center justify-center border border-emerald-500/20 shadow-[0_0_40px_-10px_rgba(16,185,129,0.3)] group-hover:shadow-[0_0_60px_-10px_rgba(16,185,129,0.5)] transition-all duration-500">
-                                            <Lock size={80} className="text-[#B9FF66] drop-shadow-[0_0_15px_rgba(185,255,102,0.5)]" />
-                                        </div>
-                                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-[#B9FF66] text-gray-900 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border-4 border-gray-900 flex items-center gap-2 whitespace-nowrap">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" /> Sistema Seguro
-                                        </div>
-                                    </div>
-
-                                    {/* Scanning Lines Decoration */}
-                                    <div className="relative z-10 space-y-6 max-w-xs mx-auto">
-                                        <div className="space-y-2">
-                                            <div className="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
-                                                <div className="h-full w-1/2 bg-emerald-500/50 rounded-full animate-[shimmer_2s_infinite]" />
-                                            </div>
-                                            <div className="flex justify-between text-[9px] font-black uppercase tracking-widest text-emerald-500/60">
-                                                <span>Encriptando Datos</span>
-                                                <span>100%</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex flex-wrap justify-center gap-2">
-                                            {['AES-256', 'SSL/TLS', 'ISO 27001'].map((tag, t) => (
-                                                <span key={t} className="text-[9px] font-black text-white/40 border border-white/10 px-3 py-1 rounded-full uppercase tracking-widest hover:bg-white/5 hover:text-white transition-colors cursor-default">{tag}</span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="space-y-8 lg:order-2"
-                        >
-                            <div className="w-full flex justify-center mb-8 lg:justify-start">
-                                <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
-                                    <Lock size={10} className="w-[14px] h-[14px]" /> TU INFORMACIÓN SIEMPRE SEGURA
-                                </div>
-                            </div>
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-6">
-                                Tu información, <br /><span className="text-emerald-600">siempre protegida.</span>
-                            </h2>
-                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-8">
-                                En NeuroV, cuidar los datos de tus pacientes es nuestra prioridad. Cumplimos con todas las leyes chilenas de salud y protección de datos para que tú trabajes tranquilo.
-                            </p>
-
-                            <div className="grid gap-6">
-                                {[
-                                    { title: "Ley 20.584 (Derechos y Deberes)", desc: "Privacidad absoluta en Fichas Clínicas y consentimiento informado digital.", law: "Minsal Chile" },
-                                    { title: "Ley 19.628 (Protección de Datos)", desc: "Encriptación de grado bancario para toda la información personal de tus pacientes.", law: "Data Privacy" },
-                                    { title: "Estándar HL7 FHIR & CENS", desc: "Interoperabilidad certificada para el intercambio seguro de datos clínicos.", law: "Health Tech Standard" }
-                                ].map((item, i) => (
-                                    <motion.div
-                                        key={i}
-                                        whileHover={{ y: -5, scale: 1.01 }}
-                                        className="flex gap-4 p-6 rounded-3xl bg-gray-50 border border-transparent hover:border-emerald-100 hover:bg-white hover:shadow-xl transition-all group cursor-default"
-                                    >
-                                        <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform shrink-0">
-                                            <ShieldCheck size={24} />
-                                        </div>
-                                        <div>
-                                            <div className="flex items-center gap-3 mb-1">
-                                                <h4 className="text-sm font-black uppercase tracking-tight text-gray-900">{item.title}</h4>
-                                                <span className="text-[9px] font-black bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full uppercase">{item.law}</span>
-                                            </div>
-                                            <p className="text-xs text-gray-400 font-bold leading-relaxed">{item.desc}</p>
-                                        </div>
-                                    </motion.div>
-                                ))}
-
-                                {/* COMPACT PREMIUM CTA BUTTON: PILL SHAPE & VIBRANT EMERALD */}
-                                <motion.a
-                                    href="/solutions-test/legal"
-                                    whileHover={{ y: -3, scale: 1.01 }}
-                                    whileTap={{ scale: 0.99 }}
-                                    className="flex items-center justify-between px-6 py-3 rounded-full bg-emerald-600 border border-emerald-500 shadow-[0_15px_30px_-5px_rgba(5,150,105,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(5,150,105,0.6)] transition-all group mt-6 overflow-hidden relative w-full"
-                                >
-                                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <div className="flex items-center gap-3 relative z-10 w-full justify-between">
-                                        <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white shrink-0 shadow-inner">
-                                            <ShieldCheck size={16} />
-                                        </div>
-                                        <div className="flex-1 overflow-hidden text-center">
-                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white leading-tight">Más información</h4>
-                                        </div>
-                                        <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all">
-                                            <ArrowRight size={14} className="text-white group-hover:translate-x-1 transition-transform" />
-                                        </div>
-                                    </div>
-                                </motion.a>
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
 
             <section className="py-20 sm:py-32 px-6 sm:px-12 bg-[#0A0B14] text-white overflow-hidden relative">
 
