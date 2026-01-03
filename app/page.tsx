@@ -435,10 +435,9 @@ const Nav = () => {
                 </div>
 
                 <div className={`hidden lg:flex items-center gap-10 font-bold text-[10px] uppercase tracking-[0.25em] transition-colors duration-300 ${isScrolled ? 'text-gray-400' : 'text-gray-300'}`}>
-                    <a href="#inteligencia" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>Web</a>
                     <a href="#secretaria" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>WhatsApp</a>
                     <a href="#operacion" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>Gestión</a>
-                    <a href="#marketing" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>Pacientes</a>
+                    <a href="#marketing" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>Marketing</a>
                     <a href="#seguridad" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>Seguridad</a>
                     <a href="#precios" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>Planes</a>
                     <button className="bg-indigo-600 text-white px-10 py-4 rounded-full hover:bg-indigo-700 transition-all font-black shadow-2xl shadow-indigo-100 flex items-center gap-2 hover:scale-105 active:scale-95">
@@ -461,10 +460,9 @@ const Nav = () => {
                         className="lg:hidden bg-white border-b border-gray-100 overflow-hidden"
                     >
                         <div className="flex flex-col p-6 gap-6 font-bold text-[10px] uppercase tracking-[0.25em] text-gray-400">
-                            <a href="#inteligencia" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">Web</a>
                             <a href="#secretaria" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">WhatsApp</a>
                             <a href="#operacion" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">Gestión</a>
-                            <a href="#marketing" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">Pacientes</a>
+                            <a href="#marketing" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">Marketing</a>
                             <a href="#seguridad" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">Seguridad</a>
                             <a href="#precios" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">Planes</a>
                             <button className="bg-indigo-600 text-white px-10 py-4 rounded-full hover:bg-indigo-700 transition-all font-black shadow-2xl shadow-indigo-100 flex items-center justify-center gap-2">
@@ -731,7 +729,7 @@ export default function Home() {
                             >
                                 <img
                                     src="/solutions/premium_doctor.png"
-                                    alt="Doctor Profesional NeuroV"
+                                    alt="Profesional de la Salud NeuroV"
                                     className="w-full aspect-[4/5] object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#050511] via-transparent to-transparent" />
@@ -810,7 +808,7 @@ export default function Home() {
 
 
             {/* SECCIÓN 2: Secretaria IA - Libertad de Respuesta */}
-            <section id="secretaria" className="py-20 sm:py-32 px-6 sm:px-12 bg-gray-900 text-white overflow-hidden relative rounded-[3rem] sm:rounded-[6rem] mx-4 sm:mx-10 my-10">
+            <section id="secretaria" className="py-24 sm:py-32 px-6 sm:px-12 bg-gray-900 text-white overflow-hidden relative rounded-[3rem] sm:rounded-[6rem] mx-4 sm:mx-10 my-12 shadow-2xl">
                 <div className="absolute inset-0 opacity-[0.1] mix-blend-overlay">
                     <img
                         src="/solutions/executive_donna.png"
@@ -821,7 +819,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-gray-900 to-black/80" />
 
                 <div className="max-w-7xl mx-auto relative z-10">
-                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -886,19 +884,19 @@ export default function Home() {
             </section>
 
             {/* ECOSYSTEM SECTION - Integrations (Explicit I-Med and Buk) */}
-            <section className="pt-20 pb-8 sm:py-32 px-6 sm:px-12 bg-white relative">
+            <section id="operacion" className="py-24 sm:py-32 px-6 sm:px-12 bg-white relative">
                 <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-2 lg:gap-20 items-center">
+                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
                         <div className="text-left space-y-8">
-                            <div className="w-full flex justify-center lg:justify-start mb-8">
+                            <div className="w-full flex justify-center lg:justify-start mb-10">
                                 <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
                                     <Globe size={10} className="w-[14px] h-[14px]" /> TODO EN UN SOLO LUGAR
                                 </div>
                             </div>
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-slate-900 mb-6 px-0">
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-slate-900 mb-8 px-0">
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-500">Automatiza Todas Tus Operaciones</span>
                             </h2>
-                            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed max-w-xl mx-0 mb-8">
+                            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed max-w-xl mx-0 mb-12">
                                 Integra NeuroV con las <span className="text-indigo-600 font-bold">plataformas líderes en Chile.</span> Automatiza la venta de bonos I-Med, gestiona boletas del SII y centraliza tu equipo con Buk en un solo lugar.
                             </p>
 
@@ -1071,26 +1069,26 @@ export default function Home() {
             </section>
 
             {/* SECCIÓN SEGURIDAD Y CUMPLIMIENTO LEGAL */}
-            <section id="seguridad" className="pt-4 pb-20 sm:py-32 px-6 sm:px-12 bg-slate-50 relative overflow-hidden">
+            <section id="seguridad" className="py-24 sm:py-32 px-6 sm:px-12 bg-slate-50 relative overflow-hidden rounded-[3rem] sm:rounded-[6rem] mx-4 sm:mx-10 my-12 shadow-sm border border-gray-100">
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-100/40 via-transparent to-transparent opacity-60" />
                 <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:24px_24px]" />
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
+                <div className="max-w-7xl mx-auto relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="space-y-8 lg:order-2"
+                            className="space-y-8 lg:order-2 text-left"
                         >
-                            <div className="w-full flex justify-center mb-8 lg:justify-start">
+                            <div className="w-full flex justify-center mb-10 lg:justify-start">
                                 <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
                                     <Lock size={10} className="w-[14px] h-[14px]" /> TU INFORMACIÓN SIEMPRE SEGURA
                                 </div>
                             </div>
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-6">
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-8">
                                 Tu información, <br /><span className="text-emerald-600">siempre protegida.</span>
                             </h2>
-                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-8">
+                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-12">
                                 En NeuroV, cuidar los datos de tus pacientes es nuestra prioridad. Cumplimos con todas las leyes chilenas de salud y protección de datos para que tú trabajes tranquilo.
                             </p>
 
@@ -1117,12 +1115,12 @@ export default function Home() {
                                     </motion.div>
                                 ))}
 
-                                {/* COMPACT PREMIUM CTA BUTTON: PILL SHAPE & VIBRANT EMERALD */}
+                                {/* Desktop CTA - Hidden on mobile */}
                                 <motion.a
                                     href="/solutions-test/legal"
                                     whileHover={{ y: -3, scale: 1.01 }}
                                     whileTap={{ scale: 0.99 }}
-                                    className="flex items-center justify-between px-6 py-3 rounded-full bg-emerald-600 border border-emerald-500 shadow-[0_15px_30px_-5px_rgba(5,150,105,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(5,150,105,0.6)] transition-all group mt-6 overflow-hidden relative w-full"
+                                    className="hidden lg:flex items-center justify-between px-6 py-3 rounded-full bg-emerald-600 border border-emerald-500 shadow-[0_15px_30px_-5px_rgba(5,150,105,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(5,150,105,0.6)] transition-all group mt-6 overflow-hidden relative w-full"
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity" />
                                     <div className="flex items-center gap-3 relative z-10 w-full justify-between">
@@ -1130,7 +1128,7 @@ export default function Home() {
                                             <ShieldCheck size={16} />
                                         </div>
                                         <div className="flex-1 overflow-hidden text-center">
-                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white leading-tight">Más información</h4>
+                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white leading-tight">Ver Certificaciones</h4>
                                         </div>
                                         <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all">
                                             <ArrowRight size={14} className="text-white group-hover:translate-x-1 transition-transform" />
@@ -1154,6 +1152,27 @@ export default function Home() {
                                 />
                             </div>
                         </motion.div>
+
+                        {/* CTA Button - Appears after image on mobile, stays with text on desktop */}
+                        <motion.a
+                            href="/solutions-test/legal"
+                            whileHover={{ y: -3, scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
+                            className="flex items-center justify-between px-6 py-3 rounded-full bg-emerald-600 border border-emerald-500 shadow-[0_15px_30px_-5px_rgba(5,150,105,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(5,150,105,0.6)] transition-all group mt-8 lg:mt-0 overflow-hidden relative w-full lg:hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="flex items-center gap-3 relative z-10 w-full justify-between">
+                                <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white shrink-0 shadow-inner">
+                                    <ShieldCheck size={16} />
+                                </div>
+                                <div className="flex-1 overflow-hidden text-center">
+                                    <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white leading-tight">Ver Certificaciones</h4>
+                                </div>
+                                <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all">
+                                    <ArrowRight size={14} className="text-white group-hover:translate-x-1 transition-transform" />
+                                </div>
+                            </div>
+                        </motion.a>
                     </div>
                 </div>
             </section >
@@ -1161,11 +1180,11 @@ export default function Home() {
 
 
             {/* SECCIÓN GROWTH: Más Pacientes (REORDERED) */}
-            < section id="marketing" className="py-20 sm:py-32 px-6 sm:px-12 bg-white overflow-hidden relative" >
+            < section id="marketing" className="py-24 sm:py-32 px-6 sm:px-12 bg-white overflow-hidden relative" >
                 <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-12 sm:gap-20 items-center">
+                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
                         <div className="text-left space-y-8 lg:order-1">
-                            <div className="w-full flex justify-center mb-8 lg:justify-start">
+                            <div className="w-full flex justify-center mb-10 lg:justify-start">
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -1185,11 +1204,11 @@ export default function Home() {
                                     </div>
                                 </motion.div>
                             </div>
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-6">
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-8">
                                 <span className="text-indigo-600">Presencia Digital.</span>
                             </h2>
-                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-8">
-                                Tu clínica siempre activa para tus pacientes. Donna es omnicanal para asegurar que nadie se quede sin atención.
+                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-12">
+                                Tu clínica siempre activa para tus pacientes. Donna <span className="text-indigo-600 font-bold">está en todas</span> para asegurar que nadie se quede sin atención.
                             </p>
 
                             <div className="grid gap-6 mt-10 sm:mt-12">
@@ -1216,12 +1235,12 @@ export default function Home() {
                                     </motion.div>
                                 ))}
 
-                                {/* MARKETING & GROWTH CTA BUTTON: PILL SHAPE & VIBRANT INDIGO */}
+                                {/* Desktop CTA - Hidden on mobile */}
                                 <motion.a
                                     href="/growth"
                                     whileHover={{ y: -3, scale: 1.01 }}
                                     whileTap={{ scale: 0.99 }}
-                                    className="flex items-center justify-between px-6 py-3 rounded-full bg-indigo-600 border border-indigo-500 shadow-[0_15px_30px_-5px_rgba(79,70,229,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(79,70,229,0.6)] transition-all group mt-6 overflow-hidden relative w-full"
+                                    className="hidden lg:flex items-center justify-between px-6 py-3 rounded-full bg-indigo-600 border border-indigo-500 shadow-[0_15px_30px_-5px_rgba(79,70,229,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(79,70,229,0.6)] transition-all group mt-6 overflow-hidden relative w-full"
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity" />
                                     <div className="flex items-center gap-3 relative z-10 w-full justify-between">
@@ -1229,7 +1248,7 @@ export default function Home() {
                                             <TrendingUp size={16} />
                                         </div>
                                         <div className="flex-1 overflow-hidden text-center">
-                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white leading-tight">Más información</h4>
+                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white leading-tight">Ver Plan de Marketing</h4>
                                         </div>
                                         <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all">
                                             <ArrowRight size={14} className="text-white group-hover:translate-x-1 transition-transform" />
@@ -1254,6 +1273,27 @@ export default function Home() {
                                 <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-transparent to-transparent pointer-events-none" />
                             </motion.div>
                         </div>
+
+                        {/* Mobile CTA - Appears after image */}
+                        <motion.a
+                            href="/growth"
+                            whileHover={{ y: -3, scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
+                            className="flex lg:hidden items-center justify-between px-6 py-3 rounded-full bg-indigo-600 border border-indigo-500 shadow-[0_15px_30px_-5px_rgba(79,70,229,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(79,70,229,0.6)] transition-all group mt-8 overflow-hidden relative w-full"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="flex items-center gap-3 relative z-10 w-full justify-between">
+                                <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white shrink-0 shadow-inner">
+                                    <TrendingUp size={16} />
+                                </div>
+                                <div className="flex-1 overflow-hidden text-center">
+                                    <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white leading-tight">Ver Plan de Marketing</h4>
+                                </div>
+                                <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all">
+                                    <ArrowRight size={14} className="text-white group-hover:translate-x-1 transition-transform" />
+                                </div>
+                            </div>
+                        </motion.a>
                     </div>
                 </div>
             </section >
@@ -1270,9 +1310,9 @@ export default function Home() {
 
 
             {/* SECCIÓN ADAPTABILIDAD: Diseñado para tu Crecimiento */}
-            < section className="py-20 sm:py-32 px-6 sm:px-12 bg-gray-50 relative overflow-hidden" >
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+            < section className="py-24 sm:py-32 px-6 sm:px-12 bg-gray-50 relative overflow-hidden rounded-[3rem] sm:rounded-[6rem] mx-4 sm:mx-10 my-12" >
+                <div className="max-w-7xl mx-auto relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -1280,16 +1320,16 @@ export default function Home() {
                             transition={{ duration: 0.8 }}
                             className="space-y-8 text-left lg:order-2"
                         >
-                            <div className="w-full flex justify-center lg:justify-start mb-8">
+                            <div className="w-full flex justify-center lg:justify-start mb-10">
                                 <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-bold uppercase tracking-[0.1em] whitespace-nowrap w-full sm:w-auto">
                                     <Zap size={10} className="w-[14px] h-[14px]" /> ADAPTABILIDAD TOTAL
                                 </div>
                             </div>
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900">
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900 mb-8">
                                 Nos adaptamos <br />
                                 <span className="text-indigo-600">a tu consulta.</span>
                             </h2>
-                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0">
+                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0 mb-12">
                                 Ya sea que manejes una consulta privada o una red nacional de centros, NeuroV te brinda el orden necesario para que te enfoques 100% en tus pacientes.
                             </p>
 
@@ -1415,14 +1455,14 @@ export default function Home() {
                     <div className="text-left mb-16 sm:mb-24 space-y-8">
                         <div className="w-full flex justify-center lg:justify-start mb-8">
                             <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/5 border border-white/10 text-indigo-400 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
-                                <CreditCard size={10} className="w-[14px] h-[14px]" /> PLANES PARA TU CONSULTA
+                                <CreditCard size={10} className="w-[14px] h-[14px]" /> PLANES PARA TU GESTIÓN
                             </div>
                         </div>
                         <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-white mb-6">
                             NeuroV te ayuda <span className="text-indigo-400">con todo.</span>
                         </h2>
                         <p className="text-lg sm:text-xl text-gray-400 font-medium leading-relaxed max-w-xl mx-0 mb-8">
-                            Centraliza tu gestión y olvida las complicaciones administrativas. <span className="text-indigo-400 font-bold">NeuroV te acompaña</span> para que tú solo seas el Doctor.
+                            Centraliza tu gestión y olvida las complicaciones administrativas. <span className="text-indigo-400 font-bold">NeuroV te acompaña</span> para que tú solo seas el Profesional.
                         </p>
                     </div>
 
@@ -1502,7 +1542,7 @@ export default function Home() {
                                     </div>
                                     <button className={`w-full py-5 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all relative overflow-hidden group/btn ${plan.popular ? 'bg-indigo-600 text-white shadow-[0_15px_30px_-5px_rgba(79,70,229,0.4)]' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'}`}>
                                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000" />
-                                        ACTIVAR LIBERTAD
+                                        EMPEZAR AHORA
                                     </button>
                                 </div>
                             </motion.div>
@@ -1513,7 +1553,7 @@ export default function Home() {
 
 
 
-            <section id="agenda" className="py-20 sm:py-32 px-6 bg-[#0A0B14] relative overflow-hidden">
+            <section id="agenda" className="py-24 sm:py-32 px-6 sm:px-12 bg-[#0A0B14] relative overflow-hidden">
                 {/* Cyber backgrounds */}
                 <div className="absolute inset-0 opacity-10"
                     style={{
@@ -1522,38 +1562,49 @@ export default function Home() {
                     }}
                 />
 
-                <div className="max-w-5xl mx-auto text-left relative z-10 space-y-8">
+                <div className="max-w-5xl mx-auto text-center lg:text-left relative z-10 space-y-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <div className="w-full flex justify-center lg:justify-start mb-8">
-                            <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/5 border border-white/10 text-[#B9FF66] text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.05em] sm:tracking-[0.5em] whitespace-nowrap w-full sm:w-auto">
-                                <Sparkles size={10} className="w-[2.5vw] h-[2.5vw] max-w-[14px] max-h-[14px] min-w-[11px] min-h-[11px]" /> CONSULTORÍA DE ALTO NIVEL
+                        <div className="w-full flex justify-center lg:justify-start mb-10">
+                            <div className="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#B9FF66] text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.5em] whitespace-nowrap">
+                                <Sparkles size={12} className="text-[#B9FF66]" /> ASESORÍA DE INICIO
                             </div>
                         </div>
-                        <h2 className="text-4xl sm:text-7xl lg:text-8xl font-[1000] text-white mb-8 sm:mb-10 tracking-tightest leading-[0.9] italic">
+                        <h2 className="text-4xl sm:text-7xl lg:text-8xl font-[1000] text-white mb-8 tracking-tightest leading-[1.1] sm:leading-[0.9] italic">
                             Agenda tu <br />
                             <span className="text-indigo-500">Sesión de Inicio.</span>
                         </h2>
-                        <p className="text-gray-400 text-xl md:text-2xl font-medium mb-16 max-w-2xl mx-0 leading-relaxed">
+                        <p className="text-gray-400 text-lg sm:text-2xl font-medium mb-12 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                             Nuestro equipo te ayudará a organizar tu <span className="text-white font-bold">consulta con NeuroV</span> en solo 30 minutos.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-6 justify-start items-center">
-                            <Link href="/strategic-session">
-                                <PremiumButton variant="primary" size="xl" className="px-16 py-8 rounded-full text-xs font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(79,70,229,0.3)] group">
-                                    RESERVAR EN GOOGLE CALENDAR <ChevronRight className="group-hover:translate-x-1 transition-transform" />
+                        <div className="flex flex-col lg:flex-row gap-8 justify-center lg:justify-start items-center">
+                            <Link href="/strategic-session" className="w-full sm:w-auto">
+                                <PremiumButton variant="primary" size="xl" className="w-full sm:w-auto px-8 py-5 sm:px-12 sm:py-6 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(79,70,229,0.3)] group">
+                                    AGENDA AQUÍ <ChevronRight className="group-hover:translate-x-1 transition-transform ml-2" />
                                 </PremiumButton>
                             </Link>
-                            <div className="flex flex-col items-center sm:items-start text-[10px] font-black uppercase tracking-widest text-gray-500 gap-2">
-                                <div className="flex -space-x-2">
-                                    {[1, 2, 3, 4].map(i => (
-                                        <div key={i} className="w-8 h-8 rounded-full border-2 border-[#0A0B14] bg-gray-800" />
+                            <div className="flex flex-col items-center lg:items-start gap-3">
+                                <div className="flex -space-x-3">
+                                    {[
+                                        "https://i.pravatar.cc/150?u=1",
+                                        "https://i.pravatar.cc/150?u=2",
+                                        "https://i.pravatar.cc/150?u=3",
+                                        "https://i.pravatar.cc/150?u=4"
+                                    ].map((url, i) => (
+                                        <motion.div
+                                            key={i}
+                                            whileHover={{ y: -5, zIndex: 50 }}
+                                            className="w-10 h-10 rounded-full border-2 border-[#0A0B14] overflow-hidden bg-indigo-900 shadow-xl"
+                                        >
+                                            <img src={url} alt="Especialista en NeuroV" className="w-full h-full object-cover" />
+                                        </motion.div>
                                     ))}
                                 </div>
-                                <span>+50 sesiones esta semana</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-[#B9FF66]/80">+50 sesiones esta semana</span>
                             </div>
                         </div>
                     </motion.div>
