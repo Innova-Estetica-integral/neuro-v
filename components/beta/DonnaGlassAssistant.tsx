@@ -88,7 +88,7 @@ export function DonnaGlassAssistant() {
                 className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 w-16 h-16 sm:w-20 sm:h-20 bg-white shadow-2xl rounded-2xl flex items-center justify-center z-[200] group border border-indigo-50 overflow-hidden"
             >
                 <div className="relative z-10">
-                    <BrainCircuit className="text-[#00f2ff] w-8 h-8 sm:w-10 sm:h-10 drop-shadow-[0_0_12px_rgba(0,242,255,0.8)]" />
+                    <BrainCircuit className="text-indigo-600 w-8 h-8 sm:w-10 sm:h-10 drop-shadow-[0_0_12px_rgba(79,70,229,0.4)]" />
                     {isSpeaking && (
                         <div className="absolute -top-1 -right-1 w-3 h-3 bg-indigo-500 rounded-full border-2 border-white animate-pulse" />
                     )}

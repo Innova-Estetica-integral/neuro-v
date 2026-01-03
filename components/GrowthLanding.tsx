@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { LucideVideo, LucideTrendingUp, LucideArrowRight, LucidePlay, LucideMessageSquare, LucideInstagram, LucideCalendar, LucideWallet } from 'lucide-react';
+import { LucideVideo, LucideTrendingUp, LucideArrowRight, LucidePlay, LucideMessageSquare, LucideInstagram, LucideCalendar, LucideWallet, LucideClock, LucideShieldCheck, LucideBrainCircuit, LucideBarChart } from 'lucide-react';
 import { GlassCard } from './ui/GlassCard';
 import { PremiumButton } from './ui/PremiumButton';
 import { WorkflowMockup } from './WorkflowMockup';
@@ -188,6 +188,101 @@ export function GrowthLanding() {
                 </div>
             </section>
 
+
+            {/* SECCIÓN LO QUE DEBES SABER (MOVED FROM MAIN PAGE) */}
+            <section id="pilares" className="container mx-auto px-6 py-20 bg-[#0A0B14] relative overflow-hidden rounded-[3rem] border border-white/5">
+                <div className="max-w-7xl mx-auto relative z-10">
+                    <div className="text-left mb-16 sm:mb-24 space-y-8">
+                        <div className="w-full flex justify-center mb-8 lg:justify-start">
+                            <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/5 border border-white/10 text-indigo-400 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
+                                <LucideTrendingUp size={10} className="w-[14px] h-[14px]" /> LO QUE DEBES SABER
+                            </div>
+                        </div>
+                        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-white mb-6">Cómo funciona una consulta profesional.</h2>
+                        <p className="text-lg sm:text-xl text-gray-400 font-medium leading-relaxed max-w-xl mx-0 mb-8">
+                            Estos son los pilares que toda consulta médica moderna necesita para funcionar de forma ordenada y profesional.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[
+                            {
+                                title: 'Implementación Rápida',
+                                desc: 'Una buena herramienta debe estar lista en días, no meses. Esto te permite empezar a trabajar ordenadamente sin perder tiempo.',
+                                icon: LucideClock,
+                                highlight: '48 horas',
+                                iconBg: 'bg-indigo-600/20',
+                                iconColor: 'text-indigo-400'
+                            },
+                            {
+                                title: 'Cumplimiento Legal',
+                                desc: 'Es fundamental que tu sistema cumpla con las leyes chilenas de salud y protección de datos para evitar problemas legales.',
+                                icon: LucideShieldCheck,
+                                highlight: 'Ley 20.584 y 19.628',
+                                iconBg: 'bg-emerald-600/20',
+                                iconColor: 'text-emerald-400'
+                            },
+                            {
+                                title: 'Gestión Financiera',
+                                desc: 'Boletas, impuestos y pagos de equipo deben estar centralizados para que no tengas que hacer todo manualmente.',
+                                icon: LucideBrainCircuit,
+                                highlight: 'SII y BUK integrados',
+                                iconBg: 'bg-violet-600/20',
+                                iconColor: 'text-violet-400'
+                            },
+                            {
+                                title: 'Bonos de Salud',
+                                desc: 'Tus pacientes necesitan comprar bonos Fonasa e Isapre fácilmente. Una buena integración hace esto automático.',
+                                icon: LucideShieldCheck,
+                                highlight: 'I-Med conectado',
+                                iconBg: 'bg-cyan-600/20',
+                                iconColor: 'text-cyan-400'
+                            },
+                            {
+                                title: 'Presencia Constante',
+                                desc: 'Tu consulta debe estar visible para nuevos pacientes. Esto incluye web, redes sociales y respuestas rápidas por WhatsApp.',
+                                icon: LucideTrendingUp,
+                                highlight: 'Disponible 24/7',
+                                iconBg: 'bg-amber-600/20',
+                                iconColor: 'text-amber-400'
+                            },
+                            {
+                                title: 'Crecimiento Flexible',
+                                desc: 'Si tu consulta crece o abres una segunda sede, tu sistema debe adaptarse sin que tengas que cambiar de herramienta.',
+                                icon: LucideBarChart,
+                                highlight: 'Multi-sede',
+                                iconBg: 'bg-pink-600/20',
+                                iconColor: 'text-pink-400'
+                            }
+                        ].map((item, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="group relative"
+                            >
+                                <div className="h-full bg-white/[0.03] border border-white/10 rounded-3xl p-8 transition-all hover:bg-white/[0.05] hover:border-indigo-500/30 hover:shadow-[0_30px_60px_-15px_rgba(79,70,229,0.3)] hover:-translate-y-2 flex flex-col justify-between">
+                                    <div>
+                                        <div className={`w-14 h-14 ${item.iconBg} rounded-2xl flex items-center justify-center ${item.iconColor} mb-6 group-hover:scale-110 transition-transform`}>
+                                            <item.icon size={28} />
+                                        </div>
+                                        <h3 className="text-xl font-black text-white mb-3 tracking-tight">{item.title}</h3>
+                                        <p className="text-sm text-gray-400 font-medium leading-relaxed mb-8">
+                                            {item.desc}
+                                        </p>
+                                    </div>
+                                    <div className="pt-4 border-t border-white/10">
+                                        <div className="text-[9px] text-gray-500 font-black uppercase tracking-widest mb-2">En NeuroV</div>
+                                        <div className="text-sm font-black text-[#B9FF66] tracking-wide">{item.highlight}</div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
             {/* Virtual Assistant Section */}
             <section className="container mx-auto px-6 py-20 bg-indigo-500/5 rounded-[3rem] border border-white/5">

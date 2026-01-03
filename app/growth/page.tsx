@@ -9,6 +9,7 @@ import { SalesAssistant } from '@/components/SalesAssistant';
 import { SalesBookingWizard } from '@/components/booking/SalesBookingWizard';
 import { PremiumButton } from '@/components/ui/PremiumButton';
 import { usePsychographic } from '@/lib/hooks/use-psychographic';
+import { Footer } from '@/components/Footer';
 
 function BookingSection() {
     const searchParams = useSearchParams();
@@ -62,11 +63,7 @@ function GrowthPageContent() {
                 <BookingSection />
                 <SalesAssistant mode="growth" />
 
-                {/* Footer */}
-                <footer className="container mx-auto px-6 py-20 border-t border-white/5 text-center text-gray-500 text-sm">
-                    <p>© 2025 NEURO-VENTAS V6. Todos los derechos reservados.</p>
-                    <p className="mt-2 text-gray-600 font-mono tracking-widest uppercase">Tecnología de Ventas para Clínicas Estéticas</p>
-                </footer>
+                <Footer />
             </main>
         </div>
     );
