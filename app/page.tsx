@@ -823,11 +823,11 @@ export default function Home() {
                 <div className="max-w-7xl mx-auto relative z-10">
                     <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                         <motion.div
-                            initial={{ opacity: 0, x: -50 }}
+                            initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
-                            className="space-y-8 text-left"
+                            className="space-y-8 text-left lg:order-2"
                         >
                             <div className="w-full flex justify-center mb-8 lg:justify-start">
                                 <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/5 border border-white/10 text-indigo-400 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
@@ -848,7 +848,7 @@ export default function Home() {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2, duration: 1 }}
-                            className="relative"
+                            className="relative lg:order-1"
                         >
                             <div className="absolute inset-0 bg-indigo-500/30 blur-[120px] rounded-full" />
 
@@ -1077,10 +1077,10 @@ export default function Home() {
                 <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <motion.div
-                            initial={{ opacity: 0, x: -50 }}
+                            initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="space-y-8"
+                            className="space-y-8 lg:order-2"
                         >
                             <div className="w-full flex justify-center mb-8 lg:justify-start">
                                 <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.2em] whitespace-nowrap w-full sm:w-auto">
@@ -1144,7 +1144,7 @@ export default function Home() {
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="relative lg:order-2 group"
+                            className="relative lg:order-1 group"
                         >
                             <div className="relative z-10 overflow-hidden rounded-[2.5rem]">
                                 <img
@@ -1274,11 +1274,11 @@ export default function Home() {
                 <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
                         <motion.div
-                            initial={{ opacity: 0, x: -50 }}
+                            initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
-                            className="space-y-8 text-left"
+                            className="space-y-8 text-left lg:order-2"
                         >
                             <div className="w-full flex justify-center lg:justify-start mb-8">
                                 <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-bold uppercase tracking-[0.1em] whitespace-nowrap w-full sm:w-auto">
@@ -1290,7 +1290,7 @@ export default function Home() {
                                 <span className="text-indigo-600">a tu consulta.</span>
                             </h2>
                             <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0">
-                                Ya sea que manejes una consulta privada o una red nacional de centros, NeuroV te brinda el orden necesario para que te enfocues 100% en tus pacientes.
+                                Ya sea que manejes una consulta privada o una red nacional de centros, NeuroV te brinda el orden necesario para que te enfoques 100% en tus pacientes.
                             </p>
 
                             <div className="grid gap-6 mt-12">
@@ -1342,7 +1342,7 @@ export default function Home() {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 1 }}
-                            className="relative group lg:order-2"
+                            className="relative group lg:order-1"
                         >
                             <div className="relative z-10 overflow-hidden rounded-[3rem] shadow-2xl border border-white">
                                 <img
@@ -1372,7 +1372,7 @@ export default function Home() {
                                 <ShieldCheck size={10} className="w-[14px] h-[14px]" /> TE AYUDAMOS A EMPEZAR
                             </div>
                         </div>
-                        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-[1000] tracking-tightest mb-8 leading-none text-slate-900">No te dejamos sola. <br /><span className="text-indigo-600">Estamos en todas!</span></h2>
+                        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-[1000] tracking-tightest mb-8 leading-none text-slate-900">No te dejamos solo. <br /><span className="text-indigo-600">¡Estamos en todas!</span></h2>
                         <p className="text-lg text-slate-500 font-medium leading-relaxed mb-10 max-w-xl mx-0">
                             A diferencia de otros softwares donde tú haces todo, nosotros te ofrecemos una <span className="text-indigo-600 font-bold">Asesoría de Inicio</span>. Dejamos tus pagos, a Donna y toda tu agenda configurada en 48 horas.
                         </p>
