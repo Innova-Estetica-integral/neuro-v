@@ -478,36 +478,105 @@ const Nav = () => {
     );
 };
 
-export default function Home() {
-    const [mounted, setMounted] = useState(false);
-    const [neuralPaths, setNeuralPaths] = useState<any[]>([]);
-    const [dataNodes, setDataNodes] = useState<any[]>([]);
+const ParticleOcean = () => {
+    const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        // Generate stable random paths for the neural mesh
-        const paths = [...Array(15)].map((_, i) => ({
-            id: i,
-            d: `M ${Math.random() * 100} ${Math.random() * 100} Q ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100}`,
-            animateD: [
-                `M ${Math.random() * 100} ${Math.random() * 100} Q ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100}`,
-                `M ${Math.random() * 100} ${Math.random() * 100} Q ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100}`
-            ],
-            duration: 10 + Math.random() * 10,
-            delay: i * 0.5
-        }));
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
 
-        // Generate stable random positions for data nodes
-        const nodes = [...Array(20)].map((_, i) => ({
-            id: i,
-            x: `${Math.random() * 100}%`,
-            y: `${Math.random() * 100}%`,
-            animateY: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
-            duration: 15 + Math.random() * 10,
-            delay: i * 0.3
-        }));
+        let animationFrameId: number;
+        let time = 0;
 
-        setNeuralPaths(paths);
-        setDataNodes(nodes);
+        const resize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        const points: { x: number; z: number }[] = [];
+        const gap = 16;
+        const countX = 140; // Slightly reduced for performance (was 180)
+        const countZ = 75;  // Slightly reduced for performance (was 90)
+
+        for (let x = 0; x < countX; x++) {
+            for (let z = 0; z < countZ; z++) {
+                points.push({
+                    x: (x - countX / 2) * gap,
+                    z: (z - countZ / 2) * gap
+                });
+            }
+        }
+
+        const render = () => {
+            time += 0.012;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2 + 40;
+            const focalLength = 1000;
+
+            points.forEach((p, i) => {
+                const zPos = p.z + 1000;
+                if (zPos < 100) return;
+
+                const scale = focalLength / zPos;
+
+                // Optimized Wave Math
+                const d = Math.sqrt(p.x * p.x + p.z * p.z) * 0.004;
+                const wave1 = Math.sin(p.x * 0.005 + time) * 50;
+                const wave2 = Math.cos(p.z * 0.006 + time * 1.5) * 40;
+                const wave3 = Math.sin(d - time * 2.5) * 30;
+                const y = wave1 + wave2 + wave3;
+
+                const screenX = centerX + p.x * scale;
+                const screenY = centerY + (y + 120) * scale;
+
+                const distOpacity = Math.max(0, (1 - zPos / 2400));
+                const peakHighlight = Math.max(0, y / 100);
+                const opacity = (distOpacity * 0.6) + (peakHighlight * 0.3);
+
+                // PERFORMANCE FIX: Using fillRect instead of arc/stroke
+                // fillRect is significantly faster for thousands of particles
+                const hue = 215 + (y * 0.6);
+                const lightness = 75 + (peakHighlight * 20);
+                const size = Math.max(0.5, 1.8 * scale);
+
+                ctx.fillStyle = `hsla(${hue}, 90%, ${lightness}%, ${opacity})`;
+                ctx.fillRect(screenX - size / 2, screenY - size / 2, size, size);
+
+                // Reduce tracer frequency for performance
+                if (i % 220 === 0 && y > 35) {
+                    ctx.strokeStyle = `hsla(${hue}, 100%, 90%, ${opacity * 0.2})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(screenX, screenY);
+                    ctx.lineTo(screenX, screenY - (y * 2 * scale));
+                    ctx.stroke();
+                }
+            });
+
+            animationFrameId = requestAnimationFrame(render);
+        };
+
+        render();
+        return () => {
+            window.removeEventListener('resize', resize);
+            cancelAnimationFrame(animationFrameId);
+        };
+    }, []);
+
+    return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-[2]" />;
+};
+
+export default function Home() {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
         setMounted(true);
     }, []);
 
@@ -518,86 +587,116 @@ export default function Home() {
             {/* Cinematic Hero */}
             {/* Cinematic Hero - Dark Cyber Nebula Theme */}
             <section className="relative pt-[160px] pb-32 sm:pt-96 sm:pb-48 px-6 sm:px-12 bg-[#050511] overflow-hidden flex items-center min-h-screen sm:min-h-0">
-                {/* HIGH-FIDELITY CYBER NEURAL BACKGROUND */}
-                <div className="absolute inset-0 w-full h-full overflow-hidden z-0 bg-[#050511]">
-                    {/* Animated Mesh Gradient */}
-                    <motion.div
-                        animate={{
-                            scale: [1, 1.1, 1],
-                            rotate: [0, 5, 0]
-                        }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-[-10%] opacity-40"
-                    >
-                        <div className="absolute top-1/4 left-1/4 w-[60%] h-[60%] bg-indigo-600/20 blur-[150px] rounded-full" />
-                        <div className="absolute bottom-1/4 right-1/4 w-[50%] h-[50%] bg-cyan-600/10 blur-[120px] rounded-full" />
-                    </motion.div>
+                {/* DENSE LIQUID DIGITAL OCEAN BACKGROUND */}
+                <div className="absolute inset-0 w-full h-full overflow-hidden z-0 bg-[#02020a]">
 
-                    {/* Cyber Neural SVG Mesh */}
-                    <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="neural-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stopColor="#4f46e5" stopOpacity="0" />
-                                <stop offset="50%" stopColor="#4f46e5" stopOpacity="0.5" />
-                                <stop offset="100%" stopColor="#4f46e5" stopOpacity="0" />
-                            </linearGradient>
-                        </defs>
-                        {mounted && neuralPaths.map((path) => (
-                            <motion.path
-                                key={path.id}
-                                d={path.d}
-                                stroke="url(#neural-gradient)"
-                                strokeWidth="0.5"
-                                fill="none"
-                                initial={{ pathLength: 0, opacity: 0 }}
-                                animate={{
-                                    pathLength: [0, 1, 0],
-                                    opacity: [0, 0.5, 0],
-                                    d: path.animateD
-                                }}
-                                transition={{
-                                    duration: path.duration,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                    delay: path.delay
-                                }}
-                            />
-                        ))}
-                    </svg>
+                    {/* VIBRANT DIGITAL AURORA BOREALIS (Optimized) */}
+                    <div className="absolute top-0 left-0 w-full h-[80%] overflow-hidden pointer-events-none z-[1]">
+                        {/* Deep Sky Base */}
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(79,70,229,0.05)_0%,transparent_60%)]" />
 
-                    {/* Floating Data Nodes */}
-                    <div className="absolute inset-0">
-                        {mounted && dataNodes.map((node) => (
-                            <motion.div
-                                key={node.id}
-                                initial={{
-                                    x: node.x,
-                                    y: node.y,
-                                    opacity: 0,
-                                    scale: 0
-                                }}
-                                animate={{
-                                    y: node.animateY,
-                                    opacity: [0, 0.4, 0],
-                                    scale: [0.5, 1, 0.5]
-                                }}
-                                transition={{
-                                    duration: node.duration,
-                                    repeat: Infinity,
-                                    ease: "linear",
-                                    delay: node.delay
-                                }}
-                                className="absolute w-1 h-1 bg-cyan-400 rounded-full blur-[1px]"
-                            />
-                        ))}
+                        {/* Aurora Curtains Container (Reduced count to 12 for performance) */}
+                        <div className="absolute inset-0 flex justify-around mix-blend-plus-lighter opacity-70">
+                            {[...Array(12)].map((_, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, scaleY: 0.7 }}
+                                    animate={{
+                                        opacity: [0.2, 0.6, 0.2],
+                                        scaleY: [1, 1.4, 1],
+                                        skewX: [i % 2 === 0 ? -12 : 12, i % 2 === 0 ? 12 : -12],
+                                        x: [i * 5, i * 5 + 40, i * 5]
+                                    }}
+                                    transition={{
+                                        duration: 12 + (i % 5) * 6,
+                                        repeat: Infinity,
+                                        ease: "easeInOut",
+                                        delay: i * 0.4
+                                    }}
+                                    className="h-full w-[10%] blur-[40px] sm:blur-[50px] will-change-transform"
+                                    style={{
+                                        background: `linear-gradient(to top, 
+                                            transparent 0%, 
+                                            ${i % 4 === 0 ? 'rgba(219, 39, 119, 0.25)' : i % 3 === 0 ? 'rgba(124, 58, 237, 0.25)' : 'rgba(16, 185, 129, 0.35)'} 35%, 
+                                            ${i % 2 === 0 ? 'rgba(6, 182, 212, 0.3)' : 'rgba(52, 211, 153, 0.4)'} 60%, 
+                                            transparent 100%
+                                        )`,
+                                        marginLeft: '-3%',
+                                        transformOrigin: 'top center',
+                                        backfaceVisibility: 'hidden'
+                                    }}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Secondary Flowing "Mist" (Optimized) */}
+                        <motion.div
+                            animate={{
+                                x: [-300, 300],
+                                opacity: [0.1, 0.2, 0.1],
+                            }}
+                            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                            className="absolute inset-0 bg-[linear-gradient(to_right,transparent,rgba(16,185,129,0.05),rgba(124,58,237,0.05),transparent)] blur-[120px] mix-blend-screen will-change-transform"
+                        />
                     </div>
 
-                    {/* Digital Dust / Grain Overlay */}
-                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+                    {/* Atmospheric Gas Layers (Ultra-Dense Nebula Clouds) */}
+                    <div className="absolute inset-0 z-0 opacity-80">
+                        {/* Core Nebula Vortex */}
+                        <motion.div
+                            animate={{
+                                scale: [1, 1.3, 1],
+                                rotate: [0, 45, 0],
+                                opacity: [0.5, 0.7, 0.5]
+                            }}
+                            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute top-[-20%] left-[-10%] w-[120%] h-[120%] bg-gradient-radial from-indigo-600/30 via-violet-800/10 to-transparent blur-[140px] rounded-full mix-blend-screen"
+                        />
 
-                    {/* Dark Overlays for Depth */}
-                    <div className="absolute inset-0 bg-[#020617]/40 backdrop-blur-[1px]" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050511] via-transparent to-[#050511]/60" />
+                        {/* Surrounding Nebula Clouds for Density */}
+                        <motion.div
+                            animate={{
+                                x: [50, -50],
+                                y: [-30, 30],
+                                scale: [1.1, 0.9, 1.1]
+                            }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute bottom-[-10%] right-[-10%] w-[100%] h-[100%] bg-indigo-900/40 blur-[160px] rounded-full mix-blend-soft-light"
+                        />
+
+                        {/* Liquid Cyan Flow Layer */}
+                        <motion.div
+                            animate={{
+                                x: [-200, 200],
+                                opacity: [0.3, 0.5, 0.3],
+                            }}
+                            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute top-1/3 left-[-25%] w-[150%] h-[60%] bg-cyan-600/15 blur-[180px] rounded-full mix-blend-plus-lighter"
+                        />
+
+                        {/* Deep Space Highlight */}
+                        <motion.div
+                            animate={{
+                                scale: [0.8, 1.2, 0.8],
+                                opacity: [0.2, 0.5, 0.2]
+                            }}
+                            transition={{ duration: 15, repeat: Infinity }}
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-violet-600/5 blur-[220px] rounded-full"
+                        />
+                    </div>
+
+                    {/* Canvas-based Particle Ocean (The water-wave effect matching reference images) */}
+                    {mounted && <ParticleOcean />}
+
+                    {/* Digital Grid / Technical HUD Sutil Overlay */}
+                    <div className="absolute inset-0 z-1 pointer-events-none opacity-[0.04] bg-[linear-gradient(to_right,#4f46e522_1px,transparent_1px),linear-gradient(to_bottom,#4f46e522_1px,transparent_1px)] bg-[size:60px_60px]" />
+
+                    {/* Atmospheric Dust (Static Grains) */}
+                    <div className="absolute inset-0 opacity-[0.1] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat" />
+
+                    {/* Cinematic Depth Overlays */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050511] z-[3]" />
+                    <div className="absolute inset-0 bg-radial-gradient(circle_at_bottom,transparent_20%,#050511_100%) opacity-40 z-[3]" />
                 </div>
 
                 <div className="max-w-7xl mx-auto relative z-10">
@@ -1065,22 +1164,6 @@ export default function Home() {
             < section id="marketing" className="py-20 sm:py-32 px-6 sm:px-12 bg-white overflow-hidden relative" >
                 <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-12 sm:gap-20 items-center">
-                        <div className="relative lg:order-2">
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 1 }}
-                                className="relative rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(79,70,229,0.15)] border border-gray-100"
-                            >
-                                <img
-                                    src="/assets/imagenes/asistente virtual 2.png"
-                                    alt="NeuroV Cyber-Health Intelligence"
-                                    className="w-full h-auto object-contain"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-transparent to-transparent pointer-events-none" />
-                            </motion.div>
-                        </div>
-
                         <div className="text-left space-y-8 lg:order-1">
                             <div className="w-full flex justify-center mb-8 lg:justify-start">
                                 <motion.div
@@ -1154,6 +1237,22 @@ export default function Home() {
                                     </div>
                                 </motion.a>
                             </div>
+                        </div>
+
+                        <div className="relative lg:order-2">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 1 }}
+                                className="relative rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(79,70,229,0.15)] border border-gray-100"
+                            >
+                                <img
+                                    src="/assets/imagenes/asistente virtual 2.png"
+                                    alt="NeuroV Cyber-Health Intelligence"
+                                    className="w-full h-auto object-contain"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-transparent to-transparent pointer-events-none" />
+                            </motion.div>
                         </div>
                     </div>
                 </div>

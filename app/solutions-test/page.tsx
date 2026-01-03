@@ -1180,7 +1180,7 @@ export default function SolutionsTest() {
             < section id="marketing" className="py-20 sm:py-24 px-4 sm:px-12 bg-white overflow-hidden relative" >
                 <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-12 sm:gap-20 items-center">
-                        <div className="text-left space-y-8">
+                        <div className="text-left space-y-8 lg:order-1">
                             <div className="w-full flex justify-center lg:justify-start mb-8">
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
@@ -1256,22 +1256,22 @@ export default function SolutionsTest() {
                                 </div>
                             </motion.a>
                         </div>
-                    </div>
 
-                    <div className="relative">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1 }}
-                            className="relative rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(79,70,229,0.15)] border border-gray-100"
-                        >
-                            <img
-                                src="/assets/imagenes/asistente virtual 2.png"
-                                alt="NeuroV Cyber-Health Intelligence"
-                                className="w-full h-auto object-contain"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-transparent to-transparent pointer-events-none" />
-                        </motion.div>
+                        <div className="relative lg:order-2">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 1 }}
+                                className="relative rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(79,70,229,0.15)] border border-gray-100"
+                            >
+                                <img
+                                    src="/assets/imagenes/asistente virtual 2.png"
+                                    alt="NeuroV Cyber-Health Intelligence"
+                                    className="w-full h-auto object-contain"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-transparent to-transparent pointer-events-none" />
+                            </motion.div>
+                        </div>
                     </div>
                 </div>
             </section >
