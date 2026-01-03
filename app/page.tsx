@@ -59,28 +59,15 @@ const DonnaFloatingAssistant = () => {
     useEffect(() => {
         const handleActivity = () => {
             setIsVisible(true);
-
-            // Clear existing timeout
-            if (activityTimeoutRef.current) {
-                clearTimeout(activityTimeoutRef.current);
-            }
-
-            // Set a new timeout to hide the button after 3 seconds
-            // But only hide it if the assistant window is NOT open
+            if (activityTimeoutRef.current) clearTimeout(activityTimeoutRef.current);
             activityTimeoutRef.current = setTimeout(() => {
-                if (!isOpen) {
-                    setIsVisible(false);
-                }
+                if (!isOpen) setIsVisible(false);
             }, 3000);
         };
-
         window.addEventListener('scroll', handleActivity);
         window.addEventListener('mousemove', handleActivity);
         window.addEventListener('touchstart', handleActivity);
-
-        // Intial timer
         handleActivity();
-
         return () => {
             window.removeEventListener('scroll', handleActivity);
             window.removeEventListener('mousemove', handleActivity);
@@ -97,8 +84,6 @@ const DonnaFloatingAssistant = () => {
             audioRef.current.load();
         }
     }, []);
-
-    // Initial Welcome Flow
     const [chat, setChat] = useState<{ role: 'donna', content: string, options?: string[] }>({
         role: 'donna',
         content: "Hola, soy tu asistente en NeuroV. Juntos ordenaremos la gestión de tu consulta para que tengas más tiempo. ¿Empezamos?",
@@ -493,48 +478,39 @@ const Nav = () => {
     );
 };
 
-export default function SolutionsTest() {
-    const videoRef = React.useRef<HTMLVideoElement>(null);
+export default function Home() {
+    const [mounted, setMounted] = useState(false);
+    const [neuralPaths, setNeuralPaths] = useState<any[]>([]);
+    const [dataNodes, setDataNodes] = useState<any[]>([]);
 
     useEffect(() => {
-        const video = videoRef.current;
-        if (video) {
-            // Force muted via JS for mobile autoplay compliance
-            video.muted = true;
-            video.defaultMuted = true;
-            video.playbackRate = 0.35;
+        // Generate stable random paths for the neural mesh
+        const paths = [...Array(15)].map((_, i) => ({
+            id: i,
+            d: `M ${Math.random() * 100} ${Math.random() * 100} Q ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100}`,
+            animateD: [
+                `M ${Math.random() * 100} ${Math.random() * 100} Q ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100}`,
+                `M ${Math.random() * 100} ${Math.random() * 100} Q ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100} ${Math.random() * 100}`
+            ],
+            duration: 10 + Math.random() * 10,
+            delay: i * 0.5
+        }));
 
-            const startVideo = async () => {
-                try {
-                    await video.play();
-                } catch (error) {
-                    console.log("Autoplay blocked or failed, retrying...", error);
-                    // Fallback to trying to play on any touch/click if blocked
-                    const playOnInteraction = () => {
-                        if (video) video.play().catch(() => { });
-                        document.removeEventListener('touchstart', playOnInteraction);
-                        document.removeEventListener('click', playOnInteraction);
-                    };
-                    document.addEventListener('touchstart', playOnInteraction, { passive: true });
-                    document.addEventListener('click', playOnInteraction, { passive: true });
-                }
-            };
+        // Generate stable random positions for data nodes
+        const nodes = [...Array(20)].map((_, i) => ({
+            id: i,
+            x: `${Math.random() * 100}%`,
+            y: `${Math.random() * 100}%`,
+            animateY: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
+            duration: 15 + Math.random() * 10,
+            delay: i * 0.3
+        }));
 
-            startVideo();
-
-            // Asegurar que el video se reanude si el navegador lo pausa al cambiar de pestaña
-            const handleVisibilityChange = () => {
-                if (document.visibilityState === 'visible') {
-                    video.play().catch(() => { });
-                }
-            };
-
-            document.addEventListener('visibilitychange', handleVisibilityChange);
-            return () => {
-                document.removeEventListener('visibilitychange', handleVisibilityChange);
-            };
-        }
+        setNeuralPaths(paths);
+        setDataNodes(nodes);
+        setMounted(true);
     }, []);
+
     return (
         <div className="min-h-screen bg-white text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
             <Nav />
@@ -542,23 +518,86 @@ export default function SolutionsTest() {
             {/* Cinematic Hero */}
             {/* Cinematic Hero - Dark Cyber Nebula Theme */}
             <section className="relative pt-[160px] pb-32 sm:pt-96 sm:pb-48 px-6 sm:px-12 bg-[#050511] overflow-hidden flex items-center min-h-screen sm:min-h-0">
-                {/* VIDEO BACKGROUND */}
-                <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
-                    <video
-                        ref={videoRef}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="auto"
-                        className="absolute w-full h-full object-cover"
+                {/* HIGH-FIDELITY CYBER NEURAL BACKGROUND */}
+                <div className="absolute inset-0 w-full h-full overflow-hidden z-0 bg-[#050511]">
+                    {/* Animated Mesh Gradient */}
+                    <motion.div
+                        animate={{
+                            scale: [1, 1.1, 1],
+                            rotate: [0, 5, 0]
+                        }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-[-10%] opacity-40"
                     >
-                        <source src="/assets/fondo/Video_Creado.mp4" type="video/mp4" />
-                    </video>
+                        <div className="absolute top-1/4 left-1/4 w-[60%] h-[60%] bg-indigo-600/20 blur-[150px] rounded-full" />
+                        <div className="absolute bottom-1/4 right-1/4 w-[50%] h-[50%] bg-cyan-600/10 blur-[120px] rounded-full" />
+                    </motion.div>
 
-                    {/* Dark Overlay for Text Readability */}
-                    <div className="absolute inset-0 bg-[#020617]/80 mix-blend-multiply" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-[#020617]/40" />
+                    {/* Cyber Neural SVG Mesh */}
+                    <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="neural-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#4f46e5" stopOpacity="0" />
+                                <stop offset="50%" stopColor="#4f46e5" stopOpacity="0.5" />
+                                <stop offset="100%" stopColor="#4f46e5" stopOpacity="0" />
+                            </linearGradient>
+                        </defs>
+                        {mounted && neuralPaths.map((path) => (
+                            <motion.path
+                                key={path.id}
+                                d={path.d}
+                                stroke="url(#neural-gradient)"
+                                strokeWidth="0.5"
+                                fill="none"
+                                initial={{ pathLength: 0, opacity: 0 }}
+                                animate={{
+                                    pathLength: [0, 1, 0],
+                                    opacity: [0, 0.5, 0],
+                                    d: path.animateD
+                                }}
+                                transition={{
+                                    duration: path.duration,
+                                    repeat: Infinity,
+                                    ease: "easeInOut",
+                                    delay: path.delay
+                                }}
+                            />
+                        ))}
+                    </svg>
+
+                    {/* Floating Data Nodes */}
+                    <div className="absolute inset-0">
+                        {mounted && dataNodes.map((node) => (
+                            <motion.div
+                                key={node.id}
+                                initial={{
+                                    x: node.x,
+                                    y: node.y,
+                                    opacity: 0,
+                                    scale: 0
+                                }}
+                                animate={{
+                                    y: node.animateY,
+                                    opacity: [0, 0.4, 0],
+                                    scale: [0.5, 1, 0.5]
+                                }}
+                                transition={{
+                                    duration: node.duration,
+                                    repeat: Infinity,
+                                    ease: "linear",
+                                    delay: node.delay
+                                }}
+                                className="absolute w-1 h-1 bg-cyan-400 rounded-full blur-[1px]"
+                            />
+                        ))}
+                    </div>
+
+                    {/* Digital Dust / Grain Overlay */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+                    {/* Dark Overlays for Depth */}
+                    <div className="absolute inset-0 bg-[#020617]/40 backdrop-blur-[1px]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050511] via-transparent to-[#050511]/60" />
                 </div>
 
                 <div className="max-w-7xl mx-auto relative z-10">
@@ -813,57 +852,111 @@ export default function SolutionsTest() {
                         </div>
                         <div className="relative overflow-visible">
                             {/* Enhanced Container with Organic Background */}
-                            <div className="aspect-square flex items-center justify-center relative rounded-[3rem] overflow-hidden border-2 border-indigo-200/50 shadow-[0_30px_80px_-20px_rgba(79,70,229,0.35)]">
-                                {/* Space Tube Background Image - Maximum Whiteness */}
-                                <div className="absolute inset-0 z-0">
-                                    <img
-                                        src="/assets/fondo/tubo espacial.png"
-                                        alt="Fondo Espacial"
-                                        className="w-full h-full object-cover opacity-100 brightness-[1.5] contrast-[0.8]"
+                            <div className="aspect-square flex items-center justify-center relative rounded-[3rem] border-2 border-indigo-200/50 shadow-[0_30px_80px_-20px_rgba(79,70,229,0.35)]">
+                                {/* PIEZA 1: El Fondo (Profundidad y Energía) */}
+                                <div className="absolute inset-0 z-0 overflow-hidden rounded-[3rem]">
+                                    <motion.img
+                                        src="/assets/fondo/cyber_tunnel_v2.png"
+                                        alt="Fondo Cyber"
+                                        initial={{ scale: 1.15 }}
+                                        animate={{
+                                            scale: [1.15, 1.05, 1.15],
+                                            opacity: [0.9, 1, 0.9]
+                                        }}
+                                        transition={{
+                                            duration: 20,
+                                            repeat: Infinity,
+                                            ease: "linear"
+                                        }}
+                                        className="w-full h-full object-cover brightness-[1.3] contrast-[1.1] saturate-[0.8]"
                                     />
-                                    {/* Heavy white overlay for high-key look */}
-                                    <div className="absolute inset-0 bg-white/50" />
+                                    {/* High-Key Glass Overlay */}
+                                    <div className="absolute inset-0 bg-white/40" />
 
-                                    {/* Central Flare (Destello) for Logo Visibility */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white rounded-full blur-[80px] opacity-100" />
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-indigo-100/40 rounded-full blur-[100px] opacity-70 animate-pulse" />
-
-                                    {/* Architectural Liquid Energy Background */}
+                                    {/* Dynamic Neural Energy Pulses (Fondo) */}
                                     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                                        {/* Subtle Orbital Rings */}
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] border border-indigo-100/50 rounded-full" />
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-indigo-50/40 rounded-full" />
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[580px] border border-slate-50/30 rounded-full" />
+                                        {[...Array(3)].map((_, i) => (
+                                            <motion.div
+                                                key={i}
+                                                initial={{ scale: 0.8, opacity: 0 }}
+                                                animate={{
+                                                    scale: [0.8, 2.5],
+                                                    opacity: [0, 0.4, 0]
+                                                }}
+                                                transition={{
+                                                    duration: 8,
+                                                    repeat: Infinity,
+                                                    delay: i * 2.6,
+                                                    ease: "easeOut"
+                                                }}
+                                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-indigo-200/30 rounded-full blur-[2px]"
+                                            />
+                                        ))}
+                                    </div>
 
-                                        {/* Soft Floating Energy Orbs */}
-                                        <motion.div
-                                            animate={{
-                                                x: [-20, 20, -20],
-                                                y: [-10, 30, -10],
-                                                scale: [1, 1.1, 1],
-                                            }}
-                                            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-                                            className="absolute -top-20 -left-20 w-96 h-96 bg-cyan-100/30 rounded-full blur-[120px]"
-                                        />
-                                        <motion.div
-                                            animate={{
-                                                x: [20, -20, 20],
-                                                y: [30, -10, 30],
-                                                scale: [1.1, 1, 1.1],
-                                            }}
-                                            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-                                            className="absolute -bottom-20 -right-20 w-80 h-80 bg-indigo-100/30 rounded-full blur-[120px]"
-                                        />
+                                    {/* Central Core Glow (Fondo) */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white rounded-full blur-[80px] opacity-100" />
+                                    <motion.div
+                                        animate={{
+                                            scale: [1, 1.3, 1],
+                                            opacity: [0.4, 0.7, 0.4]
+                                        }}
+                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-indigo-100/50 rounded-full blur-[100px]"
+                                    />
+                                </div>
 
-                                        {/* Central Connecting Pulse */}
+                                {/* PIEZA 2: El Carrusel Orbitante (Independiente del Fondo) */}
+                                <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+                                    <div className="relative w-full h-full pointer-events-auto">
+                                        {/* Static Central Node: NeuroV Logo */}
+                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                                            <span className="text-3xl sm:text-4xl font-black tracking-tighter">
+                                                <span className="text-gray-900">Neuro</span>
+                                                <span className="text-indigo-600">V</span>
+                                            </span>
+                                        </div>
+
                                         <motion.div
-                                            animate={{
-                                                scale: [1, 1.5],
-                                                opacity: [0.3, 0],
-                                            }}
-                                            transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }}
-                                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-indigo-200/30 rounded-full"
-                                        />
+                                            animate={{ rotate: 360 }}
+                                            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+                                            className="relative w-full h-full max-w-[340px] max-h-[340px] sm:max-w-[600px] sm:max-h-[600px] orbit-container flex items-center justify-center mx-auto"
+                                        >
+                                            {/* Orbiting Logotypes (Static Group Rotation) */}
+                                            {[
+                                                { angle: 0, logo: '/assets/logotipos/whatsapp API.png' },
+                                                { angle: 51.4, logo: '/assets/logotipos/imed.png' },
+                                                { angle: 102.8, logo: '/assets/logotipos/Google_Ads_logo.svg.png' },
+                                                { angle: 154.2, logo: '/assets/logotipos/sii.png' },
+                                                { angle: 205.6, logo: '/assets/logotipos/meta ADS.png' },
+                                                { angle: 257, logo: '/assets/logotipos/previred.png' },
+                                                { angle: 308.4, logo: '/assets/logotipos/LOGO-BUK.png' }
+                                            ].map((orb, idx) => (
+                                                <div
+                                                    key={idx}
+                                                    className="absolute top-1/2 left-1/2"
+                                                    style={{
+                                                        transform: `rotate(${orb.angle}deg) translateY(calc(-1 * var(--orbit-radius)))`
+                                                    }}
+                                                >
+                                                    <div className="absolute -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-48 sm:h-48 flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-500">
+                                                        <img
+                                                            src={orb.logo}
+                                                            alt="Integración"
+                                                            className={`${orb.logo.includes('Google_Ads') ? 'w-[53.2px] h-[53.2px] sm:w-[91.2px] sm:h-[91.2px]' :
+                                                                orb.logo.includes('meta') ? 'w-[39px] h-[39px] sm:w-[94px] sm:h-[94px]' :
+                                                                    orb.logo.includes('BUK') ? 'w-[76.8px] h-[76.8px] sm:w-[153.6px] sm:h-[153.6px]' :
+                                                                        orb.logo.includes('previred') ? 'w-[91.2px] h-[91.2px] sm:w-[182.4px] sm:h-[182.4px]' :
+                                                                            orb.logo.includes('whatsapp') ? 'w-20 h-20 sm:w-40 sm:h-40' :
+                                                                                orb.logo.includes('imed') ? 'w-16 h-16 sm:w-32 sm:h-32' :
+                                                                                    orb.logo.includes('sii') ? 'w-[38.4px] h-[38.4px] sm:w-[57.6px] sm:h-[57.6px]' :
+                                                                                        'w-12 h-12 sm:w-24 sm:h-24'
+                                                                } object-contain`}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </motion.div>
                                     </div>
                                 </div>
                                 <style>{`
@@ -872,67 +965,14 @@ export default function SolutionsTest() {
                                         .orbit-container { --orbit-radius: 200px; }
                                     }
                                 `}</style>
-
-                                {/* Static Central Node: NeuroV Logo */}
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                                    <span className="text-3xl sm:text-4xl font-black tracking-tighter">
-                                        <span className="text-gray-900">Neuro</span>
-                                        <span className="text-indigo-600">V</span>
-                                    </span>
-                                </div>
-
-                                <motion.div
-                                    animate={{ rotate: 360 }}
-                                    transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                                    className="relative w-full h-full max-w-[340px] max-h-[340px] sm:max-w-[600px] sm:max-h-[600px] orbit-container flex items-center justify-center"
-                                >
-
-
-
-
-                                    {/* Orbiting Logotypes (Static Group Rotation) */}
-                                    {[
-                                        { angle: 0, logo: '/assets/logotipos/whatsapp API.png' },
-                                        { angle: 51.4, logo: '/assets/logotipos/imed.png' },
-                                        { angle: 102.8, logo: '/assets/logotipos/Google_Ads_logo.svg.png' },
-                                        { angle: 154.2, logo: '/assets/logotipos/sii.png' },
-                                        { angle: 205.6, logo: '/assets/logotipos/meta ADS.png' },
-                                        { angle: 257, logo: '/assets/logotipos/previred.png' },
-                                        { angle: 308.4, logo: '/assets/logotipos/LOGO-BUK.png' }
-                                    ].map((orb, idx) => (
-                                        <div
-                                            key={idx}
-                                            className="absolute top-1/2 left-1/2"
-                                            style={{
-                                                transform: `rotate(${orb.angle}deg) translateY(calc(-1 * var(--orbit-radius)))`
-                                            }}
-                                        >
-                                            <div className="absolute -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-48 sm:h-48 flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-500">
-                                                <img
-                                                    src={orb.logo}
-                                                    alt="Integración"
-                                                    className={`${orb.logo.includes('Google_Ads') ? 'w-[53.2px] h-[53.2px] sm:w-[91.2px] sm:h-[91.2px]' :
-                                                        orb.logo.includes('meta') ? 'w-[39px] h-[39px] sm:w-[94px] sm:h-[94px]' :
-                                                            orb.logo.includes('BUK') ? 'w-[76.8px] h-[76.8px] sm:w-[153.6px] sm:h-[153.6px]' :
-                                                                orb.logo.includes('previred') ? 'w-[91.2px] h-[91.2px] sm:w-[182.4px] sm:h-[182.4px]' :
-                                                                    orb.logo.includes('whatsapp') ? 'w-20 h-20 sm:w-40 sm:h-40' :
-                                                                        orb.logo.includes('imed') ? 'w-16 h-16 sm:w-32 sm:h-32' :
-                                                                            orb.logo.includes('sii') ? 'w-[38.4px] h-[38.4px] sm:w-[57.6px] sm:h-[57.6px]' :
-                                                                                'w-12 h-12 sm:w-24 sm:h-24'
-                                                        } object-contain`}
-                                                />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </motion.div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section >
+            </section>
 
             {/* SECCIÓN SEGURIDAD Y CUMPLIMIENTO LEGAL */}
-            < section id="seguridad" className="pt-4 pb-20 sm:py-32 px-6 sm:px-12 bg-slate-50 relative overflow-hidden" >
+            <section id="seguridad" className="pt-4 pb-20 sm:py-32 px-6 sm:px-12 bg-slate-50 relative overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-100/40 via-transparent to-transparent opacity-60" />
                 <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:24px_24px]" />
                 <div className="max-w-7xl mx-auto">
@@ -1025,7 +1065,7 @@ export default function SolutionsTest() {
             < section id="marketing" className="py-20 sm:py-32 px-6 sm:px-12 bg-white overflow-hidden relative" >
                 <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-12 sm:gap-20 items-center">
-                        <div className="relative lg:order-1">
+                        <div className="relative lg:order-2">
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
@@ -1041,7 +1081,7 @@ export default function SolutionsTest() {
                             </motion.div>
                         </div>
 
-                        <div className="text-left space-y-8 lg:order-2">
+                        <div className="text-left space-y-8 lg:order-1">
                             <div className="w-full flex justify-center mb-8 lg:justify-start">
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
@@ -1130,71 +1170,96 @@ export default function SolutionsTest() {
 
 
 
-            {/* SECCIÓN ECOSSISTEMA: Solution Switcher (Inspired by Buk/Encuadrado) */}
-            <section className="pt-12 pb-20 sm:py-32 px-4 sm:px-12 bg-gray-50 relative overflow-hidden">
+            {/* SECCIÓN ADAPTABILIDAD: Diseñado para tu Crecimiento */}
+            < section className="py-20 sm:py-32 px-6 sm:px-12 bg-gray-50 relative overflow-hidden" >
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-left mb-16 sm:mb-24 space-y-8">
-                        <div className="w-full flex justify-center lg:justify-start mb-8">
-                            <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-black uppercase tracking-[0.05em] sm:tracking-[0.4em] whitespace-nowrap w-full sm:w-auto">
-                                <Zap size={10} className="w-[2.5vw] h-[2.5vw] max-w-[14px] max-h-[14px] min-w-[11px] min-h-[11px]" /> ADAPTABILIDAD TOTAL
-                            </div>
-                        </div>
-                        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight">Diseñado para cada <br />nivel de tu <span className="text-indigo-600 italic">operación.</span></h2>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row gap-12 sm:gap-20">
-                        <div className="lg:w-1/3 space-y-4">
-                            {[
-                                { id: 'independiente', title: 'Independientes', icon: Target, desc: 'Para el doctor que busca libertad total.' },
-                                { id: 'centro', title: 'Centros Médicos', icon: Users, desc: 'Gestión de múltiples salas y especialistas.' },
-                                { id: 'franquicia', title: 'Franquicias', icon: ShieldCheck, desc: 'Control centralizado de múltiples sucursales.' }
-                            ].map((tab, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    whileHover={{ x: 10, y: -2 }}
-                                    className={`p-6 rounded-3xl border transition-all cursor-pointer group ${idx === 1 ? 'bg-white shadow-2xl border-indigo-100' : 'bg-transparent border-transparent hover:bg-white hover:shadow-xl'}`}
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${idx === 1 ? 'bg-indigo-600 text-white' : 'bg-white text-gray-400 group-hover:text-indigo-600 shadow-sm'}`}>
-                                            <tab.icon size={24} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-black text-lg tracking-tight">{tab.title}</h4>
-                                            <p className="text-xs text-gray-400 font-medium">{tab.desc}</p>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        <div className="lg:w-2/3">
-                            <GlassCard className="h-full min-h-[300px] bg-white border-white p-10 flex flex-col justify-center relative overflow-hidden shadow-2xl rounded-[3rem]">
-                                <div className="relative z-10 w-full">
-                                    <div className="space-y-8">
-                                        <h3 className="text-3xl font-black tracking-tighter italic">Optimización de Centros <br />y Clínicas Estéticas.</h3>
-                                        <ul className="space-y-4">
-                                            {[
-                                                { text: 'Gestión Multi-especialista con pago de imposiciones vía BUK.', highlight: 'BUK' },
-                                                { text: 'Venta automática de Bonos Fonasa/Isapre vía I-Med.', highlight: 'I-Med' },
-                                                { text: 'Reportes de rentabilidad y pago de impuestos centralizado.', highlight: 'Reportes' },
-                                                { text: 'Difusión & Comunicaciones automatizadas por Donna.', highlight: 'Donna' }
-                                            ].map((li, k) => (
-                                                <li key={k} className="flex items-start gap-3">
-                                                    <Check className="text-indigo-600 shrink-0 mt-1" size={16} />
-                                                    <span className="text-xs sm:text-sm font-medium text-gray-600 leading-tight sm:leading-relaxed">{li.text}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
+                    <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="space-y-8 text-left"
+                        >
+                            <div className="w-full flex justify-center lg:justify-start mb-8">
+                                <div className="flex sm:inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[clamp(9px,2.5vw,10px)] font-bold uppercase tracking-[0.1em] whitespace-nowrap w-full sm:w-auto">
+                                    <Zap size={10} className="w-[14px] h-[14px]" /> ADAPTABILIDAD TOTAL
                                 </div>
-                            </GlassCard>
-                        </div>
+                            </div>
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tightest leading-tight text-gray-900">
+                                Nos adaptamos <br />
+                                <span className="text-indigo-600">a tu consulta.</span>
+                            </h2>
+                            <p className="text-lg sm:text-xl text-gray-500 font-medium leading-relaxed max-w-xl mx-0">
+                                Ya sea que manejes una consulta privada o una red nacional de centros, NeuroV te brinda el orden necesario para que te enfocues 100% en tus pacientes.
+                            </p>
+
+                            <div className="grid gap-6 mt-12">
+                                {[
+                                    {
+                                        icon: Target,
+                                        title: "Independientes",
+                                        desc: "Centraliza agenda y cobros sin secretarias físicas.",
+                                        tag: "Autonomía",
+                                        color: "indigo"
+                                    },
+                                    {
+                                        icon: Users,
+                                        title: "Centros Médicos",
+                                        desc: "Sincronización perfecta entre múltiples especialistas y salas.",
+                                        tag: "Sincronización",
+                                        color: "emerald"
+                                    },
+                                    {
+                                        icon: ShieldCheck,
+                                        title: "Franquicias",
+                                        desc: "Control global simplificado para una expansión sin riesgos.",
+                                        tag: "Control Global",
+                                        color: "violet"
+                                    }
+                                ].map((item, i) => (
+                                    <motion.div
+                                        key={i}
+                                        whileHover={{ x: 10, scale: 1.02 }}
+                                        className="group relative flex gap-6 p-6 rounded-[2rem] bg-white border border-transparent hover:border-indigo-100/50 hover:shadow-xl transition-all duration-500 cursor-default"
+                                    >
+                                        <div className={`w-14 h-14 rounded-2xl bg-${item.color}-500/10 flex items-center justify-center text-${item.color}-600 group-hover:scale-110 group-hover:bg-${item.color}-600 group-hover:text-white transition-all duration-500 shadow-sm shrink-0`}>
+                                            <item.icon size={26} />
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-3 mb-1.5">
+                                                <span className={`text-[9px] font-black text-${item.color}-600 uppercase tracking-widest`}>{item.tag}</span>
+                                            </div>
+                                            <h4 className="text-lg font-black italic tracking-tighter text-gray-900 leading-tight uppercase">{item.title}</h4>
+                                            <p className="text-xs text-gray-400 font-bold leading-relaxed">{item.desc}</p>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1 }}
+                            className="relative group lg:order-2"
+                        >
+                            <div className="relative z-10 overflow-hidden rounded-[3rem] shadow-2xl border border-white">
+                                <img
+                                    src="/solutions/growth_stages.png"
+                                    alt="Etapas de Crecimiento NeuroV"
+                                    className="w-full h-auto object-cover"
+                                />
+                            </div>
+                            <div className="absolute inset-0 bg-indigo-500/10 blur-[100px] rounded-full -z-10" />
+                        </motion.div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* PREMIUM ONBOARDING (MATCHING ENCUADRADO SUPPORT) */}
-            <section className="py-20 sm:py-24 px-6 bg-[#F9FAFB] border-t border-gray-100 relative overflow-hidden">
+            < section className="py-20 sm:py-24 px-6 bg-[#F9FAFB] border-t border-gray-100 relative overflow-hidden" >
                 <div className="absolute top-0 right-0 w-1/2 h-full bg-indigo-50/30 -skew-x-12 translate-x-32" />
                 <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
                     <motion.div
@@ -1243,10 +1308,10 @@ export default function SolutionsTest() {
                         </div>
                     </motion.div>
                 </div>
-            </section>
+            </section >
 
             {/* PLANES DE LIBERTAD OPERATIVA - DARK REDESIGN */}
-            <section id="precios" className="py-20 sm:py-32 px-6 sm:px-12 bg-[#0A0B14] text-white relative overflow-hidden">
+            < section id="precios" className="py-20 sm:py-32 px-6 sm:px-12 bg-[#0A0B14] text-white relative overflow-hidden" >
                 <div className="max-w-7xl mx-auto relative z-10">
                     <div className="text-left mb-16 sm:mb-24 space-y-8">
                         <div className="w-full flex justify-center lg:justify-start mb-8">
@@ -1345,7 +1410,7 @@ export default function SolutionsTest() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section >
 
 
 
