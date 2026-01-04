@@ -190,10 +190,10 @@ export default function MarketingSolutionsPage() {
                                     </div>
                                     <div className="space-y-4">
                                         <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 ml-12">
-                                            <p className="text-sm text-gray-400 font-medium leading-relaxed italic">"Hola, ¿qué precio tiene el tratamiento? Busco algo rápido para este fin de semana."</p>
+                                            <p className="text-sm text-gray-400 font-medium leading-relaxed italic">&ldquo;Hola, ¿qué precio tiene el tratamiento? Busco algo rápido para este fin de semana.&rdquo;</p>
                                         </div>
                                         <div className="p-5 rounded-2xl bg-purple-600 text-white shadow-lg mr-12">
-                                            <p className="text-sm font-bold leading-relaxed">"NeuroV detecta: Perfil Impulsivo + Urgencia Alta. Donna responde: Hola, los valores dependen del diagnóstico, pero parten desde los $45.000. Justo nos queda un cupo para este viernes a las 15:00. ¿Lo reservamos?"</p>
+                                            <p className="text-sm font-bold leading-relaxed">&ldquo;NeuroV detecta: Perfil Impulsivo + Urgencia Alta. Donna responde: Hola, los valores dependen del diagnóstico, pero parten desde los $45.000. Justo nos queda un cupo para este viernes a las 15:00. ¿Lo reservamos?&rdquo;</p>
                                         </div>
                                     </div>
                                 </div>
@@ -246,7 +246,7 @@ export default function MarketingSolutionsPage() {
                                         className="h-full bg-indigo-500"
                                     />
                                 </div>
-                                <p className="text-sm text-gray-400 font-medium italic">"Donna ha detectado que este prospecto cumple con el presupuesto y tiene una urgencia alta. Priorizando agendamiento."</p>
+                                <p className="text-sm text-gray-400 font-medium italic">&ldquo;Donna ha detectado que este prospecto cumple con el presupuesto y tiene una urgencia alta. Priorizando agendamiento.&rdquo;</p>
                             </div>
                         </div>
                     </div>
