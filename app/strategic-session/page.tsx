@@ -9,7 +9,8 @@ import {
     LucideCheckCircle,
     LucideChevronRight,
     LucideClock,
-    LucideArrowLeft
+    LucideArrowLeft,
+    BrainCircuit
 } from 'lucide-react';
 import { DatePicker } from '@mantine/dates';
 import Link from 'next/link';
@@ -76,11 +77,15 @@ export default function StrategicSessionPage() {
     return (
         <div className="min-h-screen bg-[#F9FAFB] text-gray-900 selection:bg-indigo-100 p-6 md:p-12">
             <nav className="max-w-7xl mx-auto mb-16 flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-2 group">
-                    <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-black text-white shadow-lg">NV</div>
-                    <span className="font-black tracking-tighter text-xl uppercase">NeuroV <span className="text-indigo-600">B2B</span></span>
+                <Link href="/" className="flex items-center gap-2.5 group">
+                    <div className="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:bg-indigo-600 transition-colors">
+                        <BrainCircuit size={20} />
+                    </div>
+                    <span className="font-black tracking-tighter text-xl uppercase text-slate-900">
+                        Neuro<span className="text-indigo-600">V</span> <span className="text-slate-400 font-bold ml-1 text-sm">B2B</span>
+                    </span>
                 </Link>
-                <Link href="/" className="flex items-center gap-2 text-xs font-black text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-[0.2em]">
+                <Link href="/" className="flex items-center gap-2 text-[10px] font-black text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-[0.2em]">
                     <LucideArrowLeft size={14} /> Volver
                 </Link>
             </nav>
@@ -97,48 +102,88 @@ export default function StrategicSessionPage() {
                         >
                             <div className="text-center">
                                 <span className="text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em] mb-4 block">PASO 01 // IDENTIDAD</span>
-                                <h1 className="text-4xl md:text-7xl font-black tracking-tightest leading-none mb-6">Sesión Estratégica.</h1>
-                                <p className="text-lg text-gray-400 font-medium max-w-xl mx-auto">Comencemos por conocerte. ¿Con quién tendremos el placer de hablar?</p>
+                                <h1 className="text-4xl md:text-7xl font-black tracking-tightest leading-tight mb-6 text-slate-900">Sesión Estratégica.</h1>
+                                <p className="text-lg text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">Comencemos por conocerte. ¿Con quién tendremos el placer de hablar?</p>
                             </div>
 
-                            <GlassCard className="p-8 md:p-12 bg-white border-gray-100 shadow-xl max-w-2xl mx-auto space-y-8">
-                                <div className="space-y-6">
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Nombre del Dueño/Director</label>
-                                        <div className="relative">
-                                            <LucideUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" size={18} />
-                                            <input
-                                                type="text"
-                                                value={formData.name}
-                                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                placeholder="Ej. Dr. Claudio Castro"
-                                                className="w-full pl-12 pr-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all font-bold"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Email Corporativo</label>
-                                        <div className="relative">
-                                            <LucideMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" size={18} />
-                                            <input
-                                                type="email"
-                                                value={formData.email}
-                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                placeholder="doctor@clinica.com"
-                                                className="w-full pl-12 pr-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all font-bold"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                <PremiumButton
-                                    disabled={!formData.name || !formData.email}
-                                    variant="primary"
-                                    className="w-full py-6 rounded-2xl text-xs uppercase tracking-widest"
-                                    onClick={() => setStep(2)}
+
+                            <div className="relative max-w-2xl mx-auto">
+                                {/* Strong shadow layer */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-[3rem] blur-2xl translate-y-8" />
+
+                                <GlassCard
+                                    hoverIntensity="none"
+                                    className="relative p-12 md:p-16 !bg-white hover:!bg-white border border-slate-300 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.3)] hover:shadow-[0_50px_120px_-20px_rgba(0,0,0,0.4)] rounded-[3rem] transition-all duration-300"
                                 >
-                                    CONTINUAR AL CALENDARIO <LucideChevronRight size={16} />
-                                </PremiumButton>
-                            </GlassCard>
+                                    {/* Header with icon */}
+                                    <div className="text-center mb-10">
+                                        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl mb-4 shadow-lg shadow-indigo-500/30">
+                                            <LucideUser className="text-white" size={28} />
+                                        </div>
+                                        <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">Información de Contacto</h3>
+                                    </div>
+
+                                    <div className="space-y-6">
+                                        {/* Name Field */}
+                                        <div className="space-y-3">
+                                            <label className="block text-sm font-black text-slate-700 uppercase tracking-wide">
+                                                Nombre Completo
+                                            </label>
+                                            <div className="relative">
+                                                <div className="absolute left-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
+                                                    <LucideUser className="text-indigo-600" size={20} />
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    value={formData.name}
+                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                                    placeholder="Ej. Dr. Claudio Castro"
+                                                    className="w-full pl-20 pr-6 py-5 bg-white border-2 border-slate-300 rounded-2xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all font-semibold text-slate-900 text-lg placeholder:text-slate-400 shadow-sm hover:border-indigo-300"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Email Field */}
+                                        <div className="space-y-3">
+                                            <label className="block text-sm font-black text-slate-700 uppercase tracking-wide">
+                                                Email Corporativo
+                                            </label>
+                                            <div className="relative">
+                                                <div className="absolute left-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
+                                                    <LucideMail className="text-indigo-600" size={20} />
+                                                </div>
+                                                <input
+                                                    type="email"
+                                                    value={formData.email}
+                                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                    placeholder="doctor@clinica.com"
+                                                    className="w-full pl-20 pr-6 py-5 bg-white border-2 border-slate-300 rounded-2xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all font-semibold text-slate-900 text-lg placeholder:text-slate-400 shadow-sm hover:border-indigo-300"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Submit Button */}
+                                    <div className="mt-10">
+                                        <PremiumButton
+                                            disabled={!formData.name || !formData.email}
+                                            variant="primary"
+                                            className="w-full py-6 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/40 transition-all"
+                                            onClick={() => setStep(2)}
+                                        >
+                                            CONTINUAR AL CALENDARIO
+                                            <LucideChevronRight size={20} className="inline ml-3" />
+                                        </PremiumButton>
+                                    </div>
+
+                                    {/* Progress indicator */}
+                                    <div className="mt-8 flex items-center justify-center gap-2">
+                                        <div className="w-8 h-1.5 bg-indigo-600 rounded-full" />
+                                        <div className="w-8 h-1.5 bg-slate-200 rounded-full" />
+                                        <div className="w-8 h-1.5 bg-slate-200 rounded-full" />
+                                    </div>
+                                </GlassCard>
+                            </div>
                         </motion.div>
                     )}
 
@@ -155,7 +200,10 @@ export default function StrategicSessionPage() {
                                 <h1 className="text-4xl md:text-7xl font-black tracking-tightest leading-none mb-6">Bloquea tu Espacio.</h1>
                             </div>
 
-                            <GlassCard className="p-8 md:p-12 bg-white border-gray-100 shadow-xl flex flex-col md:row gap-12">
+                            <GlassCard
+                                hoverIntensity="none"
+                                className="p-8 md:p-12 !bg-white hover:!bg-white border-slate-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] hover:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.2)] flex flex-col md:row gap-12 rounded-[3rem] transition-shadow duration-300"
+                            >
                                 <div className="flex-1 flex justify-center">
                                     <DatePicker
                                         value={formData.date}
@@ -204,7 +252,10 @@ export default function StrategicSessionPage() {
                             <h2 className="text-4xl md:text-7xl font-black tracking-tightest leading-none">¡Todo Listo!</h2>
                             <p className="text-xl text-gray-400 font-medium max-w-xl mx-auto">Recibirás una invitación en tu correo electrónico con el link de Google Meet.</p>
 
-                            <GlassCard className="p-8 bg-white border-gray-100 max-w-md mx-auto space-y-4">
+                            <GlassCard
+                                hoverIntensity="none"
+                                className="p-8 !bg-white hover:!bg-white border-slate-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] hover:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.2)] max-w-md mx-auto space-y-4 rounded-[3rem] transition-shadow duration-300"
+                            >
                                 <div className="flex items-center gap-4 text-left">
                                     <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
                                         <LucideClock size={20} />

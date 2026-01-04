@@ -19,83 +19,53 @@ import {
 const WORKFLOW_STEPS = [
     {
         id: 1,
-        title: 'Lead desde Instagram',
-        subtitle: 'Paciente ve tu anuncio',
-        icon: LucideInstagram,
-        color: 'from-pink-500 to-purple-500',
-        metric: '1,000 leads/mes',
-        impact: 'Tráfico calificado',
+        title: 'Captación de Interesados',
+        subtitle: 'Tus anuncios en Google y Meta atraen a pacientes ideales',
+        icon: LucideTarget,
+        color: 'from-indigo-600 to-indigo-400',
+        metric: 'Tráfico Calificado',
+        impact: 'Más visibilidad',
         animation: 'scale'
     },
     {
         id: 2,
-        title: 'Perfilado Psicográfico',
-        subtitle: 'IA detecta personalidad en 30 segundos',
-        icon: LucideBrain,
-        color: 'from-purple-500 to-indigo-500',
-        metric: '+275% conversión',
-        impact: 'De 1.2% a 4.5%',
+        title: 'Respuesta Inmediata',
+        subtitle: 'Donna atiende cada mensaje en menos de 1 minuto',
+        icon: LucideZap,
+        color: 'from-indigo-500 to-purple-500',
+        metric: 'Atención 24/7',
+        impact: 'Cero leads perdidos',
         animation: 'pulse'
     },
     {
         id: 3,
-        title: 'Filtro BANT Automático',
-        subtitle: 'Solo leads con presupuesto >$30k',
-        icon: LucideTarget,
-        color: 'from-indigo-500 to-blue-500',
-        metric: '100% calificados',
-        impact: 'Cero tiempo perdido',
+        title: 'Calificación Inteligente',
+        subtitle: 'Donna identifica la urgencia y el tipo de tratamiento',
+        icon: LucideBrain,
+        color: 'from-purple-500 to-pink-500',
+        metric: 'IA Psicográfica',
+        impact: 'Pacientes reales',
         animation: 'bounce'
     },
     {
         id: 4,
-        title: 'Payment-Gating',
-        subtitle: 'Prepago 100% obligatorio',
-        icon: LucideShieldCheck,
-        color: 'from-blue-500 to-cyan-500',
-        metric: '0% no-shows',
-        impact: 'De 40% a 0%',
-        animation: 'rotate'
-    },
-    {
-        id: 5,
-        title: 'Pursuit System',
-        subtitle: 'Recuperación automática de carritos abandonados',
-        icon: LucideMessageSquare,
-        color: 'from-cyan-500 to-teal-500',
-        metric: '3 niveles WhatsApp',
-        impact: '+30% recuperación',
-        animation: 'slide'
-    },
-    {
-        id: 6,
-        title: 'Confirmación Pagada',
-        subtitle: 'Agenda blindada, flujo de caja asegurado',
+        title: 'Cierre de Cita',
+        subtitle: 'Donna guía al paciente directo a tu agenda clínica',
         icon: LucideCalendarCheck,
-        color: 'from-teal-500 to-green-500',
-        metric: '$2.25M/mes',
-        impact: 'vs $600k anterior',
+        color: 'from-pink-500 to-rose-500',
+        metric: 'Agendado Directo',
+        impact: 'Consultas llenas',
         animation: 'scale'
     },
     {
-        id: 7,
-        title: 'Retención Automática',
-        subtitle: 'Recordatorios según tratamiento',
-        icon: LucideRepeat,
-        color: 'from-green-500 to-emerald-500',
-        metric: 'LTV maximizado',
-        impact: 'Botox: 120d, Rellenos: 180d',
-        animation: 'pulse'
-    },
-    {
-        id: 8,
-        title: 'ROI Tracking',
-        subtitle: 'GCLID: Sabe qué anuncio genera ventas reales',
-        icon: LucideTrendingUp,
-        color: 'from-emerald-500 to-pink-500',
-        metric: '+474% ROI',
-        impact: 'Primer año',
-        animation: 'bounce'
+        id: 5,
+        title: 'Reputación en Google',
+        subtitle: 'Tras la consulta, Donna captura reseñas positivas',
+        icon: LucideSparkles,
+        color: 'from-rose-500 to-amber-500',
+        metric: '+ Estrellas',
+        impact: 'Confianza digital',
+        animation: 'rotate'
     }
 ];
 
@@ -114,7 +84,7 @@ export function EnhancedWorkflow() {
     const Icon = step.icon;
 
     return (
-        <div className="relative w-full min-h-[500px] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+        <div className="relative w-full min-h-[500px] bg-[#0A0B14] rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-2xl">
             {/* Animated Background Grid */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{
@@ -124,7 +94,7 @@ export function EnhancedWorkflow() {
             </div>
 
             {/* Main Content */}
-            <div className="relative z-10 h-full flex flex-col items-start justify-center px-8 py-8">
+            <div className="relative z-10 h-full flex flex-col items-center justify-center px-10 py-16">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={currentStep}
@@ -132,11 +102,11 @@ export function EnhancedWorkflow() {
                         animate={{ opacity: 1, scale: 1, x: 0 }}
                         exit={{ opacity: 0, scale: 0.8, x: 30 }}
                         transition={{ duration: 0.7, ease: 'easeInOut' }}
-                        className="text-left w-full"
+                        className="text-left w-full max-w-md mx-auto flex flex-col items-start"
                     >
                         {/* Animated Icon with Glow - Centered */}
                         <motion.div
-                            className="relative mx-auto mb-6 w-full flex justify-center"
+                            className="relative mx-auto mb-10 w-full flex justify-center"
                             animate={{
                                 scale: step.animation === 'pulse' ? [1, 1.25, 1] : 1,
                                 rotate: step.animation === 'rotate' ? [0, 360, 0] : step.animation === 'shake' ? [0, -10, 10, -10, 0] : 0,
@@ -204,7 +174,7 @@ export function EnhancedWorkflow() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
-                            className="grid grid-cols-2 gap-3 max-w-md mr-auto"
+                            className="grid grid-cols-2 gap-3 w-full mr-auto"
                         >
                             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-all">
                                 <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1">Métrica</p>
@@ -219,16 +189,7 @@ export function EnhancedWorkflow() {
                 </AnimatePresence>
             </div>
 
-            {/* ROI Badge - Bottom Left */}
-            <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 }}
-                className="absolute bottom-4 left-6 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-4 py-2 rounded-full font-black text-xs sm:text-sm shadow-2xl border-2 border-white/20 flex items-center gap-2"
-            >
-                <LucideZap className="w-4 h-4" />
-                ROI: +474% Año 1
-            </motion.div>
+
 
             {/* Animated Connection Lines */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">

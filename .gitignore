@@ -44,6 +44,8 @@ next-env.d.ts
 !supabase/migrations/*.sql
 !README.md
 !GUIA_VOZ_Y_TONO.md
+!GUIA_IMPLEMENTACION_MARKETING.md
+!REPORTE_TRANSICION_SESION.md
 !package.json
 !tsconfig.json
 !next.config.js

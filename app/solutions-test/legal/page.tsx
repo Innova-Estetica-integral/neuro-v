@@ -1,240 +1,238 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-    ShieldCheck,
-    Lock,
-    ArrowRight,
-    BrainCircuit,
-    ChevronLeft,
-    ShieldAlert,
-    Database,
-    Fingerprint,
-    FileCheck,
-    Scale,
-    Menu,
-    X,
-    Cpu
+    LucideShieldCheck,
+    LucideCheckCircle,
+    LucideLock,
+    LucideArrowRight,
+    LucideFileText,
+    LucideShield,
+    LucideChevronLeft,
+    LucideHeartPulse,
+    LucideDatabase,
+    LucideSearch
 } from 'lucide-react';
+import { PremiumButton } from '@/components/ui/PremiumButton';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { Footer } from '@/components/Footer';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-const LegalPage = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function LegalSecurityPage() {
+    const [isMounted, setIsMounted] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 50);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        setIsMounted(true);
     }, []);
 
+    if (!isMounted) return null;
+
     return (
-        <div className="min-h-screen bg-white selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
-            {/* Header / Nav */}
-            <nav className={`fixed top-0 w-full z-[100] transition-all duration-700 ${isScrolled ? 'bg-white/10 backdrop-blur-md border-b border-white/20 py-[11px] shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'bg-transparent py-[35px]'}`}>
-                <div className="max-w-7xl mx-auto px-6 sm:px-12 flex justify-between items-center">
-                    <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.location.href = '/solutions-test'}>
-                        <div className="relative w-10 h-10 backdrop-blur-[0.5px] rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-[0_30px_60px_rgba(0,0,0,0.4),0_0_40px_rgba(0,242,255,0.3),inset_0_-8px_15px_rgba(0,0,0,0.3),inset_0_2px_4px_rgba(255,255,255,0.6)] overflow-hidden"
-                            style={{ background: 'radial-gradient(circle at 35% 35%, rgba(255,255,255,0.15) 0%, rgba(15, 23, 42, 0.002) 100%)' }}
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.08] via-white/[0.12] to-transparent pointer-events-none z-10" />
-                            <div className="absolute top-1 left-1 w-1/3 h-1/4 bg-white/60 blur-[1px] rounded-full rotate-[-45deg] pointer-events-none z-20" />
-                            <div className="absolute bottom-1 right-1 w-1/4 h-1/6 bg-cyan-400/30 blur-[2px] rounded-full pointer-events-none z-20" />
-                            <BrainCircuit className="relative z-30 w-6 h-6 text-[#00f2ff] stroke-[1.1] opacity-95 mix-blend-screen" />
+        <main className="min-h-screen bg-white text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden">
+            {/* CLEAN NAV */}
+            <nav className="fixed top-0 w-full z-[100] bg-white/80 backdrop-blur-md border-b border-slate-100 py-4 shadow-sm">
+                <div className="container mx-auto px-6 flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <Link href="/solutions-test" className="p-2 hover:bg-slate-50 rounded-full transition-colors group">
+                            <LucideChevronLeft className="w-5 h-5 text-slate-400 group-hover:text-slate-600" />
+                        </Link>
+                        <div className="flex flex-col">
+                            <span className="text-[10px] font-bold text-emerald-600 tracking-widest uppercase text-left">Ecosistema NeuroV</span>
+                            <span className="text-xl font-black tracking-tight text-slate-900 uppercase">Seguridad & Confianza</span>
                         </div>
-                        <span className="text-xl font-black uppercase tracking-tighter text-gray-900">NeuroV <span className="text-indigo-600">LEGAL</span></span>
                     </div>
-
-                    <div className="hidden lg:flex items-center gap-12 font-bold text-[10px] uppercase tracking-[0.25em] text-gray-400">
-                        <a href="/solutions-test" className="hover:text-gray-900 transition-colors flex items-center gap-2">
-                            <ChevronLeft size={14} /> VOLVER
-                        </a>
-                        <button className="bg-indigo-600 text-white px-10 py-4 rounded-full hover:bg-indigo-700 transition-all font-black shadow-2xl shadow-indigo-100 flex items-center gap-2 hover:scale-105 active:scale-95">
-                            CONSULTORÍA LEGAL <ArrowRight size={14} />
-                        </button>
+                    <div className="hidden md:flex items-center gap-6">
+                        <Link href="/solutions-test" className="text-xs font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest">Soluciones</Link>
+                        <PremiumButton
+                            variant="primary"
+                            size="sm"
+                            className="!bg-emerald-600 hover:!bg-emerald-700 !text-white rounded-full px-6 py-2.5 text-[10px] font-bold !shadow-none"
+                            onClick={() => router.push('/strategic-session')}
+                        >
+                            CONSULTORÍA PRIVADA
+                        </PremiumButton>
                     </div>
-
-                    <button className="lg:hidden p-2 text-gray-900" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                        {isMenuOpen ? <X /> : <Menu />}
-                    </button>
                 </div>
             </nav>
 
-            {/* Hero Section */}
-            <header className="relative pt-40 pb-20 px-6 sm:px-12 bg-white overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
-                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.08),transparent_70%)]" />
-
-                <div className="max-w-7xl mx-auto relative z-10">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center text-center lg:text-left">
+            {/* HERO Section */}
+            <section className="relative pt-48 pb-24 px-6 sm:px-12 bg-white overflow-hidden">
+                <div className="container mx-auto relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: -30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
                         >
-                            <motion.div
-                                className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-8 backdrop-blur-md"
-                            >
-                                <ShieldCheck className="text-indigo-600 animate-pulse" size={16} />
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600">Blindaje Clínico & Seguridad</span>
-                            </motion.div>
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-10">
+                                <LucideShieldCheck className="w-4 h-4 text-emerald-600" />
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600">Tu información siempre segura</span>
+                            </div>
 
-                            <h1 className="text-4xl sm:text-8xl lg:text-7xl font-black text-gray-900 leading-[1] mb-8 tracking-tightest">
-                                Confianza <br />
-                                <span className="text-indigo-600 relative inline-block">
-                                    Legal.
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        animate={{ width: '100%' }}
-                                        transition={{ delay: 0.5, duration: 1 }}
-                                        className="absolute -bottom-2 left-0 h-2 bg-[#B9FF66] opacity-30 blur-[2px]"
-                                    />
-                                </span>
+                            <h1 className="text-6xl sm:text-8xl font-black text-slate-900 leading-[0.95] mb-10 tracking-tightest">
+                                Tu información, <br />
+                                <span className="text-emerald-600">siempre protegida.</span>
                             </h1>
 
-                            <p className="text-gray-500 text-xl leading-relaxed font-medium mb-10 max-w-xl">
-                                Cumplimiento total con la Ley 20.584 y estándares de ciberseguridad. Protegemos tu consulta como un activo nacional.
+                            <p className="text-slate-500 text-xl leading-relaxed font-medium mb-12 max-w-xl">
+                                En NeuroV, cuidar los datos de tus pacientes es nuestra prioridad. Cumplimos con todas las leyes chilenas de salud y legislación vigente para que tú trabajes tranquilo.
                             </p>
 
-                            <button className="bg-gray-900 text-white px-10 py-5 rounded-full font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-black transition-all">
-                                CONSULTAR PROTOCOLO
-                            </button>
+                            <div className="space-y-6 mb-12">
+                                <div className="flex items-center gap-6 p-5 rounded-[2rem] bg-slate-50 border border-slate-100 hover:border-emerald-200 transition-colors shadow-sm">
+                                    <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 shrink-0">
+                                        <LucideCheckCircle size={24} />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h4 className="font-black text-sm uppercase tracking-tight text-slate-900 mb-1">Ley 20.584 (Derechos y Deberes)</h4>
+                                        <p className="text-[11px] text-slate-400 font-medium">Privacidad absoluta en Fichas Clínicas y consentimiento Informado digital.</p>
+                                    </div>
+                                    <div className="px-3 py-1 bg-emerald-50 text-[10px] font-black text-emerald-600 rounded-lg uppercase tracking-widest whitespace-nowrap border border-emerald-100">MINSAL CHILE</div>
+                                </div>
+
+                                <div className="flex items-center gap-6 p-5 rounded-[2rem] bg-slate-50 border border-slate-100 hover:border-emerald-200 transition-colors shadow-sm">
+                                    <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 shrink-0">
+                                        <LucideCheckCircle size={24} />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h4 className="font-black text-sm uppercase tracking-tight text-slate-900 mb-1">Ley 19.628 (Protección de Datos)</h4>
+                                        <p className="text-[11px] text-slate-400 font-medium">Encriptación de grado bancario para toda la información personal de tus pacientes.</p>
+                                    </div>
+                                    <div className="px-3 py-1 bg-emerald-50 text-[10px] font-black text-emerald-600 rounded-lg uppercase tracking-widest whitespace-nowrap border border-emerald-100">DATA PRIVACY</div>
+                                </div>
+                            </div>
+
+                            <PremiumButton
+                                variant="primary"
+                                size="lg"
+                                className="!bg-emerald-600/20 backdrop-blur-sm hover:!bg-emerald-600/30 !text-white border-2 !border-emerald-400/50 hover:!border-emerald-400/70 rounded-[2rem] px-12 py-6 text-sm font-black shadow-2xl !shadow-emerald-100 group w-fit transition-all"
+                                onClick={() => router.push('/strategic-session')}
+                            >
+                                VER CERTIFICACIONES <LucideArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                            </PremiumButton>
                         </motion.div>
 
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="relative hidden lg:block"
+                            transition={{ duration: 1 }}
+                            className="relative"
                         >
-                            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group">
+                            <div className="relative rounded-[4rem] overflow-hidden shadow-2xl border-[12px] border-white group">
                                 <img
-                                    src="/solutions/legal_hero.png"
-                                    alt="Legal Trust Physician"
+                                    src="/solutions/medico_legal.png"
+                                    alt="Especialista de Confianza"
                                     className="w-full aspect-square object-cover transition-all duration-700 grayscale-[0.2] group-hover:grayscale-0"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
-                                <div className="absolute bottom-8 left-8 text-white">
-                                    <div className="text-[10px] font-black uppercase tracking-widest text-[#B9FF66]">100% COMPLIANT</div>
-                                    <div className="text-3xl font-black">LEY 20.584</div>
-                                </div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60" />
+
+                                {/* Floating Badge - Better Integration */}
+                                <motion.div
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.5 }}
+                                    className="absolute bottom-8 left-8 right-8 bg-emerald-600/95 backdrop-blur-xl text-white p-8 rounded-[2.5rem] shadow-2xl border border-white/20"
+                                >
+                                    <div className="flex items-center gap-4 mb-3">
+                                        <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md">
+                                            <LucideHeartPulse className="w-6 h-6 text-white" />
+                                        </div>
+                                        <span className="text-[11px] font-black uppercase tracking-[0.3em] text-emerald-100">Nuestro Compromiso</span>
+                                    </div>
+                                    <h3 className="text-3xl font-black leading-none uppercase tracking-tightest">PAZ MENTAL <br />OPERATIVA</h3>
+                                </motion.div>
                             </div>
                         </motion.div>
                     </div>
                 </div>
-            </header>
+            </section>
 
-            {/* Content Section: Zero-Trust */}
-            <section className="py-24 px-6 sm:px-12 bg-white">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
-                        <div>
-                            <span className="text-indigo-600 font-black text-xs uppercase tracking-[0.4em] block mb-4">INFRAESTRUCTURA ZERO-TRUST</span>
-                            <h2 className="text-2xl sm:text-6xl font-black tracking-tightest leading-tight mb-8">Nadie entra sin ser <br />invitado.</h2>
-                            <p className="text-gray-500 text-lg leading-relaxed mb-10 font-medium">
-                                Aplicamos arquitectura <strong>Zero-Trust</strong>: un modelo de seguridad que no asume confianza, ni siquiera dentro de la red. Cada acceso es verificado, autenticado y cifrado de extremo a extremo (E2EE) bajo estándar HL7 FHIR.
+            {/* HL7 FHIR: EL ESTÁNDAR DE CALIDAD */}
+            <section className="py-32 bg-slate-50/50 border-y border-slate-100 px-6 sm:px-12">
+                <div className="container mx-auto">
+                    <div className="flex flex-col lg:flex-row items-center gap-16 max-w-6xl mx-auto">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-12 rounded-[3.5rem] shadow-xl border border-slate-100 flex-shrink-0"
+                        >
+                            <img
+                                src="/solutions/hl7_fhir_logo.png"
+                                alt="HL7 FHIR Logo"
+                                className="h-20 w-auto object-contain"
+                            />
+                        </motion.div>
+                        <div className="flex-1 text-center lg:text-left">
+                            <h3 className="text-4xl font-black text-slate-900 mb-8 uppercase tracking-tightest leading-tight">El idioma universal <br /><span className="text-emerald-600">de la salud digital</span></h3>
+                            <p className="text-slate-500 text-lg font-medium leading-relaxed max-w-2xl">
+                                Utilizamos el estándar **HL7® FHIR®**, garantizando que la información de tus pacientes esté organizada bajo los más altos protocolos de interoperabilidad mundial. Esto asegura que tu clínica esté preparada para el futuro de la salud conectada en Chile.
                             </p>
-
-                            <div className="space-y-6">
-                                {[
-                                    { icon: Fingerprint, title: "Biometría & MFA", desc: "Autenticación multifactor para cada acceso administrativo." },
-                                    { icon: Lock, title: "Cifrado AES-256", desc: "Datos clínicos en reposo y en tránsito con grado militar." },
-                                    { icon: Database, title: "Soberanía de Datos", desc: "Backups diarios geolocalizados y cifrados." }
-                                ].map((item, i) => (
-                                    <div key={i} className="flex gap-6 group">
-                                        <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-900 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-sm">
-                                            <item.icon size={28} />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-xl font-black tracking-tight">{item.title}</h4>
-                                            <p className="text-gray-400 font-medium">{item.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="relative">
-                            <div className="aspect-square bg-slate-900 rounded-[3rem] overflow-hidden relative shadow-2xl">
-                                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20" />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="relative w-64 h-64">
-                                        <motion.div
-                                            animate={{ rotate: 360 }}
-                                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                                            className="absolute inset-0 border-2 border-dashed border-indigo-500/20 rounded-full"
-                                        />
-                                        <div className="absolute inset-8 border-2 border-indigo-500/40 rounded-full animate-pulse" />
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <Cpu className="text-indigo-400" size={64} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="absolute bottom-10 left-10 p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-3 h-3 bg-emerald-500 rounded-full animate-ping" />
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-white">Security Node #042 Active</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Chilean Laws Section */}
-            <section className="py-24 px-6 sm:px-12 bg-gray-50 overflow-hidden relative">
-                <div className="max-w-7xl mx-auto relative z-10">
-                    <div className="text-center mb-20">
-                        <h2 className="text-4xl sm:text-7xl font-black tracking-tightest leading-tight">Marco Legal Chileno.</h2>
-                        <p className="text-gray-500 text-xl font-medium mt-4">Estamos alineados con la normativa vigente en Chile.</p>
-                    </div>
+            {/* SEGURIDAD PRAGMÁTICA */}
+            <section className="py-32 px-6 sm:px-12 bg-white">
+                <div className="container mx-auto text-center mb-24">
+                    <span className="text-emerald-600 font-bold text-xs uppercase tracking-[0.4em] block mb-4 italic">Tecnología centrada en ti</span>
+                    <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tightest leading-tight">Seguridad que no se ve,<br /> pero que se siente.</h2>
+                </div>
 
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[
-                            {
-                                icon: Scale,
-                                title: "Ley 20.584",
-                                desc: "Derechos y deberes de los pacientes. Gestión estricta del consentimiento informado y la privacidad de la ficha clínica."
-                            },
-                            {
-                                icon: FileCheck,
-                                title: "Ley 19.628",
-                                desc: "Protección de la vida privada. Tratamiento de datos personales sensibles con los más altos estándares éticos."
-                            },
-                            {
-                                icon: ShieldAlert,
-                                title: "Normas MINSAL",
-                                desc: "Sincronización con las directrices de cibersalud y almacenamiento de registros electrónicos del Ministerio de Salud."
-                            }
-                        ].map((card, i) => (
-                            <div key={i} className="bg-white p-10 rounded-[3rem] shadow-xl shadow-indigo-100/50 border border-indigo-50 group hover:-translate-y-2 transition-all">
-                                <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg shadow-indigo-100">
-                                    <card.icon size={32} />
-                                </div>
-                                <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter leading-none">{card.title}</h3>
-                                <p className="text-gray-500 font-medium leading-[1.6]">
-                                    {card.desc}
-                                </p>
-                                <div className="mt-8 flex items-center gap-2 text-indigo-600 font-black text-[10px] uppercase tracking-widest cursor-pointer hover:gap-3 transition-all">
-                                    Ver especificaciones <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                                </div>
-                            </div>
-                        ))}
+                <div className="container mx-auto grid md:grid-cols-3 gap-10">
+                    <GlassCard className="p-12 border-slate-100 bg-slate-50/30 hover:bg-white hover:shadow-2xl transition-all duration-500 rounded-[3.5rem] text-center lg:text-left">
+                        <div className="w-16 h-16 bg-emerald-100 rounded-[1.5rem] flex items-center justify-center text-emerald-600 mb-8 mx-auto lg:mx-0">
+                            <LucideLock size={32} />
+                        </div>
+                        <h3 className="text-2xl font-black text-slate-900 mb-5 uppercase tracking-tighter">Acceso Protegido</h3>
+                        <p className="text-slate-500 font-medium leading-relaxed">Solo tú y tu equipo autorizado pueden acceder a los datos. Implementamos validación por pasos para que nadie extraño entre a tu sistema.</p>
+                    </GlassCard>
+
+                    <GlassCard className="p-12 border-slate-100 bg-slate-50/30 hover:bg-white hover:shadow-2xl transition-all duration-500 rounded-[3.5rem] text-center lg:text-left">
+                        <div className="w-16 h-16 bg-emerald-100 rounded-[1.5rem] flex items-center justify-center text-emerald-600 mb-8 mx-auto lg:mx-0">
+                            <LucideDatabase size={32} />
+                        </div>
+                        <h3 className="text-2xl font-black text-slate-900 mb-5 uppercase tracking-tighter">Respaldo Diario</h3>
+                        <p className="text-slate-500 font-medium leading-relaxed">Tus fichas clínicas se respaldan cada día automáticamente. Nunca perderás la historia clínica de un paciente por un error técnico.</p>
+                    </GlassCard>
+
+                    <GlassCard className="p-12 border-slate-100 bg-slate-50/30 hover:bg-white hover:shadow-2xl transition-all duration-500 rounded-[3.5rem] text-center lg:text-left">
+                        <div className="w-16 h-16 bg-emerald-100 rounded-[1.5rem] flex items-center justify-center text-emerald-600 mb-8 mx-auto lg:mx-0">
+                            <LucideSearch size={32} />
+                        </div>
+                        <h3 className="text-2xl font-black text-slate-900 mb-5 uppercase tracking-tighter">Control Total</h3>
+                        <p className="text-slate-500 font-medium leading-relaxed">Auditamos cada movimiento para que tengas el control total de quién vio qué información. Un sistema de orden y honestidad profesional.</p>
+                    </GlassCard>
+                </div>
+            </section>
+
+            {/* FINAL CTA */}
+            <section className="py-40 px-6 sm:px-12 bg-white">
+                <div className="container mx-auto">
+                    <div className="bg-emerald-600 rounded-[5rem] p-16 sm:p-24 text-center text-white relative overflow-hidden shadow-2xl shadow-emerald-100">
+                        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/grid.svg')] pointer-events-none" />
+                        <div className="relative z-10 max-w-4xl mx-auto">
+                            <h2 className="text-6xl sm:text-8xl font-black mb-10 italic tracking-tightest leading-[0.9]">Queremos que <br />estés tranquilo.</h2>
+                            <p className="text-xl sm:text-2xl text-emerald-50 font-medium mb-16 opacity-90 leading-relaxed">
+                                Si tienes dudas sobre cómo protegemos tu consulta o quieres saber más sobre nuestra certificación HL7® FHIR®, hablemos. Un colega de nuestro equipo te ayudará de inmediato.
+                            </p>
+                            <PremiumButton
+                                variant="secondary"
+                                size="lg"
+                                className="!bg-white !text-emerald-700 hover:!bg-emerald-50 rounded-[2.5rem] px-16 py-8 text-xl font-black shadow-3xl group transition-all"
+                                onClick={() => router.push('/strategic-session')}
+                            >
+                                COMENZAR AHORA <LucideArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" />
+                            </PremiumButton>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="bg-white py-12 border-t border-gray-100">
-                <div className="max-w-7xl mx-auto px-6 sm:px-12 flex flex-col sm:flex-row justify-between items-center gap-8">
-                    <span className="text-gray-400 font-bold text-[10px] tracking-widest uppercase opacity-50">© 2025 NeuroV Systems. Todos los derechos reservados.</span>
-                    <div className="flex gap-8 text-[10px] font-black uppercase tracking-widest text-indigo-600">
-                        <a href="#" className="hover:text-indigo-800 transition-colors underline-offset-4 hover:underline">Políticas de Privacidad</a>
-                        <a href="#" className="hover:text-indigo-800 transition-colors underline-offset-4 hover:underline">SLA Service Level Agreement</a>
-                    </div>
-                </div>
-            </footer>
-        </div>
+            <Footer />
+        </main>
     );
-};
+}
 
-export default LegalPage;

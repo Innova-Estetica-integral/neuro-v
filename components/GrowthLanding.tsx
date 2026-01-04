@@ -7,6 +7,8 @@ import { PremiumButton } from './ui/PremiumButton';
 import { WorkflowMockup } from './WorkflowMockup';
 import { AnimatedWorkflow } from './AnimatedWorkflow';
 import { EnhancedWorkflow } from './EnhancedWorkflow';
+import { ServiceTabs } from './ServiceTabs';
+import { ROICalculator } from './ROICalculator';
 import { analytics } from '@/lib/analytics/tracker';
 import { parseUTM } from '@/lib/utils/utm';
 import { useSearchParams } from 'next/navigation';
@@ -87,6 +89,9 @@ export function GrowthLanding() {
                 </div>
             </section>
 
+            {/* Service Tabs - Detailed Content */}
+            <ServiceTabs />
+
             {/* Business Features Grid */}
             <section className="container mx-auto px-6 py-20">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -117,76 +122,8 @@ export function GrowthLanding() {
                 </div>
             </section>
 
-            {/* Revenue Mockup Section - Replacing Technical Terminal */}
-            <section className="container mx-auto px-6 py-16">
-                <div className="flex flex-col lg:grid lg:grid-cols-2 gap-20 items-center">
-                    <div>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full mb-6">
-                            <LucideTrendingUp className="w-3 h-3 text-green-400" />
-                            <span className="text-[10px] font-black text-green-300 tracking-widest uppercase">Resultados Tangibles</span>
-                        </div>
-                        <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
-                            Toma el control de tu <span className="text-gradient from-green-400 to-cyan-500">Crecimiento Financiero</span>
-                        </h2>
-                        <div className="space-y-8">
-                            <div className="flex gap-6">
-                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-indigo-400">
-                                    <LucideTrendingUp size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="text-xl font-bold mb-2">Aumento del 27% en Ventas Netas</h4>
-                                    <p className="text-gray-400">Medido en clínicas reales tras solo 30 días de implementación asistida.</p>
-                                </div>
-                            </div>
-                            <div className="flex gap-6">
-                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-purple-400">
-                                    <LucideMessageSquare size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="text-xl font-bold mb-2">Liberamos 15h de tu Secretaria</h4>
-                                    <p className="text-gray-400">Automatizamos la confirmación y el seguimiento, dejando que ella venda más en presencial.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="relative group">
-                        <div className="absolute inset-0 bg-indigo-600/20 blur-[100px] rounded-full" />
-                        <GlassCard className="relative z-10 border-white/10 bg-[#0f172a]/80 p-8 shadow-3xl">
-                            {/* Revenue Dashboard UI Mock */}
-                            <div className="space-y-6">
-                                <div className="flex justify-between items-end pb-6 border-b border-white/10">
-                                    <div>
-                                        <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1">Impacto NeuroV</p>
-                                        <p className="text-3xl font-black text-white">$12.450.000 <span className="text-xs text-green-400 font-bold ml-2">+24.5%</span></p>
-                                    </div>
-                                    <div className="bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20 text-[10px] font-black text-indigo-300">ESTE MES</div>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
-                                        <p className="text-[8px] font-black text-gray-500 uppercase tracking-widest mb-1">No-Shows Evitados</p>
-                                        <p className="text-xl font-black text-white">42 citas</p>
-                                    </div>
-                                    <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
-                                        <p className="text-[8px] font-black text-gray-500 uppercase tracking-widest mb-1">Recuperado IG/FB</p>
-                                        <p className="text-xl font-black text-white">$3.820.000</p>
-                                    </div>
-                                </div>
-
-                                <div className="h-32 flex items-end gap-1.5 pt-4">
-                                    {[40, 70, 45, 90, 65, 80, 100].map((h, i) => (
-                                        <div key={i} className="flex-1 bg-gradient-to-t from-indigo-500 to-purple-500 rounded-t-lg" style={{ height: `${h}%` }} />
-                                    ))}
-                                </div>
-                                <div className="flex justify-between text-[8px] font-black text-gray-600 uppercase tracking-widest">
-                                    <span>LUN</span><span>MAR</span><span>MIE</span><span>JUE</span><span>VIE</span><span>SAB</span><span>DOM</span>
-                                </div>
-                            </div>
-                        </GlassCard>
-                    </div>
-                </div>
-            </section>
+            {/* ROI Calculator Section */}
+            <ROICalculator />
 
 
             {/* SECCIÓN LO QUE DEBES SABER (MOVED FROM MAIN PAGE) */}

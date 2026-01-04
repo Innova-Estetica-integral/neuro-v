@@ -41,6 +41,7 @@ import {
     Check
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { PremiumButton } from '@/components/ui/PremiumButton';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Footer } from '@/components/Footer';
@@ -398,6 +399,7 @@ const DonnaFloatingAssistant = () => {
 const Nav = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -440,7 +442,10 @@ const Nav = () => {
                     <a href="#marketing" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>Marketing</a>
                     <a href="#seguridad" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>Seguridad</a>
                     <a href="#precios" className={`transition-colors ${isScrolled ? 'hover:text-gray-900' : 'hover:text-white'}`}>Planes</a>
-                    <button className="bg-indigo-600 text-white px-10 py-4 rounded-full hover:bg-indigo-700 transition-all font-black shadow-2xl shadow-indigo-100 flex items-center gap-2 hover:scale-105 active:scale-95">
+                    <button
+                        onClick={() => router.push('/strategic-session')}
+                        className="bg-indigo-600/20 backdrop-blur-sm text-white border-2 border-indigo-400/50 px-10 py-4 rounded-full hover:bg-indigo-600/30 hover:border-indigo-400/70 transition-all font-black shadow-2xl shadow-indigo-100 flex items-center gap-2 hover:scale-105 active:scale-95"
+                    >
                         COMENZAR AHORA <ArrowRight size={14} />
                     </button>
                 </div>
@@ -465,7 +470,10 @@ const Nav = () => {
                             <a href="#marketing" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">Marketing</a>
                             <a href="#seguridad" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">Seguridad</a>
                             <a href="#precios" onClick={() => setIsMenuOpen(false)} className="hover:text-gray-900 transition-colors">Planes</a>
-                            <button className="bg-indigo-600 text-white px-10 py-4 rounded-full hover:bg-indigo-700 transition-all font-black shadow-2xl shadow-indigo-100 flex items-center justify-center gap-2">
+                            <button
+                                onClick={() => router.push('/strategic-session')}
+                                className="bg-indigo-600/20 backdrop-blur-sm text-white border-2 border-indigo-400/50 px-10 py-4 rounded-full hover:bg-indigo-600/30 hover:border-indigo-400/70 transition-all font-black shadow-2xl shadow-indigo-100 flex items-center justify-center gap-2"
+                            >
                                 COMENZAR AHORA <ArrowRight size={14} />
                             </button>
                         </div>
@@ -714,9 +722,16 @@ export default function Home() {
                                 Mientras <strong className="text-[#B9FF66]">Donna</strong> te ayuda con WhatsApp y recordatorios automáticos, tú te dedicas 100% a tus pacientes.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-start mt-10 mb-4">
-                                <button className="px-10 py-5 sm:px-12 sm:py-7 bg-indigo-600 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-indigo-500 hover:scale-105 transition-all shadow-[0_0_30px_rgba(79,70,229,0.3)]">
-                                    COMENZAR AHORA
-                                </button>
+                                <Link href="/strategic-session" className="w-full sm:w-auto">
+                                    <button className="w-full px-10 py-5 sm:px-12 sm:py-7 bg-indigo-600/20 backdrop-blur-sm text-white border-2 border-indigo-400/50 rounded-full font-black text-xs uppercase tracking-widest hover:bg-indigo-600/30 hover:border-indigo-400/70 hover:scale-105 transition-all shadow-[0_0_30px_rgba(79,70,229,0.3)]">
+                                        COMENZAR AHORA
+                                    </button>
+                                </Link>
+                                <Link href="/clinic-alpha" className="w-full sm:w-auto">
+                                    <button className="w-full px-10 py-5 sm:px-12 sm:py-7 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 rounded-full font-black text-xs uppercase tracking-widest hover:bg-white/20 hover:scale-105 transition-all">
+                                        VER CLÍNICA
+                                    </button>
+                                </Link>
                             </div>
                         </div>
 
@@ -1237,7 +1252,7 @@ export default function Home() {
 
                                 {/* Desktop CTA - Hidden on mobile */}
                                 <motion.a
-                                    href="/growth"
+                                    href="/soluciones-marketing"
                                     whileHover={{ y: -3, scale: 1.01 }}
                                     whileTap={{ scale: 0.99 }}
                                     className="hidden lg:flex items-center justify-between px-6 py-3 rounded-full bg-indigo-600 border border-indigo-500 shadow-[0_15px_30px_-5px_rgba(79,70,229,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(79,70,229,0.6)] transition-all group mt-6 overflow-hidden relative w-full"
@@ -1276,7 +1291,7 @@ export default function Home() {
 
                         {/* Mobile CTA - Appears after image */}
                         <motion.a
-                            href="/growth"
+                            href="/soluciones-marketing"
                             whileHover={{ y: -3, scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
                             className="flex lg:hidden items-center justify-between px-6 py-3 rounded-full bg-indigo-600 border border-indigo-500 shadow-[0_15px_30px_-5px_rgba(79,70,229,0.4)] hover:shadow-[0_20px_40px_-8px_rgba(79,70,229,0.6)] transition-all group mt-8 overflow-hidden relative w-full"
@@ -1540,10 +1555,12 @@ export default function Home() {
                                             ))}
                                         </div>
                                     </div>
-                                    <button className={`w-full py-5 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all relative overflow-hidden group/btn ${plan.popular ? 'bg-indigo-600 text-white shadow-[0_15px_30px_-5px_rgba(79,70,229,0.4)]' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'}`}>
-                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000" />
-                                        EMPEZAR AHORA
-                                    </button>
+                                    <Link href="/strategic-session" className="w-full">
+                                        <button className={`w-full py-5 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all relative overflow-hidden group/btn ${plan.popular ? 'bg-indigo-600 text-white shadow-[0_15px_30px_-5px_rgba(79,70,229,0.4)]' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'}`}>
+                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000" />
+                                            EMPEZAR AHORA
+                                        </button>
+                                    </Link>
                                 </div>
                             </motion.div>
                         ))}
@@ -1583,7 +1600,7 @@ export default function Home() {
 
                         <div className="flex flex-col lg:flex-row gap-8 justify-center lg:justify-start items-center">
                             <Link href="/strategic-session" className="w-full sm:w-auto">
-                                <PremiumButton variant="primary" size="xl" className="w-full sm:w-auto px-8 py-5 sm:px-12 sm:py-6 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(79,70,229,0.3)] group">
+                                <PremiumButton variant="primary" size="xl" className="w-full sm:w-auto px-8 py-5 sm:px-12 sm:py-6 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(79,70,229,0.3)] group !bg-indigo-600/20 backdrop-blur-sm hover:!bg-indigo-600/30 border-2 !border-indigo-400/50 hover:!border-indigo-400/70 transition-all">
                                     AGENDA AQUÍ <ChevronRight className="group-hover:translate-x-1 transition-transform ml-2" />
                                 </PremiumButton>
                             </Link>

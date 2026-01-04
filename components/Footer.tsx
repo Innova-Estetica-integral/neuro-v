@@ -32,7 +32,7 @@ export function Footer() {
         {
             title: 'Recursos',
             links: [
-                { name: 'Growth / Escalamiento', href: '/growth' },
+                { name: 'Growth / Escalamiento', href: '/soluciones-marketing' },
                 { name: 'Casos de Éxito', href: '#' },
                 { name: 'Documentación', href: '#' },
                 { name: 'Blog Médico', href: '#' },
